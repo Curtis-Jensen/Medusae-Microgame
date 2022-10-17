@@ -203,7 +203,6 @@ namespace Unity.FPS.AI
         void Update()
         {
             EnsureIsWithinLevelBounds();
-
             DetectionModule.HandleTargetDetection(m_Actor, m_SelfColliders);
 
             Color currentColor = OnHitBodyGradient.Evaluate((Time.time - m_LastTimeDamaged) / FlashOnHitDuration);

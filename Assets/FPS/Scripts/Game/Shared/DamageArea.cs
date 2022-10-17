@@ -21,9 +21,9 @@ namespace Unity.FPS.Game
 
             // Create a collection of unique health components that would be damaged in the area of effect (in order to avoid damaging a same entity multiple times)
             Collider[] affectedColliders = Physics.OverlapSphere(center, AreaOfEffectDistance, layers, interaction);
-            foreach (var coll in affectedColliders)
+            foreach (var collider in affectedColliders)
             {
-                Damageable damageable = coll.GetComponent<Damageable>();
+                Damageable damageable = collider.GetComponent<Damageable>();
                 if (damageable)
                 {
                     Health health = damageable.GetComponentInParent<Health>();

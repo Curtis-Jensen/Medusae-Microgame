@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Unity.InteractiveTutorials;
+//using Unity.InteractiveTutorials;
 using UnityEditor;
 using UnityEngine.AI;
 
@@ -10,8 +10,8 @@ namespace Unity.Tutorials
     /// </summary>
     public class TutorialCallbacks : ScriptableObject
     {
-        public FutureObjectReference futureRoomInstance = default;
-        public FutureObjectReference futureBotInstance = default;
+        //public FutureObjectReference futureRoomInstance = default;
+        //public FutureObjectReference futureBotInstance = default;
         NavMeshSurface navMeshSurface = default;
 
         public bool NavMeshIsBuilt()
@@ -34,7 +34,7 @@ namespace Unity.Tutorials
         /// </summary>
         public void KeepRoomSelected()
         {
-            SelectSpawnedGameObject(futureRoomInstance);
+            //SelectSpawnedGameObject(futureRoomInstance);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Unity.Tutorials
         /// </summary>
         public void KeepBotSelected()
         {
-            SelectSpawnedGameObject(futureBotInstance);
+            //SelectSpawnedGameObject(futureBotInstance);
         }
 
 
@@ -50,11 +50,11 @@ namespace Unity.Tutorials
         /// Selects a GameObject in the scene, marking it as the active object for selection
         /// </summary>
         /// <param name="futureObjectReference"></param>
-        public void SelectSpawnedGameObject(FutureObjectReference futureObjectReference)
-        {
-            if (futureObjectReference.sceneObjectReference == null) { return; }
-            Selection.activeObject = futureObjectReference.sceneObjectReference.ReferencedObjectAsGameObject;
-        }
+        //public void SelectSpawnedGameObject(FutureObjectReference futureObjectReference)
+        //{
+        //    if (futureObjectReference.sceneObjectReference == null) { return; }
+        //    Selection.activeObject = futureObjectReference.sceneObjectReference.ReferencedObjectAsGameObject;
+        //}
 
         public void SelectMoveTool()
         {
