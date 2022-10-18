@@ -9,6 +9,7 @@ namespace Unity.FPS.AI
     [RequireComponent(typeof(Health), typeof(Actor), typeof(NavMeshAgent))]
     public class EnemyController : MonoBehaviour
     {
+        #region struct RenderIndexData
         [System.Serializable]
         public struct RendererIndexData
         {
@@ -21,128 +22,135 @@ namespace Unity.FPS.AI
                 MaterialIndex = index;
             }
         }
+        #endregion
 
+        #region Global🌎Variables
         [Header("Parameters")]
         [Tooltip("The Y height at which the enemy will be automatically killed (if it falls off of the level)")]
-        public float SelfDestructYHeight = -20f;
+        public float selfDestructYHeight = -20f;
 
         [Tooltip("The distance at which the enemy considers that it has reached its current path destination point")]
-        public float PathReachingRadius = 2f;
+        public float pathReachingRadius = 2f;
 
         [Tooltip("The speed at which the enemy rotates")]
-        public float OrientationSpeed = 10f;
+        public float orientationSpeed = 10f;
 
         [Tooltip("Delay after death where the GameObject is destroyed (to allow for animation)")]
-        public float DeathDuration = 0f;
+        public float deathDuration = 0f;
 
 
         [Header("Weapons Parameters")] [Tooltip("Allow weapon swapping for this enemy")]
-        public bool SwapToNextWeapon = false;
+        public bool swapToNextWeapon = false;
 
         [Tooltip("Time delay between a weapon swap and the next attack")]
-        public float DelayAfterWeaponSwap = 0f;
+        public float delayAfterWeaponSwap = 0f;
 
         [Header("Eye color")] [Tooltip("Material for the eye color")]
-        public Material EyeColorMaterial;
+        public Material eyeColorMaterial;
 
         [Tooltip("The default color of the bot's eye")] [ColorUsageAttribute(true, true)]
-        public Color DefaultEyeColor;
+        public Color defaultEyeColor;
 
         [Tooltip("The attack color of the bot's eye")] [ColorUsageAttribute(true, true)]
-        public Color AttackEyeColor;
+        public Color attackEyeColor;
 
         [Header("Flash on hit")] [Tooltip("The material used for the body of the hoverbot")]
-        public Material BodyMaterial;
+        public Material bodyMaterial;
 
         [Tooltip("The gradient representing the color of the flash on hit")] [GradientUsageAttribute(true)]
-        public Gradient OnHitBodyGradient;
+        public Gradient onHitBodyGradient;
 
         [Tooltip("The duration of the flash on hit")]
-        public float FlashOnHitDuration = 0.5f;
+        public float flashOnHitDuration = 0.5f;
 
         [Header("Sounds")] [Tooltip("Sound played when recieving damages")]
-        public AudioClip DamageTick;
+        public AudioClip damageTick;
 
         [Header("VFX")] [Tooltip("The VFX prefab spawned when the enemy dies")]
-        public GameObject DeathVfx;
+        public GameObject deathVfx;
 
         [Tooltip("The point at which the death VFX is spawned")]
-        public Transform DeathVfxSpawnPoint;
+        public Transform deathVfxSpawnPoint;
 
         [Header("Loot")] [Tooltip("The object this enemy can drop when dying")]
-        public GameObject LootPrefab;
+        public GameObject lootPrefab;
 
         [Tooltip("The chance the object has to drop")] [Range(0, 1)]
-        public float DropRate = 1f;
+        public float dropRate = 1f;
 
         [Header("Debug Display")] [Tooltip("Color of the sphere gizmo representing the path reaching range")]
-        public Color PathReachingRangeColor = Color.yellow;
+        public Color pathReachingRangeColor = Color.yellow;
 
         [Tooltip("Color of the sphere gizmo representing the attack range")]
-        public Color AttackRangeColor = Color.red;
+        public Color attackRangeColor = Color.red;
 
         [Tooltip("Color of the sphere gizmo representing the detection range")]
-        public Color DetectionRangeColor = Color.blue;
+        public Color detectionRangeColor = Color.blue;
 
         public UnityAction onAttack;
         public UnityAction onDetectedTarget;
         public UnityAction onLostTarget;
         public UnityAction onDamaged;
 
-        List<RendererIndexData> m_BodyRenderers = new List<RendererIndexData>();
-        MaterialPropertyBlock m_BodyFlashMaterialPropertyBlock;
-        float m_LastTimeDamaged = float.NegativeInfinity;
+        List<RendererIndexData> bodyRenderers = new List<RendererIndexData>();
+        MaterialPropertyBlock bodyFlashMaterialPropertyBlock;
+        float lastTimeDamaged = float.NegativeInfinity;
 
-        RendererIndexData m_EyeRendererData;
-        MaterialPropertyBlock m_EyeColorMaterialPropertyBlock;
+        RendererIndexData eyeRendererData;
+        MaterialPropertyBlock eyeColorMaterialPropertyBlock;
 
-        public PatrolPath PatrolPath { get; set; }
-        public GameObject KnownDetectedTarget => DetectionModule.KnownDetectedTarget;
-        public bool IsTargetInAttackRange => DetectionModule.IsTargetInAttackRange;
-        public bool IsSeeingTarget => DetectionModule.IsSeeingTarget;
-        public bool HadKnownTarget => DetectionModule.HadKnownTarget;
-        public NavMeshAgent NavMeshAgent { get; private set; }
-        public DetectionModule DetectionModule { get; private set; }
+        public PatrolPath patrolPath { get; set; }
+        //This used to be below all these other things but I moved it above what is accessing it
+        public DetectionModule detectionModule { get; private set; }
+        public GameObject knownDetectedTarget => detectionModule.KnownDetectedTarget;
+        public bool isTargetInAttackRange => detectionModule.IsTargetInAttackRange;
+        public bool isSeeingTarget => detectionModule.IsSeeingTarget;
+        public bool hadKnownTarget => detectionModule.HadKnownTarget;
+        public NavMeshAgent navMeshAgent { get; private set; }
 
-        int m_PathDestinationNodeIndex;
-        EnemyManager m_EnemyManager;
-        ActorsManager m_ActorsManager;
-        Health m_Health;
-        Actor m_Actor;
-        Collider[] m_SelfColliders;
-        GameFlowManager m_GameFlowManager;
-        bool m_WasDamagedThisFrame;
-        float m_LastTimeWeaponSwapped = Mathf.NegativeInfinity;
-        int m_CurrentWeaponIndex;
-        WeaponController m_CurrentWeapon;
-        WeaponController[] m_Weapons;
-        NavigationModule m_NavigationModule;
+        int pathDestinationNodeIndex;
+        EnemyManager enemyManager;
+        ActorsManager actorsManager;
+        Health health;
+        Actor actor;
+        Collider[] selfColliders;
+        GameFlowManager gameFlowManager;
+        bool wasDamagedThisFrame;
+        float lastTimeWeaponSwapped = Mathf.NegativeInfinity;
+        int currentWeaponIndex;
+        WeaponController currentWeapon;
+        WeaponController[] weapons;
+        NavigationModule navigationModule;
+        #endregion
 
+        #region Unity Monobehavior Methods
+        /* Makes sure a bunch of different components are present on the enemy game object.
+         */
         void Start()
         {
-            m_EnemyManager = FindObjectOfType<EnemyManager>();
-            DebugUtility.HandleErrorIfNullFindObject<EnemyManager, EnemyController>(m_EnemyManager, this);
+            enemyManager = FindObjectOfType<EnemyManager>();
+            DebugUtility.HandleErrorIfNullFindObject<EnemyManager, EnemyController>(enemyManager, this);
 
-            m_ActorsManager = FindObjectOfType<ActorsManager>();
-            DebugUtility.HandleErrorIfNullFindObject<ActorsManager, EnemyController>(m_ActorsManager, this);
+            actorsManager = FindObjectOfType<ActorsManager>();
+            DebugUtility.HandleErrorIfNullFindObject<ActorsManager, EnemyController>(actorsManager, this);
 
-            m_EnemyManager.RegisterEnemy(this);
+            enemyManager.RegisterEnemy(this);
 
-            m_Health = GetComponent<Health>();
-            DebugUtility.HandleErrorIfNullGetComponent<Health, EnemyController>(m_Health, this, gameObject);
+            health = GetComponent<Health>();
+            DebugUtility.HandleErrorIfNullGetComponent<Health, EnemyController>(health, this, gameObject);
 
-            m_Actor = GetComponent<Actor>();
-            DebugUtility.HandleErrorIfNullGetComponent<Actor, EnemyController>(m_Actor, this, gameObject);
+            actor = GetComponent<Actor>();
+            DebugUtility.HandleErrorIfNullGetComponent<Actor, EnemyController>(actor, this, gameObject);
 
-            NavMeshAgent = GetComponent<NavMeshAgent>();
-            m_SelfColliders = GetComponentsInChildren<Collider>();
+            navMeshAgent = GetComponent<NavMeshAgent>();
+            selfColliders = GetComponentsInChildren<Collider>();
 
-            m_GameFlowManager = FindObjectOfType<GameFlowManager>();
-            DebugUtility.HandleErrorIfNullFindObject<GameFlowManager, EnemyController>(m_GameFlowManager, this);
+            gameFlowManager = FindObjectOfType<GameFlowManager>();
+            DebugUtility.HandleErrorIfNullFindObject<GameFlowManager, EnemyController>(gameFlowManager, this);
 
             // Subscribe to damage & death actions
-            m_Health.OnDie += OnDie;
-            m_Health.OnDamaged += OnDamaged;
+            health.OnDie += OnDie;
+            health.OnDamaged += OnDamaged;
 
             // Find and initialize all weapons
             FindAndInitializeAllWeapons();
@@ -155,10 +163,10 @@ namespace Unity.FPS.AI
             DebugUtility.HandleWarningIfDuplicateObjects<DetectionModule, EnemyController>(detectionModules.Length,
                 this, gameObject);
             // Initialize detection module
-            DetectionModule = detectionModules[0];
-            DetectionModule.onDetectedTarget += OnDetectedTarget;
-            DetectionModule.onLostTarget += OnLostTarget;
-            onAttack += DetectionModule.OnAttack;
+            detectionModule = detectionModules[0];
+            detectionModule.onDetectedTarget += OnDetectedTarget;
+            detectionModule.onLostTarget += OnLostTarget;
+            onAttack += detectionModule.OnAttack;
 
             var navigationModules = GetComponentsInChildren<NavigationModule>();
             DebugUtility.HandleWarningIfDuplicateObjects<DetectionModule, EnemyController>(detectionModules.Length,
@@ -166,59 +174,79 @@ namespace Unity.FPS.AI
             // Override navmesh agent data
             if (navigationModules.Length > 0)
             {
-                m_NavigationModule = navigationModules[0];
-                NavMeshAgent.speed = m_NavigationModule.MoveSpeed;
-                NavMeshAgent.angularSpeed = m_NavigationModule.AngularSpeed;
-                NavMeshAgent.acceleration = m_NavigationModule.Acceleration;
+                navigationModule = navigationModules[0];
+                navMeshAgent.speed = navigationModule.MoveSpeed;
+                navMeshAgent.angularSpeed = navigationModule.AngularSpeed;
+                navMeshAgent.acceleration = navigationModule.Acceleration;
             }
 
             foreach (var renderer in GetComponentsInChildren<Renderer>(true))
             {
                 for (int i = 0; i < renderer.sharedMaterials.Length; i++)
                 {
-                    if (renderer.sharedMaterials[i] == EyeColorMaterial)
+                    if (renderer.sharedMaterials[i] == eyeColorMaterial)
                     {
-                        m_EyeRendererData = new RendererIndexData(renderer, i);
+                        eyeRendererData = new RendererIndexData(renderer, i);
                     }
 
-                    if (renderer.sharedMaterials[i] == BodyMaterial)
+                    if (renderer.sharedMaterials[i] == bodyMaterial)
                     {
-                        m_BodyRenderers.Add(new RendererIndexData(renderer, i));
+                        bodyRenderers.Add(new RendererIndexData(renderer, i));
                     }
                 }
             }
 
-            m_BodyFlashMaterialPropertyBlock = new MaterialPropertyBlock();
+            bodyFlashMaterialPropertyBlock = new MaterialPropertyBlock();
 
             // Check if we have an eye renderer for this enemy
-            if (m_EyeRendererData.Renderer != null)
+            if (eyeRendererData.Renderer != null)
             {
-                m_EyeColorMaterialPropertyBlock = new MaterialPropertyBlock();
-                m_EyeColorMaterialPropertyBlock.SetColor("_EmissionColor", DefaultEyeColor);
-                m_EyeRendererData.Renderer.SetPropertyBlock(m_EyeColorMaterialPropertyBlock,
-                    m_EyeRendererData.MaterialIndex);
+                eyeColorMaterialPropertyBlock = new MaterialPropertyBlock();
+                eyeColorMaterialPropertyBlock.SetColor("_EmissionColor", defaultEyeColor);
+                eyeRendererData.Renderer.SetPropertyBlock(eyeColorMaterialPropertyBlock,
+                    eyeRendererData.MaterialIndex);
             }
         }
 
         void Update()
         {
             EnsureIsWithinLevelBounds();
-            DetectionModule.HandleTargetDetection(m_Actor, m_SelfColliders);
+            detectionModule.HandleTargetDetection(actor, selfColliders);
 
-            Color currentColor = OnHitBodyGradient.Evaluate((Time.time - m_LastTimeDamaged) / FlashOnHitDuration);
-            m_BodyFlashMaterialPropertyBlock.SetColor("_EmissionColor", currentColor);
-            foreach (var data in m_BodyRenderers)
+            Color currentColor = onHitBodyGradient.Evaluate((Time.time - lastTimeDamaged) / flashOnHitDuration);
+            bodyFlashMaterialPropertyBlock.SetColor("_EmissionColor", currentColor);
+            foreach (var data in bodyRenderers)
             {
-                data.Renderer.SetPropertyBlock(m_BodyFlashMaterialPropertyBlock, data.MaterialIndex);
+                data.Renderer.SetPropertyBlock(bodyFlashMaterialPropertyBlock, data.MaterialIndex);
             }
 
-            m_WasDamagedThisFrame = false;
+            wasDamagedThisFrame = false;
         }
 
+        void OnDrawGizmosSelected()
+        {
+            // Path reaching range
+            Gizmos.color = pathReachingRangeColor;
+            Gizmos.DrawWireSphere(transform.position, pathReachingRadius);
+
+            if (detectionModule != null)
+            {
+                // Detection range
+                Gizmos.color = detectionRangeColor;
+                Gizmos.DrawWireSphere(transform.position, detectionModule.DetectionRange);
+
+                // Attack range
+                Gizmos.color = attackRangeColor;
+                Gizmos.DrawWireSphere(transform.position, detectionModule.AttackRange);
+            }
+        }
+        #endregion
+
+        #region🚦Pathfinding
         void EnsureIsWithinLevelBounds()
         {
             // at every frame, this tests for conditions to kill the enemy
-            if (transform.position.y < SelfDestructYHeight)
+            if (transform.position.y < selfDestructYHeight)
             {
                 Destroy(gameObject);
                 return;
@@ -230,11 +258,11 @@ namespace Unity.FPS.AI
             onLostTarget.Invoke();
 
             // Set the eye attack color and property block if the eye renderer is set
-            if (m_EyeRendererData.Renderer != null)
+            if (eyeRendererData.Renderer != null)
             {
-                m_EyeColorMaterialPropertyBlock.SetColor("_EmissionColor", DefaultEyeColor);
-                m_EyeRendererData.Renderer.SetPropertyBlock(m_EyeColorMaterialPropertyBlock,
-                    m_EyeRendererData.MaterialIndex);
+                eyeColorMaterialPropertyBlock.SetColor("_EmissionColor", defaultEyeColor);
+                eyeRendererData.Renderer.SetPropertyBlock(eyeColorMaterialPropertyBlock,
+                    eyeRendererData.MaterialIndex);
             }
         }
 
@@ -243,11 +271,11 @@ namespace Unity.FPS.AI
             onDetectedTarget.Invoke();
 
             // Set the eye default color and property block if the eye renderer is set
-            if (m_EyeRendererData.Renderer != null)
+            if (eyeRendererData.Renderer != null)
             {
-                m_EyeColorMaterialPropertyBlock.SetColor("_EmissionColor", AttackEyeColor);
-                m_EyeRendererData.Renderer.SetPropertyBlock(m_EyeColorMaterialPropertyBlock,
-                    m_EyeRendererData.MaterialIndex);
+                eyeColorMaterialPropertyBlock.SetColor("_EmissionColor", attackEyeColor);
+                eyeRendererData.Renderer.SetPropertyBlock(eyeColorMaterialPropertyBlock,
+                    eyeRendererData.MaterialIndex);
             }
         }
 
@@ -258,18 +286,18 @@ namespace Unity.FPS.AI
             {
                 Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
                 transform.rotation =
-                    Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * OrientationSpeed);
+                    Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * orientationSpeed);
             }
         }
 
         bool IsPathValid()
         {
-            return PatrolPath && PatrolPath.PathNodes.Count > 0;
+            return patrolPath && patrolPath.PathNodes.Count > 0;
         }
 
         public void ResetPathDestination()
         {
-            m_PathDestinationNodeIndex = 0;
+            pathDestinationNodeIndex = 0;
         }
 
         public void SetPathDestinationToClosestNode()
@@ -277,20 +305,20 @@ namespace Unity.FPS.AI
             if (IsPathValid())
             {
                 int closestPathNodeIndex = 0;
-                for (int i = 0; i < PatrolPath.PathNodes.Count; i++)
+                for (int i = 0; i < patrolPath.PathNodes.Count; i++)
                 {
-                    float distanceToPathNode = PatrolPath.GetDistanceToNode(transform.position, i);
-                    if (distanceToPathNode < PatrolPath.GetDistanceToNode(transform.position, closestPathNodeIndex))
+                    float distanceToPathNode = patrolPath.GetDistanceToNode(transform.position, i);
+                    if (distanceToPathNode < patrolPath.GetDistanceToNode(transform.position, closestPathNodeIndex))
                     {
                         closestPathNodeIndex = i;
                     }
                 }
 
-                m_PathDestinationNodeIndex = closestPathNodeIndex;
+                pathDestinationNodeIndex = closestPathNodeIndex;
             }
             else
             {
-                m_PathDestinationNodeIndex = 0;
+                pathDestinationNodeIndex = 0;
             }
         }
 
@@ -298,7 +326,7 @@ namespace Unity.FPS.AI
         {
             if (IsPathValid())
             {
-                return PatrolPath.GetPositionOfPathNode(m_PathDestinationNodeIndex);
+                return patrolPath.GetPositionOfPathNode(pathDestinationNodeIndex);
             }
             else
             {
@@ -308,9 +336,9 @@ namespace Unity.FPS.AI
 
         public void SetNavDestination(Vector3 destination)
         {
-            if (NavMeshAgent)
+            if (navMeshAgent)
             {
-                NavMeshAgent.SetDestination(destination);
+                navMeshAgent.SetDestination(destination);
             }
         }
 
@@ -319,110 +347,95 @@ namespace Unity.FPS.AI
             if (IsPathValid())
             {
                 // Check if reached the path destination
-                if ((transform.position - GetDestinationOnPath()).magnitude <= PathReachingRadius)
+                if ((transform.position - GetDestinationOnPath()).magnitude <= pathReachingRadius)
                 {
                     // increment path destination index
-                    m_PathDestinationNodeIndex =
-                        inverseOrder ? (m_PathDestinationNodeIndex - 1) : (m_PathDestinationNodeIndex + 1);
-                    if (m_PathDestinationNodeIndex < 0)
+                    pathDestinationNodeIndex =
+                        inverseOrder ? (pathDestinationNodeIndex - 1) : (pathDestinationNodeIndex + 1);
+                    if (pathDestinationNodeIndex < 0)
                     {
-                        m_PathDestinationNodeIndex += PatrolPath.PathNodes.Count;
+                        pathDestinationNodeIndex += patrolPath.PathNodes.Count;
                     }
 
-                    if (m_PathDestinationNodeIndex >= PatrolPath.PathNodes.Count)
+                    if (pathDestinationNodeIndex >= patrolPath.PathNodes.Count)
                     {
-                        m_PathDestinationNodeIndex -= PatrolPath.PathNodes.Count;
+                        pathDestinationNodeIndex -= patrolPath.PathNodes.Count;
                     }
                 }
             }
         }
+        #endregion
 
+        #region➕Health
         void OnDamaged(float damage, GameObject damageSource)
         {
             // test if the damage source is the player
             if (damageSource && !damageSource.GetComponent<EnemyController>())
             {
                 // pursue the player
-                DetectionModule.OnDamaged(damageSource);
+                detectionModule.OnDamaged(damageSource);
                 
                 onDamaged?.Invoke();
-                m_LastTimeDamaged = Time.time;
+                lastTimeDamaged = Time.time;
             
                 // play the damage tick sound
-                if (DamageTick && !m_WasDamagedThisFrame)
-                    AudioUtility.CreateSFX(DamageTick, transform.position, AudioUtility.AudioGroups.DamageTick, 0f);
+                if (damageTick && !wasDamagedThisFrame)
+                    AudioUtility.CreateSFX(damageTick, transform.position, AudioUtility.AudioGroups.DamageTick, 0f);
             
-                m_WasDamagedThisFrame = true;
+                wasDamagedThisFrame = true;
             }
         }
 
         void OnDie()
         {
             // spawn a particle system when dying
-            var vfx = Instantiate(DeathVfx, DeathVfxSpawnPoint.position, Quaternion.identity);
+            var vfx = Instantiate(deathVfx, deathVfxSpawnPoint.position, Quaternion.identity);
             Destroy(vfx, 5f);
 
             // tells the game flow manager to handle the enemy destuction
-            m_EnemyManager.UnregisterEnemy(this);
+            enemyManager.UnregisterEnemy(this);
 
             // loot an object
             if (TryDropItem())
             {
-                Instantiate(LootPrefab, transform.position, Quaternion.identity);
+                Instantiate(lootPrefab, transform.position, Quaternion.identity);
             }
 
             // this will call the OnDestroy function
-            Destroy(gameObject, DeathDuration);
+            Destroy(gameObject, deathDuration);
         }
-
-        void OnDrawGizmosSelected()
-        {
-            // Path reaching range
-            Gizmos.color = PathReachingRangeColor;
-            Gizmos.DrawWireSphere(transform.position, PathReachingRadius);
-
-            if (DetectionModule != null)
-            {
-                // Detection range
-                Gizmos.color = DetectionRangeColor;
-                Gizmos.DrawWireSphere(transform.position, DetectionModule.DetectionRange);
-
-                // Attack range
-                Gizmos.color = AttackRangeColor;
-                Gizmos.DrawWireSphere(transform.position, DetectionModule.AttackRange);
-            }
-        }
+        #endregion
 
         public void OrientWeaponsTowards(Vector3 lookPosition)
         {
-            for (int i = 0; i < m_Weapons.Length; i++)
+            for (int i = 0; i < weapons.Length; i++)
             {
                 // orient weapon towards player
-                Vector3 weaponForward = (lookPosition - m_Weapons[i].WeaponRoot.transform.position).normalized;
-                m_Weapons[i].transform.forward = weaponForward;
+                Vector3 weaponForward = (lookPosition - weapons[i].WeaponRoot.transform.position).normalized;
+                weapons[i].transform.forward = weaponForward;
             }
         }
 
         public bool TryAtack(Vector3 enemyPosition)
         {
-            if (m_GameFlowManager.GameIsEnding)
+            if (gameFlowManager.GameIsEnding)
                 return false;
 
             OrientWeaponsTowards(enemyPosition);
 
-            if ((m_LastTimeWeaponSwapped + DelayAfterWeaponSwap) >= Time.time)
+            if ((lastTimeWeaponSwapped + delayAfterWeaponSwap) >= Time.time)
                 return false;
 
             // Shoot the weapon
-            bool didFire = GetCurrentWeapon().HandleShootInputs(false, true, false);
+            bool didFire = GetCurrentWeapon().HandleShootInputs(inputDown: false, inputHeld: true, inputUp: false);
 
             if (didFire && onAttack != null)
             {
                 onAttack.Invoke();
 
-                if (SwapToNextWeapon && m_Weapons.Length > 1)
+                if (swapToNextWeapon && weapons.Length > 1)
                 {
-                    int nextWeaponIndex = (m_CurrentWeaponIndex + 1) % m_Weapons.Length;
+                    int nextWeaponIndex = (currentWeaponIndex + 1) % weapons.Length;
                     SetCurrentWeapon(nextWeaponIndex);
                 }
             }
@@ -430,59 +443,64 @@ namespace Unity.FPS.AI
             return didFire;
         }
 
+        /* If there is no loot to drop, don't try to drop it
+         * 
+         * What's up with this drop rate of 0 or 1 stuff?  Seems a bit redundant.
+         */
         public bool TryDropItem()
         {
-            if (DropRate == 0 || LootPrefab == null)
+            if (dropRate == 0 || lootPrefab == null)
                 return false;
-            else if (DropRate == 1)
+            else if (dropRate == 1)
                 return true;
             else
-                return (Random.value <= DropRate);
+                return (Random.value <= dropRate);
         }
 
+        /* 1 Check if we already found and initialized the weapons
+         */
         void FindAndInitializeAllWeapons()
         {
-            // Check if we already found and initialized the weapons
-            if (m_Weapons == null)
-            {
-                m_Weapons = GetComponentsInChildren<WeaponController>();
-                DebugUtility.HandleErrorIfNoComponentFound<WeaponController, EnemyController>(m_Weapons.Length, this,
+            if (weapons != null) return;//1
+
+            weapons = GetComponentsInChildren<WeaponController>();
+                DebugUtility.HandleErrorIfNoComponentFound<WeaponController, EnemyController>(weapons.Length, this,
                     gameObject);
 
-                for (int i = 0; i < m_Weapons.Length; i++)
+                for (int i = 0; i < weapons.Length; i++)
                 {
-                    m_Weapons[i].Owner = gameObject;
+                    weapons[i].Owner = gameObject;
                 }
-            }
+           
         }
 
         public WeaponController GetCurrentWeapon()
         {
             FindAndInitializeAllWeapons();
             // Check if no weapon is currently selected
-            if (m_CurrentWeapon == null)
+            if (currentWeapon == null)
             {
                 // Set the first weapon of the weapons list as the current weapon
                 SetCurrentWeapon(0);
             }
 
-            DebugUtility.HandleErrorIfNullGetComponent<WeaponController, EnemyController>(m_CurrentWeapon, this,
+            DebugUtility.HandleErrorIfNullGetComponent<WeaponController, EnemyController>(currentWeapon, this,
                 gameObject);
 
-            return m_CurrentWeapon;
+            return currentWeapon;
         }
 
         void SetCurrentWeapon(int index)
         {
-            m_CurrentWeaponIndex = index;
-            m_CurrentWeapon = m_Weapons[m_CurrentWeaponIndex];
-            if (SwapToNextWeapon)
+            currentWeaponIndex = index;
+            currentWeapon = weapons[currentWeaponIndex];
+            if (swapToNextWeapon)
             {
-                m_LastTimeWeaponSwapped = Time.time;
+                lastTimeWeaponSwapped = Time.time;
             }
             else
             {
-                m_LastTimeWeaponSwapped = Mathf.NegativeInfinity;
+                lastTimeWeaponSwapped = Mathf.NegativeInfinity;
             }
         }
     }

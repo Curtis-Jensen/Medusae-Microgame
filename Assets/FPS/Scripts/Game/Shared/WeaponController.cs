@@ -5,13 +5,15 @@ using UnityEngine.Events;
 
 namespace Unity.FPS.Game
 {
+    #region WeaponShootType
     public enum WeaponShootType
     {
         Manual,
         Automatic,
         Charge,
     }
-
+    #endregion
+    #region CrosshairData
     [System.Serializable]
     public struct CrosshairData
     {
@@ -24,10 +26,12 @@ namespace Unity.FPS.Game
         [Tooltip("The color of the crosshair image")]
         public Color CrosshairColor;
     }
+    #endregion
 
     [RequireComponent(typeof(AudioSource))]
     public class WeaponController : MonoBehaviour
     {
+        #region Global🌎Variables
         [Header("Information")] [Tooltip("The name that will be displayed in the UI for this weapon")]
         public string WeaponName;
 
@@ -147,6 +151,7 @@ namespace Unity.FPS.Game
         public bool IsCooling { get; private set; }
         public float CurrentCharge { get; private set; }
         public Vector3 MuzzleWorldVelocity { get; private set; }
+        #endregion
 
         public float GetAmmoNeededToShoot() =>
             (ShootType != WeaponShootType.Charge ? 1f : Mathf.Max(1f, AmmoUsedOnStartCharge)) /
@@ -350,6 +355,15 @@ namespace Unity.FPS.Game
             m_LastTimeShot = Time.time;
         }
 
+        /* Mainly just a big switch statement that goes to the appropriate firing methods
+         */
+        /// <summary>
+        /// Manages the differences between firing modes
+        /// </summary>
+        /// <param name="inputDown"></param>
+        /// <param name="inputHeld"></param>
+        /// <param name="inputUp"></param>
+        /// <returns></returns>
         public bool HandleShootInputs(bool inputDown, bool inputHeld, bool inputUp)
         {
             m_WantsToShoot = inputDown || inputHeld;
@@ -404,6 +418,10 @@ namespace Unity.FPS.Game
             return false;
         }
 
+        /// <summary>
+        /// Charges up the charging weapon
+        /// </summary>
+        /// <returns></returns>
         bool TryBeginCharge()
         {
             if (!IsCharging
@@ -422,6 +440,10 @@ namespace Unity.FPS.Game
             return false;
         }
 
+        /// <summary>
+        /// Discharges the charging weapon
+        /// </summary>
+        /// <returns></returns>
         bool TryReleaseCharge()
         {
             if (IsCharging)
@@ -437,14 +459,23 @@ namespace Unity.FPS.Game
             return false;
         }
 
+        /* 1 spawn all bullets with random direction
+         * 
+         * 2 muzzle flash
+         * 
+         * 3 Unparent the muzzleFlashInstance so that it can be cleanly destroyed
+         * 
+         * 4 play shoot SFX
+         * 
+         * 5 Trigger attack animation if there is any
+         */
         void HandleShoot()
         {
             int bulletsPerShotFinal = ShootType == WeaponShootType.Charge
                 ? Mathf.CeilToInt(CurrentCharge * BulletsPerShot)
                 : BulletsPerShot;
 
-            // spawn all bullets with random direction
-            for (int i = 0; i < bulletsPerShotFinal; i++)
+            for (int i = 0; i < bulletsPerShotFinal; i++)//1
             {
                 Vector3 shotDirection = GetShotDirectionWithinSpread(WeaponMuzzle);
                 ProjectileBase newProjectile = Instantiate(ProjectilePrefab, WeaponMuzzle.position,
@@ -452,13 +483,12 @@ namespace Unity.FPS.Game
                 newProjectile.Shoot(this);
             }
 
-            // muzzle flash
-            if (MuzzleFlashPrefab != null)
+            if (MuzzleFlashPrefab != null)//2
             {
                 GameObject muzzleFlashInstance = Instantiate(MuzzleFlashPrefab, WeaponMuzzle.position,
                     WeaponMuzzle.rotation, WeaponMuzzle.transform);
-                // Unparent the muzzleFlashInstance
-                if (UnparentMuzzleFlash)
+         
+                if (UnparentMuzzleFlash)//3
                 {
                     muzzleFlashInstance.transform.SetParent(null);
                 }
@@ -474,14 +504,13 @@ namespace Unity.FPS.Game
 
             m_LastTimeShot = Time.time;
 
-            // play shoot SFX
-            if (ShootSfx && !UseContinuousShootSound)
+
+            if (ShootSfx && !UseContinuousShootSound)//4
             {
                 m_ShootAudioSource.PlayOneShot(ShootSfx);
             }
 
-            // Trigger attack animation if there is any
-            if (WeaponAnimator)
+            if (WeaponAnimator)//5
             {
                 WeaponAnimator.SetTrigger(k_AnimAttackParameter);
             }
