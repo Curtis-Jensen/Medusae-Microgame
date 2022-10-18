@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 namespace Unity.FPS.AI
 {
+    // Handles the navigation (and some of the weapon handling) for enemy AI.
     [RequireComponent(typeof(Health), typeof(Actor), typeof(NavMeshAgent))]
     public class EnemyController : MonoBehaviour
     {
@@ -406,16 +407,21 @@ namespace Unity.FPS.AI
         }
         #endregion
 
+        /* 1 orient weapon towards player
+         */
         public void OrientWeaponsTowards(Vector3 lookPosition)
         {
             for (int i = 0; i < weapons.Length; i++)
             {
-                // orient weapon towards player
-                Vector3 weaponForward = (lookPosition - weapons[i].WeaponRoot.transform.position).normalized;
+                Vector3 weaponForward = (lookPosition - weapons[i].WeaponRoot.transform.position).normalized;//1
                 weapons[i].transform.forward = weaponForward;
             }
         }
 
+        /* 1 Can't fire right after weapon switching (NO DOUBLE PUMPING 😡)
+         * 
+         * 2 Shoot the weapon
+         */
         public bool TryAtack(Vector3 enemyPosition)
         {
             if (gameFlowManager.GameIsEnding)
@@ -423,11 +429,11 @@ namespace Unity.FPS.AI
 
             OrientWeaponsTowards(enemyPosition);
 
-            if ((lastTimeWeaponSwapped + delayAfterWeaponSwap) >= Time.time)
+            if ((lastTimeWeaponSwapped + delayAfterWeaponSwap) >= Time.time)//1
                 return false;
 
-            // Shoot the weapon
-            bool didFire = GetCurrentWeapon().HandleShootInputs(inputDown: false, inputHeld: true, inputUp: false);
+            bool didFire = 
+                GetCurrentWeapon().HandleShootInputs(inputDown: false, inputHeld: true, inputUp: false);//2
 
             if (didFire && onAttack != null)
             {
