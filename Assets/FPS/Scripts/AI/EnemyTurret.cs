@@ -82,7 +82,7 @@ namespace Unity.FPS.AI
                     bool mustShoot = Time.time > m_TimeStartedDetection + DetectionFireDelay;
                     // Calculate the desired rotation of our turret (aim at target)
                     Vector3 directionToTarget =
-                        (m_EnemyController.knownDetectedTarget.transform.position - TurretAimPoint.position).normalized;
+                        (m_EnemyController.KnownDetectedTarget.transform.position - TurretAimPoint.position).normalized;
                     Quaternion offsettedTargetRotation =
                         Quaternion.LookRotation(directionToTarget) * m_RotationWeaponForwardToPivot;
                     m_PivotAimingRotation = Quaternion.Slerp(m_PreviousPivotAimingRotation, offsettedTargetRotation,

@@ -64,14 +64,14 @@ namespace Unity.FPS.AI
             UpdateAiStateTransitions();
             UpdateCurrentAiState();
 
-            float moveSpeed = m_EnemyController.navMeshAgent.velocity.magnitude;
+            float moveSpeed = m_EnemyController.NavMeshAgent.velocity.magnitude;
 
             // Update animator speed parameter
             Animator.SetFloat(k_AnimMoveSpeedParameter, moveSpeed);
 
             // changing the pitch of the movement sound depending on the movement speed
             m_AudioSource.pitch = Mathf.Lerp(PitchDistortionMovementSpeed.Min, PitchDistortionMovementSpeed.Max,
-                moveSpeed / m_EnemyController.navMeshAgent.speed);
+                moveSpeed / m_EnemyController.NavMeshAgent.speed);
         }
 
         void UpdateAiStateTransitions()
@@ -81,7 +81,7 @@ namespace Unity.FPS.AI
             {
                 case AIState.Follow:
                     // Transition to attack when there is a line of sight to the target
-                    if (m_EnemyController.isSeeingTarget && m_EnemyController.isTargetInAttackRange)
+                    if (m_EnemyController.IsSeeingTarget && m_EnemyController.IsTargetInAttackRange)
                     {
                         AiState = AIState.Attack;
                         m_EnemyController.SetNavDestination(transform.position);
@@ -90,7 +90,7 @@ namespace Unity.FPS.AI
                     break;
                 case AIState.Attack:
                     // Transition to follow when no longer a target in attack range
-                    if (!m_EnemyController.isTargetInAttackRange)
+                    if (!m_EnemyController.IsTargetInAttackRange)
                     {
                         AiState = AIState.Follow;
                     }
@@ -109,24 +109,24 @@ namespace Unity.FPS.AI
                     m_EnemyController.SetNavDestination(m_EnemyController.GetDestinationOnPath());
                     break;
                 case AIState.Follow:
-                    m_EnemyController.SetNavDestination(m_EnemyController.knownDetectedTarget.transform.position);
-                    m_EnemyController.OrientTowards(m_EnemyController.knownDetectedTarget.transform.position);
-                    m_EnemyController.OrientWeaponsTowards(m_EnemyController.knownDetectedTarget.transform.position);
+                    m_EnemyController.SetNavDestination(m_EnemyController.KnownDetectedTarget.transform.position);
+                    m_EnemyController.OrientTowards(m_EnemyController.KnownDetectedTarget.transform.position);
+                    m_EnemyController.OrientWeaponsTowards(m_EnemyController.KnownDetectedTarget.transform.position);
                     break;
                 case AIState.Attack:
-                    if (Vector3.Distance(m_EnemyController.knownDetectedTarget.transform.position,
-                            m_EnemyController.detectionModule.DetectionSourcePoint.position)
-                        >= (AttackStopDistanceRatio * m_EnemyController.detectionModule.AttackRange))
+                    if (Vector3.Distance(m_EnemyController.KnownDetectedTarget.transform.position,
+                            m_EnemyController.DetectionModule.DetectionSourcePoint.position)
+                        >= (AttackStopDistanceRatio * m_EnemyController.DetectionModule.AttackRange))
                     {
-                        m_EnemyController.SetNavDestination(m_EnemyController.knownDetectedTarget.transform.position);
+                        m_EnemyController.SetNavDestination(m_EnemyController.KnownDetectedTarget.transform.position);
                     }
                     else
                     {
                         m_EnemyController.SetNavDestination(transform.position);
                     }
 
-                    m_EnemyController.OrientTowards(m_EnemyController.knownDetectedTarget.transform.position);
-                    m_EnemyController.TryAtack(m_EnemyController.knownDetectedTarget.transform.position);
+                    m_EnemyController.OrientTowards(m_EnemyController.KnownDetectedTarget.transform.position);
+                    m_EnemyController.TryAtack(m_EnemyController.KnownDetectedTarget.transform.position);
                     break;
             }
         }
