@@ -8,8 +8,7 @@ namespace Unity.FPS.AI
         [Tooltip("The parent object of the enemies that will be assigned to this path on Start.")]
         public GameObject assignedEnemiesParent;
 
-        [Tooltip("The Nodes making up the path.")]
-        public List<Transform> PathNodes = new List<Transform>();
+        internal Transform[] pathNodes;//The Nodes making up the path.
 
         void Start()
         {
@@ -19,43 +18,45 @@ namespace Unity.FPS.AI
             foreach (var enemy in assignedEnemies)
                 enemy.PatrolPath = this;
 
-            //PathNodes = GetComponentsInChildren<Transform>();
+            pathNodes = GetComponentsInChildren<Transform>();
         }
 
         public float GetDistanceToNode(Vector3 origin, int destinationNodeIndex)
         {
-            if (destinationNodeIndex < 0 || destinationNodeIndex >= PathNodes.Count ||
-                PathNodes[destinationNodeIndex] == null)
+            if (destinationNodeIndex < 0 || destinationNodeIndex >= pathNodes.Length ||
+                pathNodes[destinationNodeIndex] == null)
             {
                 return -1f;
             }
 
-            return (PathNodes[destinationNodeIndex].position - origin).magnitude;
+            return (pathNodes[destinationNodeIndex].position - origin).magnitude;
         }
 
         public Vector3 GetPositionOfPathNode(int nodeIndex)
         {
-            if (nodeIndex < 0 || nodeIndex >= PathNodes.Count || PathNodes[nodeIndex] == null)
+            if (nodeIndex < 0 || nodeIndex >= pathNodes.Length || pathNodes[nodeIndex] == null)
             {
                 return Vector3.zero;
             }
 
-            return PathNodes[nodeIndex].position;
+            return pathNodes[nodeIndex].position;
         }
 
         void OnDrawGizmosSelected()
         {
+            pathNodes = GetComponentsInChildren<Transform>();
+
             Gizmos.color = Color.cyan;
-            for (int i = 0; i < PathNodes.Count; i++)
+            for (int i = 0; i < pathNodes.Length; i++)
             {
                 int nextIndex = i + 1;
-                if (nextIndex >= PathNodes.Count)
+                if (nextIndex >= pathNodes.Length)
                 {
-                    nextIndex -= PathNodes.Count;
+                    nextIndex -= pathNodes.Length;
                 }
 
-                Gizmos.DrawLine(PathNodes[i].position, PathNodes[nextIndex].position);
-                Gizmos.DrawSphere(PathNodes[i].position, 0.1f);
+                Gizmos.DrawLine(pathNodes[i].position, pathNodes[nextIndex].position);
+                Gizmos.DrawSphere(pathNodes[i].position, 0.1f);
             }
         }
     }

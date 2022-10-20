@@ -264,7 +264,7 @@ namespace Unity.FPS.AI
 
         bool IsPathValid()
         {
-            return PatrolPath && PatrolPath.PathNodes.Count > 0;
+            return PatrolPath && PatrolPath.pathNodes.Length > 0;
         }
 
         public void ResetPathDestination()
@@ -277,7 +277,7 @@ namespace Unity.FPS.AI
             if (IsPathValid())
             {
                 int closestPathNodeIndex = 0;
-                for (int i = 0; i < PatrolPath.PathNodes.Count; i++)
+                for (int i = 0; i < PatrolPath.pathNodes.Length; i++)
                 {
                     float distanceToPathNode = PatrolPath.GetDistanceToNode(transform.position, i);
                     if (distanceToPathNode < PatrolPath.GetDistanceToNode(transform.position, closestPathNodeIndex))
@@ -326,12 +326,12 @@ namespace Unity.FPS.AI
                         inverseOrder ? (m_PathDestinationNodeIndex - 1) : (m_PathDestinationNodeIndex + 1);
                     if (m_PathDestinationNodeIndex < 0)
                     {
-                        m_PathDestinationNodeIndex += PatrolPath.PathNodes.Count;
+                        m_PathDestinationNodeIndex += PatrolPath.pathNodes.Length;
                     }
 
-                    if (m_PathDestinationNodeIndex >= PatrolPath.PathNodes.Count)
+                    if (m_PathDestinationNodeIndex >= PatrolPath.pathNodes.Length)
                     {
-                        m_PathDestinationNodeIndex -= PatrolPath.PathNodes.Count;
+                        m_PathDestinationNodeIndex -= PatrolPath.pathNodes.Length;
                     }
                 }
             }
