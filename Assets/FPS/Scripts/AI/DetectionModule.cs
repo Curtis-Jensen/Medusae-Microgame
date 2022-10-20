@@ -25,7 +25,6 @@ namespace Unity.FPS.AI
 
         public UnityAction onDetectedTarget;
         public UnityAction onLostTarget;
-        #endregion
 
         public GameObject KnownDetectedTarget { get; private set; }
         public bool IsTargetInAttackRange { get; private set; }
@@ -38,6 +37,7 @@ namespace Unity.FPS.AI
 
         const string animationAttackParameter = "Attack";
         const string animationOnDamagedParameter = "OnDamaged";
+        #endregion
 
         protected virtual void Start()
         {
@@ -59,39 +59,37 @@ namespace Unity.FPS.AI
             float closestSqrDistance = Mathf.Infinity;
             foreach (Actor otherActor in actorsManager.Actors)
             {
-                if (otherActor.Affiliation != actor.Affiliation)
+                if (otherActor.Affiliation == actor.Affiliation) continue;
+
+                float sqrDistance = (otherActor.transform.position - DetectionSourcePoint.position).sqrMagnitude;
+                if (sqrDistance < sqrDetectionRange && sqrDistance < closestSqrDistance)
                 {
-                    float sqrDistance = (otherActor.transform.position - DetectionSourcePoint.position).sqrMagnitude;
-                    if (sqrDistance < sqrDetectionRange && sqrDistance < closestSqrDistance)
+                    // Check for obstructions
+                    RaycastHit[] hits = Physics.RaycastAll(DetectionSourcePoint.position,
+                        (otherActor.AimPoint.position - DetectionSourcePoint.position).normalized, DetectionRange,
+                        -1, QueryTriggerInteraction.Ignore);
+                    RaycastHit closestValidHit = new RaycastHit();
+                    closestValidHit.distance = Mathf.Infinity;
+                    bool foundValidHit = false;
+                    foreach (var hit in hits)
                     {
-                        // Check for obstructions
-                        RaycastHit[] hits = Physics.RaycastAll(DetectionSourcePoint.position,
-                            (otherActor.AimPoint.position - DetectionSourcePoint.position).normalized, DetectionRange,
-                            -1, QueryTriggerInteraction.Ignore);
-                        RaycastHit closestValidHit = new RaycastHit();
-                        closestValidHit.distance = Mathf.Infinity;
-                        bool foundValidHit = false;
-                        foreach (var hit in hits)
+                        if (!selfColliders.Contains(hit.collider) && hit.distance < closestValidHit.distance)
                         {
-                            if (!selfColliders.Contains(hit.collider) && hit.distance < closestValidHit.distance)
-                            {
-                                closestValidHit = hit;
-                                foundValidHit = true;
-                            }
+                            closestValidHit = hit;
+                            foundValidHit = true;
                         }
+                    }
 
-                        if (foundValidHit)
-                        {
-                            Actor hitActor = closestValidHit.collider.GetComponentInParent<Actor>();
-                            if (hitActor == otherActor)
-                            {
-                                IsSeeingTarget = true;
-                                closestSqrDistance = sqrDistance;
+                    if (!foundValidHit) continue;
 
-                                TimeLastSeenTarget = Time.time;
-                                KnownDetectedTarget = otherActor.AimPoint.gameObject;
-                            }
-                        }
+                    Actor hitActor = closestValidHit.collider.GetComponentInParent<Actor>();
+                    if (hitActor == otherActor)
+                    {
+                        IsSeeingTarget = true;
+                        closestSqrDistance = sqrDistance;
+
+                        TimeLastSeenTarget = Time.time;
+                        KnownDetectedTarget = otherActor.AimPoint.gameObject;
                     }
                 }
             }
