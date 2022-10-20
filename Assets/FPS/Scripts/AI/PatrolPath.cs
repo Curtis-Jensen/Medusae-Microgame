@@ -34,10 +34,12 @@ namespace Unity.FPS.AI
 
         public Vector3 GetPositionOfPathNode(int nodeIndex)
         {
-            if (nodeIndex < 0 || nodeIndex >= pathNodes.Length || pathNodes[nodeIndex] == null)
-            {
+            bool noNodeIndex = nodeIndex < 0;
+            bool nodeIndexGreaterThanLength = nodeIndex >= pathNodes.Length;
+            bool nodeIsNull = pathNodes[nodeIndex] == null;
+
+            if (noNodeIndex || nodeIndexGreaterThanLength || nodeIsNull)
                 return Vector3.zero;
-            }
 
             return pathNodes[nodeIndex].position;
         }
