@@ -23,11 +23,12 @@ namespace Unity.FPS.AI
 
         public float GetDistanceToNode(Vector3 origin, int destinationNodeIndex)
         {
-            if (destinationNodeIndex < 0 || destinationNodeIndex >= pathNodes.Length ||
-                pathNodes[destinationNodeIndex] == null)
-            {
+            bool noNodeIndex = destinationNodeIndex < 0;
+            bool nodeIndexGreaterThanLength = destinationNodeIndex >= pathNodes.Length;
+            bool nodeIsNull = pathNodes[destinationNodeIndex] == null;
+
+            if (noNodeIndex || nodeIndexGreaterThanLength || nodeIsNull)
                 return -1f;
-            }
 
             return (pathNodes[destinationNodeIndex].position - origin).magnitude;
         }
