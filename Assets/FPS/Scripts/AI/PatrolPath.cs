@@ -5,18 +5,21 @@ namespace Unity.FPS.AI
 {
     public class PatrolPath : MonoBehaviour
     {
-        [Tooltip("Enemies that will be assigned to this path on Start")]
-        public List<EnemyController> EnemiesToAssign = new List<EnemyController>();
+        [Tooltip("The parent object of the enemies that will be assigned to this path on Start.")]
+        public GameObject assignedEnemiesParent;
 
-        [Tooltip("The Nodes making up the path")]
+        [Tooltip("The Nodes making up the path.")]
         public List<Transform> PathNodes = new List<Transform>();
 
         void Start()
         {
-            foreach (var enemy in EnemiesToAssign)
-            {
+            var assignedEnemies = 
+                assignedEnemiesParent.GetComponentsInChildren<EnemyController>();
+
+            foreach (var enemy in assignedEnemies)
                 enemy.PatrolPath = this;
-            }
+
+            //PathNodes = GetComponentsInChildren<Transform>();
         }
 
         public float GetDistanceToNode(Vector3 origin, int destinationNodeIndex)
