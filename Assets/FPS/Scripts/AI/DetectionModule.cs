@@ -103,15 +103,11 @@ namespace Unity.FPS.AI
             // Detection events
             if (!HadKnownTarget &&
                 KnownDetectedTarget != null)
-            {
                 OnDetect();
-            }
 
             if (HadKnownTarget &&
                 KnownDetectedTarget == null)
-            {
                 OnLostTarget();
-            }
 
             // Remember if we already knew a target (for next frame)
             HadKnownTarget = KnownDetectedTarget != null;
@@ -127,17 +123,13 @@ namespace Unity.FPS.AI
             KnownDetectedTarget = damageSource;
 
             if (Animator)
-            {
                 Animator.SetTrigger(animationOnDamagedParameter);
-            }
         }
 
         public virtual void OnAttack()
         {
             if (Animator)
-            {
                 Animator.SetTrigger(animationAttackParameter);
-            }
         }
     }
 }
