@@ -19,14 +19,7 @@ MonoBehaviour:
         m_Untranslated: 
       Text:
         m_Untranslated: 
-      m_Summary: 
-      m_Description: 
-      m_InstructionBoxTitle: 
-      m_InstructionText: 
-      m_TutorialButtonText: 
       m_Tutorial: {fileID: 0}
-      m_Icons:
-        m_Items: []
       m_Image: {fileID: 0}
       m_Video: {fileID: 32900000, guid: 79dadb0d7a0c143db8700a2c64e462c8, type: 3}
       m_CriteriaCompletion: 0
@@ -58,6 +51,7 @@ MonoBehaviour:
           m_MaskSizeModifier: 1
           m_UnmaskedControls:
           - m_SelectorMode: 0
+            m_SelectorMatchType: 0
             m_GUIContent:
               m_Text: NavMeshSurface
               m_Image: {fileID: 0}
@@ -77,6 +71,14 @@ MonoBehaviour:
                 m_AssetObject: {fileID: 0}
                 m_Prefab: {fileID: 0}
               m_FutureObjectReference: {fileID: 0}
+            m_VisualElementClassName: 
+            m_VisualElementName: 
+            m_VisualElementTypeName: 
+      m_Summary: 
+      m_Description: 
+      m_InstructionBoxTitle: 
+      m_InstructionText: 
+      m_TutorialButtonText: 
     - m_Type: 0
       Title:
         m_Untranslated: Update the NavMeshSurface
@@ -88,14 +90,7 @@ MonoBehaviour:
           The new Room_Altar
           GameObject adds new, walkable surface to the NavMesh that you must <b>bake</b>
           into the existing NavMesh surface.'
-      m_Summary: 
-      m_Description: 
-      m_InstructionBoxTitle: 
-      m_InstructionText: 
-      m_TutorialButtonText: 
       m_Tutorial: {fileID: 0}
-      m_Icons:
-        m_Items: []
       m_Image: {fileID: 0}
       m_Video: {fileID: 0}
       m_CriteriaCompletion: 0
@@ -126,31 +121,34 @@ MonoBehaviour:
           m_MaskType: 0
           m_MaskSizeModifier: 0
           m_UnmaskedControls: []
-    - m_Type: 1
-      Title:
-        m_Untranslated: Select NavMeshSurface
-      Text:
-        m_Untranslated: In the Hierarchy, select the <b>NavMeshSurface</b> GameObject.
       m_Summary: 
       m_Description: 
       m_InstructionBoxTitle: 
       m_InstructionText: 
       m_TutorialButtonText: 
+    - m_Type: 1
+      Title:
+        m_Untranslated: Select NavMeshSurface
+      Text:
+        m_Untranslated: In the Hierarchy, select the <b>NavMeshSurface</b> GameObject.
       m_Tutorial: {fileID: 0}
-      m_Icons:
-        m_Items: []
       m_Image: {fileID: 0}
       m_Video: {fileID: 0}
       m_CriteriaCompletion: 0
       m_Criteria:
         m_Items:
-        - type:
-            m_TypeName: Unity.InteractiveTutorials.RequiredSelectionCriterion, Unity.InteractiveTutorials.Core,
+        - Type:
+            m_TypeName: Unity.Tutorials.Core.Editor.RequiredSelectionCriterion, Unity.Tutorials.Core.Editor,
               Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-          criterion: {fileID: 114046183933657202}
+          Criterion: {fileID: 114046183933657202}
       m_MaskingSettings:
         m_MaskingEnabled: 0
         m_UnmaskedViews: []
+      m_Summary: 
+      m_Description: 
+      m_InstructionBoxTitle: 
+      m_InstructionText: 
+      m_TutorialButtonText: 
   m_CameraSettings:
     m_CameraMode: 0
     m_FocusMode: 0
@@ -171,15 +169,13 @@ MonoBehaviour:
     m_Untranslated: Next
   DoneButton:
     m_Untranslated: Done
-  m_NextButton: 
-  m_DoneButton: 
   m_CompletedSound: {fileID: 8300000, guid: 93fbb109633e844259ea828442bda0cb, type: 3}
-  m_autoAdvance: 1
-  m_OnBeforePageShown:
+  m_AutoAdvance: 1
+  Showing:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11400000, guid: 98457f12a6e8529488d624978bbbf3eb, type: 2}
-        m_TargetAssemblyTypeName: Unity.Tutorials.TutorialCallbacks, Unity.FPS.Tutorials
+        m_TargetAssemblyTypeName: 
         m_MethodName: ClearAllNavMeshes
         m_Mode: 1
         m_Arguments:
@@ -190,15 +186,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
-  m_OnAfterPageShown:
+  Shown:
     m_PersistentCalls:
       m_Calls: []
-  m_OnBeforeTutorialQuit:
+  Staying:
+    m_PersistentCalls:
+      m_Calls: []
+  CriteriaValidated:
+    m_PersistentCalls:
+      m_Calls: []
+  MaskingSettingsChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  NonMaskingSettingsChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnBeforePageShown:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnAfterPageShown:
     m_PersistentCalls:
       m_Calls: []
   m_OnTutorialPageStay:
     m_PersistentCalls:
       m_Calls: []
+  m_OnBeforeTutorialQuit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_NextButton: 
+  m_DoneButton: 
 --- !u!114 &114046183933657202
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -211,6 +227,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 255ef86cb95f04796b8e3b3f5b23efe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Completed:
+    m_PersistentCalls:
+      m_Calls: []
+  Invalidated:
+    m_PersistentCalls:
+      m_Calls: []
   m_ObjectReferences:
     m_Items:
     - m_SceneObjectReference:

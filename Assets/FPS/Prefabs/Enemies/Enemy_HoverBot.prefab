@@ -152,7 +152,7 @@ MonoBehaviour:
   DeathVfxSpawnPoint: {fileID: 381893446485871685}
   LootPrefab: {fileID: 2529580269645609534, guid: 9973c412032becb4ca116ca08be62edf,
     type: 3}
-  DropRate: 1
+  DropRate: 0.2
   PathReachingRangeColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   AttackRangeColor: {r: 1, g: 0, b: 0, a: 1}
   DetectionRangeColor: {r: 0, g: 0, b: 1, a: 1}
@@ -213,7 +213,7 @@ MonoBehaviour:
   Health: {fileID: 6370966072896210225}
   HealthBarImage: {fileID: 5299349968446827641}
   HealthBarPivot: {fileID: 3175718064325614203}
-  HideFullHealthBar: 1
+  HideFullHealthBar: 0
 --- !u!195 &7406548990343174644
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -407,7 +407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3175718064325614203
 Transform:
   m_ObjectHideFlags: 0

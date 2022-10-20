@@ -14,7 +14,7 @@ namespace Unity.FPS.UI
         [Tooltip("The floating healthbar pivot transform")]
         public Transform HealthBarPivot;
 
-        [Tooltip("Whether the health bar is visible when at full health or not")]
+        [Tooltip("Whether the health bar is visible when at full health or not.  (Also, disabling this on the hoverbot deletes the healthbar...  Somehow??)")]
         public bool HideFullHealthBar = true;
 
         void Update()

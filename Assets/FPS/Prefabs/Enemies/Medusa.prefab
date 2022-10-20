@@ -200,6 +200,9 @@ GameObject:
   - component: {fileID: 2607620151045324283}
   - component: {fileID: 1037453651843576260}
   - component: {fileID: 5581391596774759321}
+  - component: {fileID: 917805398}
+  - component: {fileID: 917805399}
+  - component: {fileID: 917805400}
   m_Layer: 0
   m_Name: Medusa
   m_TagString: Enemy
@@ -287,7 +290,6 @@ MonoBehaviour:
   ammoChance: 0.3
   speed: 15
   gazeHeight: 7
-  spawnOwner: {fileID: 0}
   deathScreams:
   - {fileID: 8300000, guid: 01db871b25a483b46aeb1d6184dc8d48, type: 3}
   - {fileID: 8300000, guid: 87c9d454d3be93f4aa49532fcb665ace, type: 3}
@@ -304,7 +306,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2643ac89564b58544acf54766e0b0020, type: 3}
   ammoCrate: {fileID: 1435504021497250, guid: b963da668571b714eb68621d7518e0c4, type: 3}
   glowingMaterial: {fileID: 2100000, guid: 9b032c7a4397c5645970223107681db9, type: 2}
-  dimMaterial: {fileID: 2100000, guid: a1e4592b2a1783942ab3c59af3501fc0, type: 2}
+  dimMaterial: {fileID: 0}
 --- !u!82 &5581391596774759321
 AudioSource:
   m_ObjectHideFlags: 0
@@ -401,6 +403,95 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &917805398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003328744321094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e27364eefd6dd0341ba72a3bfc0d9727, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 400
+  CriticalHealthRatio: 0.3
+--- !u!114 &917805399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003328744321094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3de939d976a5bb0419ccd8dbd0b6836b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SelfDestructYHeight: -20
+  PathReachingRadius: 0
+  OrientationSpeed: 10
+  DeathDuration: 0
+  SwapToNextWeapon: 0
+  DelayAfterWeaponSwap: 0
+  EyeColorMaterial: {fileID: 2100000, guid: 778fbfe9a7e4a96418b9312dbfc4d67c, type: 2}
+  DefaultEyeColor: {r: 23.849056, g: 7.292185, b: 0, a: 1}
+  AttackEyeColor: {r: 32, g: 1.4610044, b: 0, a: 1}
+  BodyMaterial: {fileID: 2100000, guid: bc52f7878b77b454787353158253aa1a, type: 2}
+  OnHitBodyGradient:
+    serializedVersion: 2
+    key0: {r: 0, g: 0, b: 0, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 1, g: 1, b: 1, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 13878
+    ctime2: 54356
+    ctime3: 65535
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 2
+  FlashOnHitDuration: 0.125
+  DamageTick: {fileID: 8300000, guid: a7fae22399a6e1d448dc0dd2210f1dac, type: 3}
+  DeathVfx: {fileID: 8950624839484268180, guid: 45ce85b82008be84287f2c7e5bf07647,
+    type: 3}
+  DeathVfxSpawnPoint: {fileID: 0}
+  LootPrefab: {fileID: 0}
+  DropRate: 1
+  PathReachingRangeColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  AttackRangeColor: {r: 1, g: 0, b: 0, a: 1}
+  DetectionRangeColor: {r: 0, g: 0, b: 1, a: 1}
+--- !u!114 &917805400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003328744321094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81b4c4e7c5d6cd34bb04cb46517b4e23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Affiliation: 0
+  AimPoint: {fileID: 0}
 --- !u!1 &1005000906851408
 GameObject:
   m_ObjectHideFlags: 0
@@ -1649,6 +1740,7 @@ GameObject:
   - component: {fileID: 973009478294779284}
   - component: {fileID: 1767838679256443475}
   - component: {fileID: 4210231627047411324}
+  - component: {fileID: 1376848047}
   m_Layer: 0
   m_Name: Medusa Torso
   m_TagString: Enemy
@@ -1782,6 +1874,20 @@ MonoBehaviour:
   clawDamage: 5
   hitSound: {fileID: 8300000, guid: 0d523aa90ca5e334dba906c66e863213, type: 3}
   pushForce: 1000
+--- !u!114 &1376848047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386238558992680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9b0ce1bb69c96b49a7ac1098a7f5796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DamageMultiplier: 1
+  SensibilityToSelfdamage: 0.5
 --- !u!1 &1429808955883776
 GameObject:
   m_ObjectHideFlags: 0
@@ -3291,6 +3397,6 @@ SpriteRenderer:
   m_Size: {x: 4.74, y: 4.72}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
