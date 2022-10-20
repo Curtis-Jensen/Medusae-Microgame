@@ -127,8 +127,8 @@ namespace Unity.FPS.Gameplay
         float footstepDistanceCounter;
         float targetCharacterHeight;
 
-        const float k_JumpGroundingPreventionTime = 0.2f;
-        const float k_GroundCheckDistanceInAir = 0.07f;
+        const float jumpGroundingPreventionTime = 0.2f;
+        const float groundCheckDistanceInAir = 0.07f;
 
         void Awake()
         {
@@ -227,14 +227,14 @@ namespace Unity.FPS.Gameplay
         {
             // Make sure that the ground check distance while already in air is very small, to prevent suddenly snapping to ground
             float chosenGroundCheckDistance =
-                IsGrounded ? (controller.skinWidth + GroundCheckDistance) : k_GroundCheckDistanceInAir;
+                IsGrounded ? (controller.skinWidth + GroundCheckDistance) : groundCheckDistanceInAir;
 
             // reset values before the ground check
             IsGrounded = false;
             groundNormal = Vector3.up;
 
             // only try to detect ground if it's been a short amount of time since last jump; otherwise we may snap to the ground instantly after we try jumping
-            if (Time.time >= lastTimeJumped + k_JumpGroundingPreventionTime)
+            if (Time.time >= lastTimeJumped + jumpGroundingPreventionTime)
             {
                 // if we're grounded, collect info about the ground normal with a downward capsule cast representing our character capsule
                 if (Physics.CapsuleCast(GetCapsuleBottomHemisphere(), GetCapsuleTopHemisphere(controller.height),

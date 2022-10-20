@@ -7,6 +7,7 @@ namespace Unity.FPS.AI
 {
     public class DetectionModule : MonoBehaviour
     {
+        #region Global🌎Variables
         [Tooltip("The point representing the source of target-detection raycasts for the enemy AI")]
         public Transform DetectionSourcePoint;
 
@@ -24,6 +25,7 @@ namespace Unity.FPS.AI
 
         public UnityAction onDetectedTarget;
         public UnityAction onLostTarget;
+        #endregion
 
         public GameObject KnownDetectedTarget { get; private set; }
         public bool IsTargetInAttackRange { get; private set; }
@@ -32,15 +34,15 @@ namespace Unity.FPS.AI
 
         protected float TimeLastSeenTarget = Mathf.NegativeInfinity;
 
-        ActorsManager m_ActorsManager;
+        ActorsManager actorsManager;
 
-        const string k_AnimAttackParameter = "Attack";
-        const string k_AnimOnDamagedParameter = "OnDamaged";
+        const string animationAttackParameter = "Attack";
+        const string animationOnDamagedParameter = "OnDamaged";
 
         protected virtual void Start()
         {
-            m_ActorsManager = FindObjectOfType<ActorsManager>();
-            DebugUtility.HandleErrorIfNullFindObject<ActorsManager, DetectionModule>(m_ActorsManager, this);
+            actorsManager = FindObjectOfType<ActorsManager>();
+            DebugUtility.HandleErrorIfNullFindObject<ActorsManager, DetectionModule>(actorsManager, this);
         }
 
         public virtual void HandleTargetDetection(Actor actor, Collider[] selfColliders)
@@ -55,7 +57,7 @@ namespace Unity.FPS.AI
             float sqrDetectionRange = DetectionRange * DetectionRange;
             IsSeeingTarget = false;
             float closestSqrDistance = Mathf.Infinity;
-            foreach (Actor otherActor in m_ActorsManager.Actors)
+            foreach (Actor otherActor in actorsManager.Actors)
             {
                 if (otherActor.Affiliation != actor.Affiliation)
                 {
@@ -126,7 +128,7 @@ namespace Unity.FPS.AI
 
             if (Animator)
             {
-                Animator.SetTrigger(k_AnimOnDamagedParameter);
+                Animator.SetTrigger(animationOnDamagedParameter);
             }
         }
 
@@ -134,7 +136,7 @@ namespace Unity.FPS.AI
         {
             if (Animator)
             {
-                Animator.SetTrigger(k_AnimAttackParameter);
+                Animator.SetTrigger(animationAttackParameter);
             }
         }
     }
