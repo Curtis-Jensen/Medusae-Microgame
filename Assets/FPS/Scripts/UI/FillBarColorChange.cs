@@ -30,26 +30,22 @@ namespace Unity.FPS.UI
         [Tooltip("Sharpness for the color change")]
         public float ColorChangeSharpness = 5f;
 
-        float m_PreviousValue;
+        float previousValue;
 
         public void Initialize(float fullValueRatio, float emptyValueRatio)
         {
             FullValue = fullValueRatio;
             EmptyValue = emptyValueRatio;
 
-            m_PreviousValue = fullValueRatio;
+            previousValue = fullValueRatio;
         }
 
         public void UpdateVisual(float currentRatio)
         {
-            if (currentRatio == FullValue && currentRatio != m_PreviousValue)
-            {
+            if (currentRatio == FullValue && currentRatio != previousValue)
                 ForegroundImage.color = FlashForegroundColorFull;
-            }
             else if (currentRatio < EmptyValue)
-            {
                 BackgroundImage.color = FlashBackgroundColorEmpty;
-            }
             else
             {
                 ForegroundImage.color = Color.Lerp(ForegroundImage.color, DefaultForegroundColor,
@@ -58,7 +54,7 @@ namespace Unity.FPS.UI
                     Time.deltaTime * ColorChangeSharpness);
             }
 
-            m_PreviousValue = currentRatio;
+            previousValue = currentRatio;
         }
     }
 }

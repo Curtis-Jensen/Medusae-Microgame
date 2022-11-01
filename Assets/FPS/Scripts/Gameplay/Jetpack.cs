@@ -38,16 +38,16 @@ namespace Unity.FPS.Gameplay
         [Header("Audio")] [Tooltip("Sound played when using the jetpack")]
         public AudioClip JetpackSfx;
 
-        bool m_CanUseJetpack;
-        PlayerCharacterController m_PlayerCharacterController;
-        PlayerInputHandler m_InputHandler;
-        float m_LastTimeOfUse;
+        bool canUseJetpack;
+        PlayerCharacterController playerCharacterController;
+        PlayerInputHandler inputHandler;
+        float lastTimeOfUse;
 
         // stored ratio for jetpack resource (1 is full, 0 is empty)
         public float CurrentFillRatio { get; private set; }
         public bool IsJetpackUnlocked { get; private set; }
 
-        public bool IsPlayergrounded() => m_PlayerCharacterController.IsGrounded;
+        public bool IsPlayergrounded() => playerCharacterController.IsGrounded;
 
         public UnityAction<bool> OnUnlockJetpack;
 
@@ -55,12 +55,12 @@ namespace Unity.FPS.Gameplay
         {
             IsJetpackUnlocked = IsJetpackUnlockedAtStart;
 
-            m_PlayerCharacterController = GetComponent<PlayerCharacterController>();
-            DebugUtility.HandleErrorIfNullGetComponent<PlayerCharacterController, Jetpack>(m_PlayerCharacterController,
+            playerCharacterController = GetComponent<PlayerCharacterController>();
+            DebugUtility.HandleErrorIfNullGetComponent<PlayerCharacterController, Jetpack>(playerCharacterController,
                 this, gameObject);
 
-            m_InputHandler = GetComponent<PlayerInputHandler>();
-            DebugUtility.HandleErrorIfNullGetComponent<PlayerInputHandler, Jetpack>(m_InputHandler, this, gameObject);
+            inputHandler = GetComponent<PlayerInputHandler>();
+            DebugUtility.HandleErrorIfNullGetComponent<PlayerInputHandler, Jetpack>(inputHandler, this, gameObject);
 
             CurrentFillRatio = 1f;
 
@@ -73,35 +73,35 @@ namespace Unity.FPS.Gameplay
             // jetpack can only be used if not grounded and jump has been pressed again once in-air
             if (IsPlayergrounded())
             {
-                m_CanUseJetpack = false;
+                canUseJetpack = false;
             }
-            else if (!m_PlayerCharacterController.HasJumpedThisFrame && m_InputHandler.GetJumpInputDown())
+            else if (!playerCharacterController.HasJumpedThisFrame && inputHandler.GetJumpInputDown())
             {
-                m_CanUseJetpack = true;
+                canUseJetpack = true;
             }
 
             // jetpack usage
-            bool jetpackIsInUse = m_CanUseJetpack && IsJetpackUnlocked && CurrentFillRatio > 0f &&
-                                  m_InputHandler.GetJumpInputHeld();
+            bool jetpackIsInUse = canUseJetpack && IsJetpackUnlocked && CurrentFillRatio > 0f &&
+                                  inputHandler.GetJumpInputHeld();
             if (jetpackIsInUse)
             {
                 // store the last time of use for refill delay
-                m_LastTimeOfUse = Time.time;
+                lastTimeOfUse = Time.time;
 
                 float totalAcceleration = JetpackAcceleration;
 
                 // cancel out gravity
-                totalAcceleration += m_PlayerCharacterController.GravityDownForce;
+                totalAcceleration += playerCharacterController.GravityDownForce;
 
-                if (m_PlayerCharacterController.CharacterVelocity.y < 0f)
+                if (playerCharacterController.CharacterVelocity.y < 0f)
                 {
                     // handle making the jetpack compensate for character's downward velocity with bonus acceleration
-                    totalAcceleration += ((-m_PlayerCharacterController.CharacterVelocity.y / Time.deltaTime) *
+                    totalAcceleration += ((-playerCharacterController.CharacterVelocity.y / Time.deltaTime) *
                                           JetpackDownwardVelocityCancelingFactor);
                 }
 
                 // apply the acceleration to character's velocity
-                m_PlayerCharacterController.CharacterVelocity += Vector3.up * totalAcceleration * Time.deltaTime;
+                playerCharacterController.CharacterVelocity += Vector3.up * totalAcceleration * Time.deltaTime;
 
                 // consume fuel
                 CurrentFillRatio = CurrentFillRatio - (Time.deltaTime / ConsumeDuration);
@@ -118,9 +118,9 @@ namespace Unity.FPS.Gameplay
             else
             {
                 // refill the meter over time
-                if (IsJetpackUnlocked && Time.time - m_LastTimeOfUse >= RefillDelay)
+                if (IsJetpackUnlocked && Time.time - lastTimeOfUse >= RefillDelay)
                 {
-                    float refillRate = 1 / (m_PlayerCharacterController.IsGrounded
+                    float refillRate = 1 / (playerCharacterController.IsGrounded
                         ? RefillDurationGrounded
                         : RefillDurationInTheAir);
                     CurrentFillRatio = CurrentFillRatio + Time.deltaTime * refillRate;
@@ -147,7 +147,7 @@ namespace Unity.FPS.Gameplay
 
             OnUnlockJetpack.Invoke(true);
             IsJetpackUnlocked = true;
-            m_LastTimeOfUse = Time.time;
+            lastTimeOfUse = Time.time;
             return true;
         }
     }

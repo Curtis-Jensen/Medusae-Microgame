@@ -7,14 +7,14 @@ namespace UnityEditor.AI
     [CustomEditor(typeof(NavMeshLink))]
     class NavMeshLinkEditor : Editor
     {
-        SerializedProperty m_AgentTypeID;
-        SerializedProperty m_Area;
-        SerializedProperty m_CostModifier;
-        SerializedProperty m_AutoUpdatePosition;
-        SerializedProperty m_Bidirectional;
-        SerializedProperty m_EndPoint;
-        SerializedProperty m_StartPoint;
-        SerializedProperty m_Width;
+        SerializedProperty agentTypeID;
+        SerializedProperty area;
+        SerializedProperty costModifier;
+        SerializedProperty autoUpdatePosition;
+        SerializedProperty bidirectional;
+        SerializedProperty endPoint;
+        SerializedProperty startPoint;
+        SerializedProperty width;
 
         static int s_SelectedID;
         static int s_SelectedPoint = -1;
@@ -24,14 +24,14 @@ namespace UnityEditor.AI
 
         void OnEnable()
         {
-            m_AgentTypeID = serializedObject.FindProperty("m_AgentTypeID");
-            m_Area = serializedObject.FindProperty("m_Area");
-            m_CostModifier = serializedObject.FindProperty("m_CostModifier");
-            m_AutoUpdatePosition = serializedObject.FindProperty("m_AutoUpdatePosition");
-            m_Bidirectional = serializedObject.FindProperty("m_Bidirectional");
-            m_EndPoint = serializedObject.FindProperty("m_EndPoint");
-            m_StartPoint = serializedObject.FindProperty("m_StartPoint");
-            m_Width = serializedObject.FindProperty("m_Width");
+            agentTypeID = serializedObject.FindProperty("agentTypeID");
+            area = serializedObject.FindProperty("area");
+            costModifier = serializedObject.FindProperty("costModifier");
+            autoUpdatePosition = serializedObject.FindProperty("autoUpdatePosition");
+            bidirectional = serializedObject.FindProperty("bidirectional");
+            endPoint = serializedObject.FindProperty("endPoint");
+            startPoint = serializedObject.FindProperty("startPoint");
+            width = serializedObject.FindProperty("width");
 
             s_SelectedID = 0;
             s_SelectedPoint = -1;
@@ -75,11 +75,11 @@ namespace UnityEditor.AI
         {
             serializedObject.Update();
 
-            NavMeshComponentsGUIUtility.AgentTypePopup("Agent Type", m_AgentTypeID);
+            NavMeshComponentsGUIUtility.AgentTypePopup("Agent Type", agentTypeID);
             EditorGUILayout.Space();
 
-            EditorGUILayout.PropertyField(m_StartPoint);
-            EditorGUILayout.PropertyField(m_EndPoint);
+            EditorGUILayout.PropertyField(startPoint);
+            EditorGUILayout.PropertyField(endPoint);
 
             GUILayout.BeginHorizontal();
             GUILayout.Space(EditorGUIUtility.labelWidth);
@@ -106,12 +106,12 @@ namespace UnityEditor.AI
             GUILayout.EndHorizontal();
             EditorGUILayout.Space();
 
-            EditorGUILayout.PropertyField(m_Width);
-            EditorGUILayout.PropertyField(m_CostModifier);
-            EditorGUILayout.PropertyField(m_AutoUpdatePosition);
-            EditorGUILayout.PropertyField(m_Bidirectional);
+            EditorGUILayout.PropertyField(width);
+            EditorGUILayout.PropertyField(costModifier);
+            EditorGUILayout.PropertyField(autoUpdatePosition);
+            EditorGUILayout.PropertyField(bidirectional);
 
-            NavMeshComponentsGUIUtility.AreaPopup("Area Type", m_Area);
+            NavMeshComponentsGUIUtility.AreaPopup("Area Type", area);
 
             serializedObject.ApplyModifiedProperties();
 

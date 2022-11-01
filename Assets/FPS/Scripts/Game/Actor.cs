@@ -12,27 +12,23 @@ namespace Unity.FPS.Game
         [Tooltip("Represents point where other actors will aim when they attack this actor")]
         public Transform AimPoint;
 
-        ActorsManager m_ActorsManager;
+        ActorsManager actorsManager;
 
         void Start()
         {
-            m_ActorsManager = GameObject.FindObjectOfType<ActorsManager>();
-            DebugUtility.HandleErrorIfNullFindObject<ActorsManager, Actor>(m_ActorsManager, this);
+            actorsManager = GameObject.FindObjectOfType<ActorsManager>();
+            DebugUtility.HandleErrorIfNullFindObject<ActorsManager, Actor>(actorsManager, this);
 
             // Register as an actor
-            if (!m_ActorsManager.Actors.Contains(this))
-            {
-                m_ActorsManager.Actors.Add(this);
-            }
+            if (!actorsManager.Actors.Contains(this))
+                actorsManager.Actors.Add(this);
         }
 
         void OnDestroy()
         {
             // Unregister as an actor
-            if (m_ActorsManager)
-            {
-                m_ActorsManager.Actors.Remove(this);
-            }
+            if (actorsManager)
+                actorsManager.Actors.Remove(this);
         }
     }
 }

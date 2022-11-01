@@ -164,9 +164,7 @@ namespace UnityEngine.AI
             // But is similar to reflection probe - and since navmesh data has no scaling support - it is the right choice here.
             var sourcesBounds = new Bounds(m_Center, Abs(m_Size));
             if (m_CollectObjects == CollectObjects.All || m_CollectObjects == CollectObjects.Children)
-            {
                 sourcesBounds = CalculateWorldBounds(sources);
-            }
 
             var data = NavMeshBuilder.BuildNavMeshData(GetBuildSettings(),
                     sources, sourcesBounds, transform.position, transform.rotation);
@@ -242,9 +240,7 @@ namespace UnityEngine.AI
                 modifiers.RemoveAll(x => !x.isActiveAndEnabled);
             }
             else
-            {
                 modifiers = NavMeshModifierVolume.activeModifiers;
-            }
 
             foreach (var m in modifiers)
             {
@@ -281,9 +277,7 @@ namespace UnityEngine.AI
                 modifiers.RemoveAll(x => !x.isActiveAndEnabled);
             }
             else
-            {
                 modifiers = NavMeshModifier.activeModifiers;
-            }
 
             foreach (var m in modifiers)
             {
@@ -303,15 +297,11 @@ namespace UnityEngine.AI
             if (!EditorApplication.isPlaying)
             {
                 if (m_CollectObjects == CollectObjects.All)
-                {
                     UnityEditor.AI.NavMeshBuilder.CollectSourcesInStage(
                         null, m_LayerMask, m_UseGeometry, m_DefaultArea, markups, gameObject.scene, sources);
-                }
                 else if (m_CollectObjects == CollectObjects.Children)
-                {
                     UnityEditor.AI.NavMeshBuilder.CollectSourcesInStage(
                         transform, m_LayerMask, m_UseGeometry, m_DefaultArea, markups, gameObject.scene, sources);
-                }
                 else if (m_CollectObjects == CollectObjects.Volume)
                 {
                     Matrix4x4 localToWorld = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
@@ -325,13 +315,9 @@ namespace UnityEngine.AI
 #endif
             {
                 if (m_CollectObjects == CollectObjects.All)
-                {
                     NavMeshBuilder.CollectSources(null, m_LayerMask, m_UseGeometry, m_DefaultArea, markups, sources);
-                }
                 else if (m_CollectObjects == CollectObjects.Children)
-                {
                     NavMeshBuilder.CollectSources(transform, m_LayerMask, m_UseGeometry, m_DefaultArea, markups, sources);
-                }
                 else if (m_CollectObjects == CollectObjects.Volume)
                 {
                     Matrix4x4 localToWorld = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);

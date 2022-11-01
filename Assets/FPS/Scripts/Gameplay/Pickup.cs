@@ -19,30 +19,30 @@ namespace Unity.FPS.Gameplay
 
         public Rigidbody PickupRigidbody { get; private set; }
 
-        Collider m_Collider;
-        Vector3 m_StartPosition;
-        bool m_HasPlayedFeedback;
+        Collider col;
+        Vector3 startPosition;
+        bool hasPlayedFeedback;
 
         protected virtual void Start()
         {
             PickupRigidbody = GetComponent<Rigidbody>();
             DebugUtility.HandleErrorIfNullGetComponent<Rigidbody, Pickup>(PickupRigidbody, this, gameObject);
-            m_Collider = GetComponent<Collider>();
-            DebugUtility.HandleErrorIfNullGetComponent<Collider, Pickup>(m_Collider, this, gameObject);
+            col = GetComponent<Collider>();
+            DebugUtility.HandleErrorIfNullGetComponent<Collider, Pickup>(col, this, gameObject);
 
             // ensure the physics setup is a kinematic rigidbody trigger
             PickupRigidbody.isKinematic = true;
-            m_Collider.isTrigger = true;
+            col.isTrigger = true;
 
             // Remember start position for animation
-            m_StartPosition = transform.position;
+            startPosition = transform.position;
         }
 
         void Update()
         {
             // Handle bobbing
             float bobbingAnimationPhase = ((Mathf.Sin(Time.time * VerticalBobFrequency) * 0.5f) + 0.5f) * BobbingAmount;
-            transform.position = m_StartPosition + Vector3.up * bobbingAnimationPhase;
+            transform.position = startPosition + Vector3.up * bobbingAnimationPhase;
 
             // Handle rotating
             transform.Rotate(Vector3.up, RotatingSpeed * Time.deltaTime, Space.Self);
@@ -69,20 +69,16 @@ namespace Unity.FPS.Gameplay
 
         public void PlayPickupFeedback()
         {
-            if (m_HasPlayedFeedback)
+            if (hasPlayedFeedback)
                 return;
 
             if (PickupSfx)
-            {
                 AudioUtility.CreateSFX(PickupSfx, transform.position, AudioUtility.AudioGroups.Pickup, 0f);
-            }
 
             if (PickupVfxPrefab)
-            {
-                var pickupVfxInstance = Instantiate(PickupVfxPrefab, transform.position, Quaternion.identity);
-            }
+                Instantiate(PickupVfxPrefab, transform.position, Quaternion.identity);
 
-            m_HasPlayedFeedback = true;
+            hasPlayedFeedback = true;
         }
     }
 }

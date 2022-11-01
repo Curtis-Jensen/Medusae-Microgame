@@ -55,59 +55,59 @@ namespace Unity.FPS.Gameplay
         [Header("Debug")] [Tooltip("Color of the projectile radius debug view")]
         public Color RadiusColor = Color.cyan * 0.2f;
 
-        ProjectileBase m_ProjectileBase;
-        Vector3 m_LastRootPosition;
-        Vector3 m_Velocity;
-        bool m_HasTrajectoryOverride;
-        Vector3 m_TrajectoryCorrectionVector;
-        Vector3 m_ConsumedTrajectoryCorrectionVector;
-        List<Collider> m_IgnoredColliders;
+        ProjectileBase projectileBase;
+        Vector3 lastRootPosition;
+        Vector3 velocity;
+        bool hasTrajectoryOverride;
+        Vector3 trajectoryCorrectionVector;
+        Vector3 consumedTrajectoryCorrectionVector;
+        List<Collider> ignoredColliders;
 
-        const QueryTriggerInteraction k_TriggerInteraction = QueryTriggerInteraction.Collide;
+        const QueryTriggerInteraction triggerInteraction = QueryTriggerInteraction.Collide;
 
         void OnEnable()
         {
-            m_ProjectileBase = GetComponent<ProjectileBase>();
-            DebugUtility.HandleErrorIfNullGetComponent<ProjectileBase, ProjectileStandard>(m_ProjectileBase, this,
+            projectileBase = GetComponent<ProjectileBase>();
+            DebugUtility.HandleErrorIfNullGetComponent<ProjectileBase, ProjectileStandard>(projectileBase, this,
                 gameObject);
 
-            m_ProjectileBase.OnShoot += OnShoot;
+            projectileBase.OnShoot += OnShoot;
 
             Destroy(gameObject, MaxLifeTime);
         }
 
         new void OnShoot()
         {
-            m_LastRootPosition = Root.position;
-            m_Velocity = transform.forward * Speed;
-            m_IgnoredColliders = new List<Collider>();
-            transform.position += m_ProjectileBase.InheritedMuzzleVelocity * Time.deltaTime;
+            lastRootPosition = Root.position;
+            velocity = transform.forward * Speed;
+            ignoredColliders = new List<Collider>();
+            transform.position += projectileBase.InheritedMuzzleVelocity * Time.deltaTime;
 
             // Ignore colliders of owner
-            Collider[] ownerColliders = m_ProjectileBase.Owner.GetComponentsInChildren<Collider>();
-            m_IgnoredColliders.AddRange(ownerColliders);
+            Collider[] ownerColliders = projectileBase.Owner.GetComponentsInChildren<Collider>();
+            ignoredColliders.AddRange(ownerColliders);
 
             // Handle case of player shooting (make projectiles not go through walls, and remember center-of-screen trajectory)
-            PlayerWeaponsManager playerWeaponsManager = m_ProjectileBase.Owner.GetComponent<PlayerWeaponsManager>();
+            PlayerWeaponsManager playerWeaponsManager = projectileBase.Owner.GetComponent<PlayerWeaponsManager>();
             if (playerWeaponsManager)
             {
-                m_HasTrajectoryOverride = true;
+                hasTrajectoryOverride = true;
 
-                Vector3 cameraToMuzzle = (m_ProjectileBase.InitialPosition -
+                Vector3 cameraToMuzzle = (projectileBase.InitialPosition -
                                           playerWeaponsManager.WeaponCamera.transform.position);
 
-                m_TrajectoryCorrectionVector = Vector3.ProjectOnPlane(-cameraToMuzzle,
+                trajectoryCorrectionVector = Vector3.ProjectOnPlane(-cameraToMuzzle,
                     playerWeaponsManager.WeaponCamera.transform.forward);
                 if (TrajectoryCorrectionDistance == 0)
                 {
-                    transform.position += m_TrajectoryCorrectionVector;
-                    m_ConsumedTrajectoryCorrectionVector = m_TrajectoryCorrectionVector;
+                    transform.position += trajectoryCorrectionVector;
+                    consumedTrajectoryCorrectionVector = trajectoryCorrectionVector;
                 }
                 else if (TrajectoryCorrectionDistance < 0)
-                    m_HasTrajectoryOverride = false;
+                    hasTrajectoryOverride = false;
 
                 if (Physics.Raycast(playerWeaponsManager.WeaponCamera.transform.position, cameraToMuzzle.normalized,
-                    out RaycastHit hit, cameraToMuzzle.magnitude, HittableLayers, k_TriggerInteraction))
+                    out RaycastHit hit, cameraToMuzzle.magnitude, HittableLayers, triggerInteraction))
                     if (IsHitValid(hit))
                         OnHit(hit.point, hit.normal, hit.collider);
             }
@@ -116,36 +116,36 @@ namespace Unity.FPS.Gameplay
         void Update()
         {
             // Move
-            transform.position += m_Velocity * Time.deltaTime;
+            transform.position += velocity * Time.deltaTime;
             if (InheritWeaponVelocity)
-                transform.position += m_ProjectileBase.InheritedMuzzleVelocity * Time.deltaTime;
+                transform.position += projectileBase.InheritedMuzzleVelocity * Time.deltaTime;
 
             // Drift towards trajectory override (this is so that projectiles can be centered 
             // with the camera center even though the actual weapon is offset)
-            if (m_HasTrajectoryOverride && m_ConsumedTrajectoryCorrectionVector.sqrMagnitude <
-                m_TrajectoryCorrectionVector.sqrMagnitude)
+            if (hasTrajectoryOverride && consumedTrajectoryCorrectionVector.sqrMagnitude <
+                trajectoryCorrectionVector.sqrMagnitude)
             {
-                Vector3 correctionLeft = m_TrajectoryCorrectionVector - m_ConsumedTrajectoryCorrectionVector;
-                float distanceThisFrame = (Root.position - m_LastRootPosition).magnitude;
+                Vector3 correctionLeft = trajectoryCorrectionVector - consumedTrajectoryCorrectionVector;
+                float distanceThisFrame = (Root.position - lastRootPosition).magnitude;
                 Vector3 correctionThisFrame =
-                    (distanceThisFrame / TrajectoryCorrectionDistance) * m_TrajectoryCorrectionVector;
+                    (distanceThisFrame / TrajectoryCorrectionDistance) * trajectoryCorrectionVector;
                 correctionThisFrame = Vector3.ClampMagnitude(correctionThisFrame, correctionLeft.magnitude);
-                m_ConsumedTrajectoryCorrectionVector += correctionThisFrame;
+                consumedTrajectoryCorrectionVector += correctionThisFrame;
 
                 // Detect end of correction
-                if (m_ConsumedTrajectoryCorrectionVector.sqrMagnitude == m_TrajectoryCorrectionVector.sqrMagnitude)
-                    m_HasTrajectoryOverride = false;
+                if (consumedTrajectoryCorrectionVector.sqrMagnitude == trajectoryCorrectionVector.sqrMagnitude)
+                    hasTrajectoryOverride = false;
 
                 transform.position += correctionThisFrame;
             }
 
             // Orient towards velocity
-            transform.forward = m_Velocity.normalized;
+            transform.forward = velocity.normalized;
 
             // Gravity
             if (GravityDownAcceleration > 0)
                 // add gravity to the projectile velocity for ballistic effect
-                m_Velocity += Vector3.down * GravityDownAcceleration * Time.deltaTime;
+                velocity += Vector3.down * GravityDownAcceleration * Time.deltaTime;
 
             // Hit detection
             {
@@ -154,10 +154,10 @@ namespace Unity.FPS.Gameplay
                 bool foundHit = false;
 
                 // Sphere cast
-                Vector3 displacementSinceLastFrame = Tip.position - m_LastRootPosition;
-                RaycastHit[] hits = Physics.SphereCastAll(m_LastRootPosition, Radius,
+                Vector3 displacementSinceLastFrame = Tip.position - lastRootPosition;
+                RaycastHit[] hits = Physics.SphereCastAll(lastRootPosition, Radius,
                     displacementSinceLastFrame.normalized, displacementSinceLastFrame.magnitude, HittableLayers,
-                    k_TriggerInteraction);
+                    triggerInteraction);
                 foreach (var hit in hits)
                 {
                     if (IsHitValid(hit) && hit.distance < closestHit.distance)
@@ -180,7 +180,7 @@ namespace Unity.FPS.Gameplay
                 }
             }
 
-            m_LastRootPosition = Root.position;
+            lastRootPosition = Root.position;
         }
 
         bool IsHitValid(RaycastHit hit)
@@ -194,7 +194,7 @@ namespace Unity.FPS.Gameplay
             return false;
 
             // ignore hits with specific ignored colliders (self colliders, by default)
-            if (m_IgnoredColliders != null && m_IgnoredColliders.Contains(hit.collider))
+            if (ignoredColliders != null && ignoredColliders.Contains(hit.collider))
                 return false;
 
             return true;
@@ -204,13 +204,13 @@ namespace Unity.FPS.Gameplay
         {
             // damage
             if (AreaOfDamage)
-            AreaOfDamage.InflictDamageInArea(Damage, point, HittableLayers, k_TriggerInteraction, m_ProjectileBase.Owner);
+            AreaOfDamage.InflictDamageInArea(Damage, point, HittableLayers, triggerInteraction, projectileBase.Owner);
             else
             {
                 // point damage
                 Damageable damageable = collider.GetComponent<Damageable>();
                 if (damageable)
-                    damageable.InflictDamage(Damage, false, m_ProjectileBase.Owner);
+                    damageable.InflictDamage(Damage, false, projectileBase.Owner);
             }
 
             // impact vfx

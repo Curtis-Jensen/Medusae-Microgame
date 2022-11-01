@@ -16,27 +16,27 @@ namespace Unity.FPS.UI
 
         public GameObject MarkerDirectionPrefab;
 
-        Transform m_PlayerTransform;
-        Dictionary<Transform, CompassMarker> m_ElementsDictionnary = new Dictionary<Transform, CompassMarker>();
+        Transform playerTransform;
+        Dictionary<Transform, CompassMarker> elementsDictionnary = new Dictionary<Transform, CompassMarker>();
 
-        float m_WidthMultiplier;
-        float m_HeightOffset;
+        float widthMultiplier;
+        float heightOffset;
 
         void Awake()
         {
             PlayerCharacterController playerCharacterController = FindObjectOfType<PlayerCharacterController>();
             DebugUtility.HandleErrorIfNullFindObject<PlayerCharacterController, Compass>(playerCharacterController,
                 this);
-            m_PlayerTransform = playerCharacterController.transform;
+            playerTransform = playerCharacterController.transform;
 
-            m_WidthMultiplier = CompasRect.rect.width / VisibilityAngle;
-            m_HeightOffset = -CompasRect.rect.height / 2;
+            widthMultiplier = CompasRect.rect.width / VisibilityAngle;
+            heightOffset = -CompasRect.rect.height / 2;
         }
 
         void Update()
         {
             // this is all very WIP, and needs to be reworked
-            foreach (var element in m_ElementsDictionnary)
+            foreach (var element in elementsDictionnary)
             {
                 float distanceRatio = 1;
                 float heightDifference = 0;
@@ -44,17 +44,17 @@ namespace Unity.FPS.UI
 
                 if (element.Value.IsDirection)
                 {
-                    angle = Vector3.SignedAngle(m_PlayerTransform.forward,
+                    angle = Vector3.SignedAngle(playerTransform.forward,
                         element.Key.transform.localPosition.normalized, Vector3.up);
                 }
                 else
                 {
-                    Vector3 targetDir = (element.Key.transform.position - m_PlayerTransform.position).normalized;
+                    Vector3 targetDir = (element.Key.transform.position - playerTransform.position).normalized;
                     targetDir = Vector3.ProjectOnPlane(targetDir, Vector3.up);
-                    Vector3 playerForward = Vector3.ProjectOnPlane(m_PlayerTransform.forward, Vector3.up);
+                    Vector3 playerForward = Vector3.ProjectOnPlane(playerTransform.forward, Vector3.up);
                     angle = Vector3.SignedAngle(playerForward, targetDir, Vector3.up);
 
-                    Vector3 directionVector = element.Key.transform.position - m_PlayerTransform.position;
+                    Vector3 directionVector = element.Key.transform.position - playerTransform.position;
 
                     heightDifference = (directionVector.y) * HeightDifferenceMultiplier;
                     heightDifference = Mathf.Clamp(heightDifference, -CompasRect.rect.height / 2 * CompasMarginRatio,
@@ -67,15 +67,13 @@ namespace Unity.FPS.UI
                 if (angle > -VisibilityAngle / 2 && angle < VisibilityAngle / 2)
                 {
                     element.Value.CanvasGroup.alpha = 1;
-                    element.Value.CanvasGroup.transform.localPosition = new Vector2(m_WidthMultiplier * angle,
-                        heightDifference + m_HeightOffset);
+                    element.Value.CanvasGroup.transform.localPosition = new Vector2(widthMultiplier * angle,
+                        heightDifference + heightOffset);
                     element.Value.CanvasGroup.transform.localScale =
                         Vector3.one * Mathf.Lerp(1, MinScale, distanceRatio);
                 }
                 else
-                {
                     element.Value.CanvasGroup.alpha = 0;
-                }
             }
         }
 
@@ -88,14 +86,14 @@ namespace Unity.FPS.UI
         {
             marker.transform.SetParent(CompasRect);
 
-            m_ElementsDictionnary.Add(element, marker);
+            elementsDictionnary.Add(element, marker);
         }
 
         public void UnregisterCompassElement(Transform element)
         {
-            if (m_ElementsDictionnary.TryGetValue(element, out CompassMarker marker) && marker.CanvasGroup != null)
+            if (elementsDictionnary.TryGetValue(element, out CompassMarker marker) && marker.CanvasGroup != null)
                 Destroy(marker.CanvasGroup.gameObject);
-            m_ElementsDictionnary.Remove(element);
+            elementsDictionnary.Remove(element);
         }
     }
 }

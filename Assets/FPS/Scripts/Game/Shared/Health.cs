@@ -22,7 +22,7 @@ namespace Unity.FPS.Game
         public float GetRatio() => CurrentHealth / MaxHealth;
         public bool IsCritical() => GetRatio() <= CriticalHealthRatio;
 
-        bool m_IsDead;
+        bool isDead;
 
         void Start()
         {
@@ -55,9 +55,7 @@ namespace Unity.FPS.Game
             // call OnDamage action
             float trueDamageAmount = healthBefore - CurrentHealth;
             if (trueDamageAmount > 0f)
-            {
                 OnDamaged?.Invoke(trueDamageAmount, damageSource);
-            }
 
             HandleDeath();
         }
@@ -74,13 +72,13 @@ namespace Unity.FPS.Game
 
         void HandleDeath()
         {
-            if (m_IsDead)
+            if (isDead)
                 return;
 
             // call OnDie action
             if (CurrentHealth <= 0f)
             {
-                m_IsDead = true;
+                isDead = true;
                 OnDie?.Invoke();
             }
         }

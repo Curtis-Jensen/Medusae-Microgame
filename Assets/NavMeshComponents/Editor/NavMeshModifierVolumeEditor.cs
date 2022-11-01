@@ -9,15 +9,15 @@ namespace UnityEditor.AI
     [CustomEditor(typeof(NavMeshModifierVolume))]
     class NavMeshModifierVolumeEditor : Editor
     {
-        SerializedProperty m_AffectedAgents;
-        SerializedProperty m_Area;
-        SerializedProperty m_Center;
-        SerializedProperty m_Size;
+        SerializedProperty affectedAgents;
+        SerializedProperty area;
+        SerializedProperty center;
+        SerializedProperty size;
 
         static Color s_HandleColor = new Color(187f, 138f, 240f, 210f) / 255;
         static Color s_HandleColorDisabled = new Color(187f * 0.75f, 138f * 0.75f, 240f * 0.75f, 100f) / 255;
 
-        BoxBoundsHandle m_BoundsHandle = new BoxBoundsHandle();
+        BoxBoundsHandle boundsHandle = new BoxBoundsHandle();
 
         bool editingCollider
         {
@@ -26,10 +26,10 @@ namespace UnityEditor.AI
 
         void OnEnable()
         {
-            m_AffectedAgents = serializedObject.FindProperty("m_AffectedAgents");
-            m_Area = serializedObject.FindProperty("m_Area");
-            m_Center = serializedObject.FindProperty("m_Center");
-            m_Size = serializedObject.FindProperty("m_Size");
+            affectedAgents = serializedObject.FindProperty("affectedAgents");
+            area = serializedObject.FindProperty("area");
+            center = serializedObject.FindProperty("center");
+            size = serializedObject.FindProperty("size");
 
             NavMeshVisualizationSettings.showNavigation++;
         }
@@ -52,11 +52,11 @@ namespace UnityEditor.AI
             EditMode.DoEditModeInspectorModeButton(EditMode.SceneViewEditMode.Collider, "Edit Volume",
                 EditorGUIUtility.IconContent("EditCollider"), GetBounds, this);
 
-            EditorGUILayout.PropertyField(m_Size);
-            EditorGUILayout.PropertyField(m_Center);
+            EditorGUILayout.PropertyField(size);
+            EditorGUILayout.PropertyField(center);
 
-            NavMeshComponentsGUIUtility.AreaPopup("Area Type", m_Area);
-            NavMeshComponentsGUIUtility.AgentMaskPopup("Affected Agents", m_AffectedAgents);
+            NavMeshComponentsGUIUtility.AreaPopup("Area Type", area);
+            NavMeshComponentsGUIUtility.AgentMaskPopup("Affected Agents", affectedAgents);
             EditorGUILayout.Space();
 
             serializedObject.ApplyModifiedProperties();
@@ -115,16 +115,16 @@ namespace UnityEditor.AI
             var color = vol.enabled ? s_HandleColor : s_HandleColorDisabled;
             using (new Handles.DrawingScope(color, vol.transform.localToWorldMatrix))
             {
-                m_BoundsHandle.center = vol.center;
-                m_BoundsHandle.size = vol.size;
+                boundsHandle.center = vol.center;
+                boundsHandle.size = vol.size;
 
                 EditorGUI.BeginChangeCheck();
-                m_BoundsHandle.DrawHandle();
+                boundsHandle.DrawHandle();
                 if (EditorGUI.EndChangeCheck())
                 {
                     Undo.RecordObject(vol, "Modified NavMesh Modifier Volume");
-                    Vector3 center = m_BoundsHandle.center;
-                    Vector3 size = m_BoundsHandle.size;
+                    Vector3 center = boundsHandle.center;
+                    Vector3 size = boundsHandle.size;
                     vol.center = center;
                     vol.size = size;
                     EditorUtility.SetDirty(target);

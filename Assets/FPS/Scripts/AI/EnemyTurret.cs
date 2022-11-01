@@ -28,39 +28,39 @@ namespace Unity.FPS.AI
 
         public AIState AiState { get; private set; }
 
-        EnemyController m_EnemyController;
-        Health m_Health;
-        Quaternion m_RotationWeaponForwardToPivot;
-        float m_TimeStartedDetection;
-        float m_TimeLostDetection;
-        Quaternion m_PreviousPivotAimingRotation;
-        Quaternion m_PivotAimingRotation;
+        EnemyController enemyController;
+        Health health;
+        Quaternion rotationWeaponForwardToPivot;
+        float timeStartedDetection;
+        float timeLostDetection;
+        Quaternion previousPivotAimingRotation;
+        Quaternion pivotAimingRotation;
 
-        const string k_AnimOnDamagedParameter = "OnDamaged";
-        const string k_AnimIsActiveParameter = "IsActive";
+        const string animOnDamagedParameter = "OnDamaged";
+        const string animIsActiveParameter = "IsActive";
 
         void Start()
         {
-            m_Health = GetComponent<Health>();
-            DebugUtility.HandleErrorIfNullGetComponent<Health, EnemyTurret>(m_Health, this, gameObject);
-            m_Health.OnDamaged += OnDamaged;
+            health = GetComponent<Health>();
+            DebugUtility.HandleErrorIfNullGetComponent<Health, EnemyTurret>(health, this, gameObject);
+            health.OnDamaged += OnDamaged;
 
-            m_EnemyController = GetComponent<EnemyController>();
-            DebugUtility.HandleErrorIfNullGetComponent<EnemyController, EnemyTurret>(m_EnemyController, this,
+            enemyController = GetComponent<EnemyController>();
+            DebugUtility.HandleErrorIfNullGetComponent<EnemyController, EnemyTurret>(enemyController, this,
                 gameObject);
 
-            m_EnemyController.onDetectedTarget += OnDetectedTarget;
-            m_EnemyController.onLostTarget += OnLostTarget;
+            enemyController.onDetectedTarget += OnDetectedTarget;
+            enemyController.onLostTarget += OnLostTarget;
 
             // Remember the rotation offset between the pivot's forward and the weapon's forward
-            m_RotationWeaponForwardToPivot =
-                Quaternion.Inverse(m_EnemyController.GetCurrentWeapon().WeaponMuzzle.rotation) * TurretPivot.rotation;
+            rotationWeaponForwardToPivot =
+                Quaternion.Inverse(enemyController.GetCurrentWeapon().WeaponMuzzle.rotation) * TurretPivot.rotation;
 
             // Start with idle
             AiState = AIState.Idle;
 
-            m_TimeStartedDetection = Mathf.NegativeInfinity;
-            m_PreviousPivotAimingRotation = TurretPivot.rotation;
+            timeStartedDetection = Mathf.NegativeInfinity;
+            previousPivotAimingRotation = TurretPivot.rotation;
         }
 
         void Update()
@@ -79,23 +79,23 @@ namespace Unity.FPS.AI
             switch (AiState)
             {
                 case AIState.Attack:
-                    bool mustShoot = Time.time > m_TimeStartedDetection + DetectionFireDelay;
+                    bool mustShoot = Time.time > timeStartedDetection + DetectionFireDelay;
                     // Calculate the desired rotation of our turret (aim at target)
                     Vector3 directionToTarget =
-                        (m_EnemyController.KnownDetectedTarget.transform.position - TurretAimPoint.position).normalized;
+                        (enemyController.KnownDetectedTarget.transform.position - TurretAimPoint.position).normalized;
                     Quaternion offsettedTargetRotation =
-                        Quaternion.LookRotation(directionToTarget) * m_RotationWeaponForwardToPivot;
-                    m_PivotAimingRotation = Quaternion.Slerp(m_PreviousPivotAimingRotation, offsettedTargetRotation,
+                        Quaternion.LookRotation(directionToTarget) * rotationWeaponForwardToPivot;
+                    pivotAimingRotation = Quaternion.Slerp(previousPivotAimingRotation, offsettedTargetRotation,
                         (mustShoot ? AimRotationSharpness : LookAtRotationSharpness) * Time.deltaTime);
 
                     // shoot
                     if (mustShoot)
                     {
                         Vector3 correctedDirectionToTarget =
-                            (m_PivotAimingRotation * Quaternion.Inverse(m_RotationWeaponForwardToPivot)) *
+                            (pivotAimingRotation * Quaternion.Inverse(rotationWeaponForwardToPivot)) *
                             Vector3.forward;
 
-                        m_EnemyController.TryAtack(TurretAimPoint.position + correctedDirectionToTarget);
+                        enemyController.TryAtack(TurretAimPoint.position + correctedDirectionToTarget);
                     }
 
                     break;
@@ -107,16 +107,16 @@ namespace Unity.FPS.AI
             switch (AiState)
             {
                 case AIState.Attack:
-                    TurretPivot.rotation = m_PivotAimingRotation;
+                    TurretPivot.rotation = pivotAimingRotation;
                     break;
                 default:
                     // Use the turret rotation of the animation
-                    TurretPivot.rotation = Quaternion.Slerp(m_PivotAimingRotation, TurretPivot.rotation,
-                        (Time.time - m_TimeLostDetection) / AimingTransitionBlendTime);
+                    TurretPivot.rotation = Quaternion.Slerp(pivotAimingRotation, TurretPivot.rotation,
+                        (Time.time - timeLostDetection) / AimingTransitionBlendTime);
                     break;
             }
 
-            m_PreviousPivotAimingRotation = TurretPivot.rotation;
+            previousPivotAimingRotation = TurretPivot.rotation;
         }
 
         void OnDamaged(float dmg, GameObject source)
@@ -127,7 +127,7 @@ namespace Unity.FPS.AI
                 RandomHitSparks[n].Play();
             }
 
-            Animator.SetTrigger(k_AnimOnDamagedParameter);
+            Animator.SetTrigger(animOnDamagedParameter);
         }
 
         void OnDetectedTarget()
@@ -147,8 +147,8 @@ namespace Unity.FPS.AI
                 AudioUtility.CreateSFX(OnDetectSfx, transform.position, AudioUtility.AudioGroups.EnemyDetection, 1f);
             }
 
-            Animator.SetBool(k_AnimIsActiveParameter, true);
-            m_TimeStartedDetection = Time.time;
+            Animator.SetBool(animIsActiveParameter, true);
+            timeStartedDetection = Time.time;
         }
 
         void OnLostTarget()
@@ -163,8 +163,8 @@ namespace Unity.FPS.AI
                 OnDetectVfx[i].Stop();
             }
 
-            Animator.SetBool(k_AnimIsActiveParameter, false);
-            m_TimeLostDetection = Time.time;
+            Animator.SetBool(animIsActiveParameter, false);
+            timeLostDetection = Time.time;
         }
     }
 }

@@ -15,11 +15,11 @@ namespace Unity.FPS.UI
         [Tooltip("Prefab for the primary objectives")]
         public GameObject SecondaryObjectivePrefab;
 
-        Dictionary<Objective, ObjectiveToast> m_ObjectivesDictionnary;
+        Dictionary<Objective, ObjectiveToast> objectivesDictionnary;
 
         void Awake()
         {
-            m_ObjectivesDictionnary = new Dictionary<Objective, ObjectiveToast>();
+            objectivesDictionnary = new Dictionary<Objective, ObjectiveToast>();
 
             EventManager.AddListener<ObjectiveUpdateEvent>(OnUpdateObjective);
 
@@ -43,7 +43,7 @@ namespace Unity.FPS.UI
             // initialize the element and give it the objective description
             toast.Initialize(objective.Title, objective.Description, "", objective.IsOptional, objective.DelayVisible);
 
-            m_ObjectivesDictionnary.Add(objective, toast);
+            objectivesDictionnary.Add(objective, toast);
 
             UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(ObjectivePanel);
         }
@@ -51,17 +51,17 @@ namespace Unity.FPS.UI
         public void UnregisterObjective(Objective objective)
         {
             // if the objective if in the list, make it fade out, and remove it from the list
-            if (m_ObjectivesDictionnary.TryGetValue(objective, out ObjectiveToast toast) && toast != null)
+            if (objectivesDictionnary.TryGetValue(objective, out ObjectiveToast toast) && toast != null)
             {
                 toast.Complete();
             }
 
-            m_ObjectivesDictionnary.Remove(objective);
+            objectivesDictionnary.Remove(objective);
         }
 
         void OnUpdateObjective(ObjectiveUpdateEvent evt)
         {
-            if (m_ObjectivesDictionnary.TryGetValue(evt.Objective, out ObjectiveToast toast) && toast != null)
+            if (objectivesDictionnary.TryGetValue(evt.Objective, out ObjectiveToast toast) && toast != null)
             {
                 // set the new updated description for the objective, and forces the content size fitter to be recalculated
                 Canvas.ForceUpdateCanvases();

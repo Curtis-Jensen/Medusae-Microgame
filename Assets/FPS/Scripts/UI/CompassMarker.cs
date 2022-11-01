@@ -23,22 +23,20 @@ namespace Unity.FPS.UI
         [Tooltip("Text content for the direction")]
         public TMPro.TextMeshProUGUI TextContent;
 
-        EnemyController m_EnemyController;
+        EnemyController enemyController;
 
         public void Initialize(CompassElement compassElement, string textDirection)
         {
             if (IsDirection && TextContent)
-            {
                 TextContent.text = textDirection;
-            }
             else
             {
-                m_EnemyController = compassElement.transform.GetComponent<EnemyController>();
+                enemyController = compassElement.transform.GetComponent<EnemyController>();
 
-                if (m_EnemyController)
+                if (enemyController)
                 {
-                    m_EnemyController.onDetectedTarget += DetectTarget;
-                    m_EnemyController.onLostTarget += LostTarget;
+                    enemyController.onDetectedTarget += DetectTarget;
+                    enemyController.onLostTarget += LostTarget;
 
                     LostTarget();
                 }

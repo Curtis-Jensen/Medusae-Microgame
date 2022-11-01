@@ -16,24 +16,24 @@ namespace Unity.FPS.UI
         [Tooltip("Component to animate the color when empty or full")]
         public FillBarColorChange FillBarColorChange;
 
-        Jetpack m_Jetpack;
+        Jetpack jetpack;
 
         void Awake()
         {
-            m_Jetpack = FindObjectOfType<Jetpack>();
-            DebugUtility.HandleErrorIfNullFindObject<Jetpack, JetpackCounter>(m_Jetpack, this);
+            jetpack = FindObjectOfType<Jetpack>();
+            DebugUtility.HandleErrorIfNullFindObject<Jetpack, JetpackCounter>(jetpack, this);
 
             FillBarColorChange.Initialize(1f, 0f);
         }
 
         void Update()
         {
-            MainCanvasGroup.gameObject.SetActive(m_Jetpack.IsJetpackUnlocked);
+            MainCanvasGroup.gameObject.SetActive(jetpack.IsJetpackUnlocked);
 
-            if (m_Jetpack.IsJetpackUnlocked)
+            if (jetpack.IsJetpackUnlocked)
             {
-                JetpackFillImage.fillAmount = m_Jetpack.CurrentFillRatio;
-                FillBarColorChange.UpdateVisual(m_Jetpack.CurrentFillRatio);
+                JetpackFillImage.fillAmount = jetpack.CurrentFillRatio;
+                FillBarColorChange.UpdateVisual(jetpack.CurrentFillRatio);
             }
         }
     }

@@ -40,29 +40,29 @@ namespace UnityEngine.AI
         int m_Area;
         public int area { get { return m_Area; } set { m_Area = value; UpdateLink(); } }
 
-        NavMeshLinkInstance m_LinkInstance = new NavMeshLinkInstance();
+        NavMeshLinkInstance linkInstance = new NavMeshLinkInstance();
 
-        Vector3 m_LastPosition = Vector3.zero;
-        Quaternion m_LastRotation = Quaternion.identity;
+        Vector3 lastPosition = Vector3.zero;
+        Quaternion lastRotation = Quaternion.identity;
 
         static readonly List<NavMeshLink> s_Tracked = new List<NavMeshLink>();
 
         void OnEnable()
         {
             AddLink();
-            if (m_AutoUpdatePosition && m_LinkInstance.valid)
+            if (m_AutoUpdatePosition && linkInstance.valid)
                 AddTracking(this);
         }
 
         void OnDisable()
         {
             RemoveTracking(this);
-            m_LinkInstance.Remove();
+            linkInstance.Remove();
         }
 
         public void UpdateLink()
         {
-            m_LinkInstance.Remove();
+            linkInstance.Remove();
             AddLink();
         }
 
@@ -104,7 +104,7 @@ namespace UnityEngine.AI
         void AddLink()
         {
 #if UNITY_EDITOR
-            if (m_LinkInstance.valid)
+            if (linkInstance.valid)
             {
                 Debug.LogError("Link is already added: " + this);
                 return;
@@ -119,18 +119,18 @@ namespace UnityEngine.AI
             link.bidirectional = m_Bidirectional;
             link.area = m_Area;
             link.agentTypeID = m_AgentTypeID;
-            m_LinkInstance = NavMesh.AddLink(link, transform.position, transform.rotation);
-            if (m_LinkInstance.valid)
-                m_LinkInstance.owner = this;
+            linkInstance = NavMesh.AddLink(link, transform.position, transform.rotation);
+            if (linkInstance.valid)
+                linkInstance.owner = this;
 
-            m_LastPosition = transform.position;
-            m_LastRotation = transform.rotation;
+            lastPosition = transform.position;
+            lastRotation = transform.rotation;
         }
 
         bool HasTransformChanged()
         {
-            if (m_LastPosition != transform.position) return true;
-            if (m_LastRotation != transform.rotation) return true;
+            if (lastPosition != transform.position) return true;
+            if (lastRotation != transform.rotation) return true;
             return false;
         }
 
@@ -153,7 +153,7 @@ namespace UnityEngine.AI
         {
             m_Width = Mathf.Max(0.0f, m_Width);
 
-            if (!m_LinkInstance.valid)
+            if (!linkInstance.valid)
                 return;
 
             UpdateLink();

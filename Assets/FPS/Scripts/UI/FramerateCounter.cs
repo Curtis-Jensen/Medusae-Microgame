@@ -11,21 +11,21 @@ namespace Unity.FPS.UI
         [Tooltip("The text field displaying the framerate")]
         public TextMeshProUGUI UIText;
 
-        float m_AccumulatedDeltaTime = 0f;
-        int m_AccumulatedFrameCount = 0;
+        float accumulatedDeltaTime = 0f;
+        int accumulatedFrameCount = 0;
 
         void Update()
         {
-            m_AccumulatedDeltaTime += Time.deltaTime;
-            m_AccumulatedFrameCount++;
+            accumulatedDeltaTime += Time.deltaTime;
+            accumulatedFrameCount++;
 
-            if (m_AccumulatedDeltaTime >= PollingTime)
+            if (accumulatedDeltaTime >= PollingTime)
             {
-                int framerate = Mathf.RoundToInt((float) m_AccumulatedFrameCount / m_AccumulatedDeltaTime);
+                int framerate = Mathf.RoundToInt((float) accumulatedFrameCount / accumulatedDeltaTime);
                 UIText.text = framerate.ToString();
 
-                m_AccumulatedDeltaTime = 0f;
-                m_AccumulatedFrameCount = 0;
+                accumulatedDeltaTime = 0f;
+                accumulatedFrameCount = 0;
             }
         }
     }
