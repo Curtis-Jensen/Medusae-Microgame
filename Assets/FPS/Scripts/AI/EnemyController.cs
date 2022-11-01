@@ -356,23 +356,28 @@ namespace Unity.FPS.AI
             }
         }
 
+        /* 1 spawn a particle system when dying inside the particle container
+         * 
+         * 2 tells the game flow manager to handle the enemy destuction
+         * 
+         * 3 loot an object
+         * 
+         * 4 this will call the OnDestroy function
+         */
         void OnDie()
         {
-            // spawn a particle system when dying
-            var vfx = Instantiate(DeathVfx, DeathVfxSpawnPoint.position, Quaternion.identity);
+            var particleContainter = GameObject.Find("Particle Container").transform;
+            var vfx = Instantiate
+                (DeathVfx, DeathVfxSpawnPoint.position, Quaternion.identity, particleContainter);//1
             Destroy(vfx, 5f);
 
-            // tells the game flow manager to handle the enemy destuction
-            m_EnemyManager.UnregisterEnemy(this);
+            m_EnemyManager.UnregisterEnemy(this);//2
 
-            // loot an object
-            if (TryDropItem())
-            {
-                Instantiate(LootPrefab, transform.position, Quaternion.identity);
-            }
+            var level = GameObject.Find("Level").transform;
+            if (TryDropItem())//3
+                Instantiate(LootPrefab, transform.position, Quaternion.identity, level);
 
-            // this will call the OnDestroy function
-            Destroy(gameObject, DeathDuration);
+            Destroy(gameObject, DeathDuration);//4
         }
 
         void OnDrawGizmosSelected()

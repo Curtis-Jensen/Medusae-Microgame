@@ -79,6 +79,11 @@ namespace Unity.FPS.UI
             }
         }
 
+        /// <summary>
+        /// Puts all the compass markers under the compass game object as children
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="marker"></param>
         public void RegisterCompassElement(Transform element, CompassMarker marker)
         {
             marker.transform.SetParent(CompasRect);

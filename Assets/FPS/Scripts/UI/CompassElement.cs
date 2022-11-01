@@ -11,22 +11,26 @@ namespace Unity.FPS.UI
         [Tooltip("Text override for the marker, if it's a direction")]
         public string TextDirection;
 
-        Compass m_Compass;
+        Compass compass;
 
+        /* 1 Putting the markers as children of the compass is currently unnecessary 
+         * because they are set under compass.RegisterCompassElement().
+         * That may be a TODO, but at least the hierarchy is clean
+         */
         void Awake()
         {
-            m_Compass = FindObjectOfType<Compass>();
-            DebugUtility.HandleErrorIfNullFindObject<Compass, CompassElement>(m_Compass, this);
+            compass = FindObjectOfType<Compass>();
+            DebugUtility.HandleErrorIfNullFindObject<Compass, CompassElement>(compass, this);
 
-            var markerInstance = Instantiate(CompassMarkerPrefab);
+            var markerInstance = Instantiate(CompassMarkerPrefab);//1
 
             markerInstance.Initialize(this, TextDirection);
-            m_Compass.RegisterCompassElement(transform, markerInstance);
+            compass.RegisterCompassElement(transform, markerInstance);
         }
 
         void OnDestroy()
         {
-            m_Compass.UnregisterCompassElement(transform);
+            compass.UnregisterCompassElement(transform);
         }
     }
 }

@@ -81,9 +81,11 @@ namespace Unity.FPS.Gameplay
                 AudioUtility.GetAudioGroup(AudioUtility.AudioGroups.WeaponChargeLoop);
         }
 
+        /* 1 Spawn the disc orbit particles for the launcher as a child of the gun
+         */
         void SpawnParticleSystem()
         {
-            ParticleInstance = Instantiate(DiskOrbitParticlePrefab,
+            ParticleInstance = Instantiate(DiskOrbitParticlePrefab, //1
                 ParentTransform != null ? ParentTransform : transform);
             ParticleInstance.transform.localPosition += Offset;
 

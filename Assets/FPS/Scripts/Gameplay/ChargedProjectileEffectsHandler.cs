@@ -14,31 +14,34 @@ namespace Unity.FPS.Gameplay
         [Tooltip("Color of the charged object based on charge")]
         public MinMaxColor Color;
 
-        MeshRenderer[] m_AffectedRenderers;
-        ProjectileBase m_ProjectileBase;
+        MeshRenderer[] affectedRenderers;
+        ProjectileBase projectileBase;
 
+        /* 1 I don't think this is instantiation like a game object.  
+         * I think it's just applying the material
+         */
         void OnEnable()
         {
-            m_ProjectileBase = GetComponent<ProjectileBase>();
+            projectileBase = GetComponent<ProjectileBase>();
             DebugUtility.HandleErrorIfNullGetComponent<ProjectileBase, ChargedProjectileEffectsHandler>(
-                m_ProjectileBase, this, gameObject);
+                projectileBase, this, gameObject);
 
-            m_ProjectileBase.OnShoot += OnShoot;
+            projectileBase.OnShoot += OnShoot;
 
-            m_AffectedRenderers = ChargingObject.GetComponentsInChildren<MeshRenderer>();
-            foreach (var ren in m_AffectedRenderers)
+            affectedRenderers = ChargingObject.GetComponentsInChildren<MeshRenderer>();
+            foreach (var ren in affectedRenderers)
             {
-                ren.sharedMaterial = Instantiate(ren.sharedMaterial);
+                ren.sharedMaterial = Instantiate(ren.sharedMaterial);//1
             }
         }
 
         void OnShoot()
         {
-            ChargingObject.transform.localScale = Scale.GetValueFromRatio(m_ProjectileBase.InitialCharge);
+            ChargingObject.transform.localScale = Scale.GetValueFromRatio(projectileBase.InitialCharge);
 
-            foreach (var ren in m_AffectedRenderers)
+            foreach (var ren in affectedRenderers)
             {
-                ren.sharedMaterial.SetColor("_Color", Color.GetValueFromRatio(m_ProjectileBase.InitialCharge));
+                ren.sharedMaterial.SetColor("_Color", Color.GetValueFromRatio(projectileBase.InitialCharge));
             }
         }
     }
