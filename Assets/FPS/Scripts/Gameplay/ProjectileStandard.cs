@@ -59,7 +59,6 @@ namespace Unity.FPS.Gameplay
         Vector3 m_LastRootPosition;
         Vector3 m_Velocity;
         bool m_HasTrajectoryOverride;
-        float m_ShootTime;
         Vector3 m_TrajectoryCorrectionVector;
         Vector3 m_ConsumedTrajectoryCorrectionVector;
         List<Collider> m_IgnoredColliders;
@@ -79,7 +78,6 @@ namespace Unity.FPS.Gameplay
 
         new void OnShoot()
         {
-            m_ShootTime = Time.time;
             m_LastRootPosition = Root.position;
             m_Velocity = transform.forward * Speed;
             m_IgnoredColliders = new List<Collider>();
@@ -106,18 +104,12 @@ namespace Unity.FPS.Gameplay
                     m_ConsumedTrajectoryCorrectionVector = m_TrajectoryCorrectionVector;
                 }
                 else if (TrajectoryCorrectionDistance < 0)
-                {
                     m_HasTrajectoryOverride = false;
-                }
 
                 if (Physics.Raycast(playerWeaponsManager.WeaponCamera.transform.position, cameraToMuzzle.normalized,
                     out RaycastHit hit, cameraToMuzzle.magnitude, HittableLayers, k_TriggerInteraction))
-                {
                     if (IsHitValid(hit))
-                    {
                         OnHit(hit.point, hit.normal, hit.collider);
-                    }
-                }
             }
         }
 
@@ -126,9 +118,7 @@ namespace Unity.FPS.Gameplay
             // Move
             transform.position += m_Velocity * Time.deltaTime;
             if (InheritWeaponVelocity)
-            {
                 transform.position += m_ProjectileBase.InheritedMuzzleVelocity * Time.deltaTime;
-            }
 
             // Drift towards trajectory override (this is so that projectiles can be centered 
             // with the camera center even though the actual weapon is offset)
@@ -144,9 +134,7 @@ namespace Unity.FPS.Gameplay
 
                 // Detect end of correction
                 if (m_ConsumedTrajectoryCorrectionVector.sqrMagnitude == m_TrajectoryCorrectionVector.sqrMagnitude)
-                {
                     m_HasTrajectoryOverride = false;
-                }
 
                 transform.position += correctionThisFrame;
             }
@@ -156,10 +144,8 @@ namespace Unity.FPS.Gameplay
 
             // Gravity
             if (GravityDownAcceleration > 0)
-            {
                 // add gravity to the projectile velocity for ballistic effect
                 m_Velocity += Vector3.down * GravityDownAcceleration * Time.deltaTime;
-            }
 
             // Hit detection
             {
@@ -201,21 +187,15 @@ namespace Unity.FPS.Gameplay
         {
             // ignore hits with an ignore component
             if (hit.collider.GetComponent<IgnoreHitDetection>())
-            {
-                return false;
-            }
+            return false;
 
             // ignore hits with triggers that don't have a Damageable component
             if (hit.collider.isTrigger && hit.collider.GetComponent<Damageable>() == null)
-            {
-                return false;
-            }
+            return false;
 
             // ignore hits with specific ignored colliders (self colliders, by default)
             if (m_IgnoredColliders != null && m_IgnoredColliders.Contains(hit.collider))
-            {
                 return false;
-            }
 
             return true;
         }
@@ -224,19 +204,13 @@ namespace Unity.FPS.Gameplay
         {
             // damage
             if (AreaOfDamage)
-            {
-                // area damage
-                AreaOfDamage.InflictDamageInArea(Damage, point, HittableLayers, k_TriggerInteraction,
-                    m_ProjectileBase.Owner);
-            }
+            AreaOfDamage.InflictDamageInArea(Damage, point, HittableLayers, k_TriggerInteraction, m_ProjectileBase.Owner);
             else
             {
                 // point damage
                 Damageable damageable = collider.GetComponent<Damageable>();
                 if (damageable)
-                {
                     damageable.InflictDamage(Damage, false, m_ProjectileBase.Owner);
-                }
             }
 
             // impact vfx
@@ -245,16 +219,12 @@ namespace Unity.FPS.Gameplay
                 GameObject impactVfxInstance = Instantiate(ImpactVfx, point + (normal * ImpactVfxSpawnOffset),
                     Quaternion.LookRotation(normal));
                 if (ImpactVfxLifetime > 0)
-                {
                     Destroy(impactVfxInstance.gameObject, ImpactVfxLifetime);
-                }
             }
 
             // impact sfx
             if (ImpactSfxClip)
-            {
                 AudioUtility.CreateSFX(ImpactSfxClip, point, AudioUtility.AudioGroups.Impact, 1f, 3f);
-            }
 
             // Self Destruct
             Destroy(this.gameObject);
