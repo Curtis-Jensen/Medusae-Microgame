@@ -11,7 +11,7 @@ namespace Unity.FPS.UI
 
         void Update()
         {
-            if (ObjectToToggle.activeSelf && Input.GetButtonDown(GameConstants.k_ButtonNameCancel))
+            if (ObjectToToggle.activeSelf && Input.GetButtonDown(GameConstants.buttonNameCancel))
             {
                 SetGameObjectActive(false);
             }

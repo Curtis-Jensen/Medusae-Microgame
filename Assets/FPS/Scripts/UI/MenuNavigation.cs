@@ -20,9 +20,9 @@ namespace Unity.FPS.UI
         {
             if (EventSystem.current.currentSelectedGameObject == null)
             {
-                if (Input.GetButtonDown(GameConstants.k_ButtonNameSubmit)
-                    || Input.GetAxisRaw(GameConstants.k_AxisNameHorizontal) != 0
-                    || Input.GetAxisRaw(GameConstants.k_AxisNameVertical) != 0)
+                if (Input.GetButtonDown(GameConstants.buttonNameSubmit)
+                    || Input.GetAxisRaw(GameConstants.axisNameHorizontal) != 0
+                    || Input.GetAxisRaw(GameConstants.axisNameVertical) != 0)
                 {
                     EventSystem.current.SetSelectedGameObject(DefaultSelection.gameObject);
                 }

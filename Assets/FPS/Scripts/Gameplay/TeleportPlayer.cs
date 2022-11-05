@@ -8,25 +8,23 @@ namespace Unity.FPS.Gameplay
     {
         public KeyCode ActivateKey = KeyCode.F12;
 
-        PlayerCharacterController m_PlayerCharacterController;
+        PlayerCharacterController playerCharacterController;
 
         void Awake()
         {
-            m_PlayerCharacterController = FindObjectOfType<PlayerCharacterController>();
+            playerCharacterController = FindObjectOfType<PlayerCharacterController>();
             DebugUtility.HandleErrorIfNullFindObject<PlayerCharacterController, TeleportPlayer>(
-                m_PlayerCharacterController, this);
+                playerCharacterController, this);
         }
 
         void Update()
         {
             if (Input.GetKeyDown(ActivateKey))
             {
-                m_PlayerCharacterController.transform.SetPositionAndRotation(transform.position, transform.rotation);
-                Health playerHealth = m_PlayerCharacterController.GetComponent<Health>();
+                playerCharacterController.transform.SetPositionAndRotation(transform.position, transform.rotation);
+                Health playerHealth = playerCharacterController.GetComponent<Health>();
                 if (playerHealth)
-                {
                     playerHealth.Heal(999);
-                }
             }
         }
 

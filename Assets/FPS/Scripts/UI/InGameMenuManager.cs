@@ -29,6 +29,10 @@ namespace Unity.FPS.UI
         [Tooltip("GameObject for the controls")]
         public GameObject ControlImage;
 
+        //TODO: remove pause prompt after first pause
+        [Tooltip("For getting a refference to the pause prompt so it can be disabled.")]
+        public GameObject pauseButtonPrompt;
+
         PlayerInputHandler playerInputsHandler;
         Health playerHealth;
         FramerateCounter framerateCounter;
@@ -75,8 +79,8 @@ namespace Unity.FPS.UI
                 Cursor.visible = true;
             }
 
-            if (Input.GetButtonDown(GameConstants.k_ButtonNamePauseMenu)
-                || (MenuRoot.activeSelf && Input.GetButtonDown(GameConstants.k_ButtonNameCancel)))
+            if (Input.GetButtonDown(GameConstants.buttonNamePauseMenu)
+                || (MenuRoot.activeSelf && Input.GetButtonDown(GameConstants.buttonNameCancel)))
             {
                 if (ControlImage.activeSelf)
                 {
@@ -84,11 +88,12 @@ namespace Unity.FPS.UI
                     return;
                 }
 
-                SetPauseMenuActivation(!MenuRoot.activeSelf);
+                //pauseButtonPrompt.SetActive(false);
 
+                SetPauseMenuActivation(!MenuRoot.activeSelf);
             }
 
-            if (Input.GetAxisRaw(GameConstants.k_AxisNameVertical) != 0)
+            if (Input.GetAxisRaw(GameConstants.axisNameVertical) != 0)
             {
                 if (EventSystem.current.currentSelectedGameObject == null)
                 {
@@ -106,11 +111,11 @@ namespace Unity.FPS.UI
         void SetPauseMenuActivation(bool active)
         {
             MenuRoot.SetActive(active);
+            Cursor.visible = active;
 
             if (MenuRoot.activeSelf)
             {
                 Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
                 Time.timeScale = 0f;
                 AudioUtility.SetMasterVolume(VolumeWhenMenuOpen);
 
@@ -119,7 +124,6 @@ namespace Unity.FPS.UI
             else
             {
                 Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
                 Time.timeScale = 1f;
                 AudioUtility.SetMasterVolume(1);
             }
