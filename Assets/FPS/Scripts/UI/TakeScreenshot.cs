@@ -43,9 +43,9 @@ namespace Unity.FPS.UI
             DebugUtility.HandleErrorIfNullGetComponent<InGameMenuManager, TakeScreenshot>(gameMenuManager, this,
                 gameObject);
 
-            m_MenuCanvas = gameMenuManager.MenuRoot.GetComponent<CanvasGroup>();
+            m_MenuCanvas = gameMenuManager.pauseMenuRoot.GetComponent<CanvasGroup>();
             DebugUtility.HandleErrorIfNullGetComponent<CanvasGroup, TakeScreenshot>(m_MenuCanvas, this,
-                gameMenuManager.MenuRoot.gameObject);
+                gameMenuManager.pauseMenuRoot.gameObject);
 
             LoadScreenshot();
 #endif

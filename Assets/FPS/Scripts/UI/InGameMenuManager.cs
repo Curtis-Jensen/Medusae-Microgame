@@ -9,7 +9,7 @@ namespace Unity.FPS.UI
     public class InGameMenuManager : MonoBehaviour
     {
         [Tooltip("Root GameObject of the menu used to toggle its activation")]
-        public GameObject MenuRoot;
+        public GameObject pauseMenuRoot;
         internal static bool isPaused;
 
         [Tooltip("Master volume when menu is open")] [Range(0.001f, 1f)]
@@ -50,7 +50,7 @@ namespace Unity.FPS.UI
             framerateCounter = FindObjectOfType<FramerateCounter>();
             DebugUtility.HandleErrorIfNullFindObject<FramerateCounter, InGameMenuManager>(framerateCounter, this);
 
-            MenuRoot.SetActive(false);
+            pauseMenuRoot.SetActive(false);
 
             LookSensitivitySlider.value = playerInputsHandler.LookSensitivity;
             LookSensitivitySlider.onValueChanged.AddListener(OnMouseSensitivityChanged);
@@ -68,7 +68,7 @@ namespace Unity.FPS.UI
         void Update()
         {
             // Lock cursor when clicking outside of menu
-            if (!MenuRoot.activeSelf && Input.GetMouseButtonDown(0))
+            if (!pauseMenuRoot.activeSelf && Input.GetMouseButtonDown(0))
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
@@ -81,7 +81,7 @@ namespace Unity.FPS.UI
             }
 
             if (Input.GetButtonDown(GameConstants.buttonNamePauseMenu)
-                || (MenuRoot.activeSelf && Input.GetButtonDown(GameConstants.buttonNameCancel)))
+                || (pauseMenuRoot.activeSelf && Input.GetButtonDown(GameConstants.buttonNameCancel)))
             {
                 if (ControlImage.activeSelf)
                 {
@@ -89,7 +89,7 @@ namespace Unity.FPS.UI
                     return;
                 }
 
-                SetPauseMenuActivation(!MenuRoot.activeSelf);
+                SetPauseMenuActivation(!pauseMenuRoot.activeSelf);
             }
 
             if (Input.GetAxisRaw(GameConstants.axisNameVertical) != 0)
@@ -109,11 +109,11 @@ namespace Unity.FPS.UI
 
         void SetPauseMenuActivation(bool active)
         {
-            MenuRoot.SetActive(active);
+            pauseMenuRoot.SetActive(active);
             Cursor.visible = active;
             isPaused = active;
 
-            if (MenuRoot.activeSelf)
+            if (pauseMenuRoot.activeSelf)
             {
                 Cursor.lockState = CursorLockMode.None;
                 Time.timeScale = 0f;
