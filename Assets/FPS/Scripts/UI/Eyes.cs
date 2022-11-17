@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Unity.FPS.UI;
 
-namespace Unity.FPS.Gameplay
+namespace Unity.FPS.UI
 {
     public class Eyes : MonoBehaviour
     {
@@ -30,29 +30,28 @@ namespace Unity.FPS.Gameplay
         #endregion
         #region Private Variables
         bool eyesViewing;
-        float dist;
         float lookTimer = 0; //However long the player has been looking at the enemy.
         float dps;
         float medusaeVisualized;
         float staticVisualEffect;//Determines by how much the screen will be staticy
-        List<Viewable> viewableList;
+        internal List<Viewable> viewableList;
         Camera cam;
-        Transform origin; //Where the line "starts" from
         int camWidth;
         int camHeight;
         Vector2 camCenter;
         #endregion
 
+        void Awake()
+        {
+            viewableList = new List<Viewable>();
+        }
+
         void Start()
         {
-            origin = transform;
             cam = gameObject.GetComponent<Camera>();
             camWidth = cam.pixelWidth;
             camHeight = cam.pixelHeight;
             camCenter = new Vector2(camWidth / 2, camHeight / 2);
-
-            viewableList = new List<Viewable>();
-            viewableList.Add(new Viewable(healer[0], -healingAmount));
         }
 
         #region👁Viewing Steps
@@ -63,7 +62,7 @@ namespace Unity.FPS.Gameplay
         bool Blinking()
         {
             bool blinking = false;
-            if (InGameMenuManager.isPaused)    blinking = true;
+            if (InGameMenuManager.isPaused)   blinking = true;
             else if (Input.GetMouseButton(2)) blinking = true;
 
             eyeLids.SetActive(blinking);
@@ -71,6 +70,8 @@ namespace Unity.FPS.Gameplay
         }
 
         /* Step 1 👁
+         * 
+         * The update function calls everything
          */
         void FixedUpdate()
         {
@@ -190,20 +191,6 @@ namespace Unity.FPS.Gameplay
             }
         }
         #endregion
-
-        /* The line renderer would be for if I had a pulling medusa and wanted to show a visual effect for that
-        */
-        void DrawLine(GameObject medusa)
-        {
-            //float x = Mathf.Lerp(0, dist, counter);//This line breaks.  What is a counter?
-
-            Vector3 pointA = origin.position; //The start of the line is at the player.
-            Vector3 pointB = medusa.transform.position; //The end is at the medusa
-
-            dist = Vector3.Distance(pointA, pointB); //Getting the distance between the two
-            Vector3 pointAlongLine = dist * Vector3.Normalize(pointB - pointA) + pointA;
-            //lineRenderer.SetPosition(1, pointAlongLine);//Draws the line
-        }
 
         /* Shoots out a very simple ray directly in front of the player to see if anything is there.
          * If there is something there, but the main eyes methods don't see it, then there is something wrong
