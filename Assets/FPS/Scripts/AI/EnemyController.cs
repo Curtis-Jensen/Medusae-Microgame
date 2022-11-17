@@ -242,7 +242,7 @@ namespace Unity.FPS.AI
         {
             onDetectedTarget.Invoke();
 
-            // Set the eye default color and property block if the eye renderer is set
+            // If there's a big eye set the eye default color and property block if the eye renderer is set
             if (eyeRendererData.Renderer != null)
             {
                 eyeColorMaterialPropertyBlock.SetColor("_EmissionColor", AttackEyeColor);

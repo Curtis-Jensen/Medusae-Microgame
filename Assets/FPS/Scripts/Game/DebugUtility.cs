@@ -34,9 +34,9 @@ namespace Unity.FPS.Game
 #if UNITY_EDITOR
             if (count == 0)
             {
-                Debug.LogError("Error: Component of type " + typeof(TS) + " on GameObject " + source.gameObject.name +
-                               " expected to find at least one component of type " + typeof(TO) + " on GameObject " +
-                               onObject.name + ", but none were found.");
+                Debug.LogError($"Error: Component of type {typeof(TS)} on GameObject {source.gameObject.name}" +
+                               $" expected to find at least one component of type {typeof(TO)} on GameObject " +
+                               $"{onObject.name}, but none were found.");
             }
 #endif
         }

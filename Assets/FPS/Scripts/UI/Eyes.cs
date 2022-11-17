@@ -9,29 +9,21 @@ namespace Unity.FPS.UI
     public class Eyes : MonoBehaviour
     {
         #region Public Variables
-        public GameObject[] healer;
         [Tooltip("The black part of the screen when the player blinks")]
         public GameObject eyeLids;
-        public Text healthString;
-        public Slider slider;
         [Tooltip("The effect that covers the screen when looking at medusae")]
         public Image staticImage;
-        public AudioSource major;
         public AudioSource effectNoise;
-        public float damageMultiplier = 3f;
-        public float healingAmount;
-        public float health = 100;
         [Tooltip("The volume that static that changes when looking at or not looking at medusae")]
         public float effectVolume;
         [Tooltip("The intensity of the static effect on screen")]
         public float staticIntensity;
         public float maxStaticIntensity;
-        public bool invincible;
+        public bool testing;
         #endregion
         #region Private Variables
         bool eyesViewing;
         float lookTimer = 0; //However long the player has been looking at the enemy.
-        float dps;
         float medusaeVisualized;
         float staticVisualEffect;//Determines by how much the screen will be staticy
         internal List<Viewable> viewableList;
@@ -82,7 +74,8 @@ namespace Unity.FPS.UI
 
             SetStaticIntensity();
             RenderStatic();
-            EyesTest();
+            if(testing)
+                EyesTest();
         }
 
         /* Step 2 ⬜
@@ -148,47 +141,17 @@ namespace Unity.FPS.UI
         {
             eyesViewing = true;
 
-            //Could be great to show the state of the sightline by having different colors, but that may have to wait
-            //Debug.Log("The effect Multiplier is: " + effectMultiplier);
-            //Color lineColor;
-            //if (effectMultiplier > 1) lineColor = Color.magenta;
-            //else                  lineColor = Color.yellow;
-
             //Debug.DrawRay(sightLine.origin, sightLine.direction * 100, lineColor);
 
             lookTimer += Time.deltaTime * effectMultiplier;
             if (Math.Abs(lookTimer) > 1)
             {
-                //if (lookTimer < 1)  Debug.Log("It got further down!");
-                DecreaseHealth(lookTimer);
+                //TODO add in reference to player's health script
+                //DecreaseHealth(lookTimer);
 
                 lookTimer = 0;
             }
             medusaeVisualized += effectMultiplier;
-        }
-
-        /* Step 5 💔 (Step 6 is lookEffects.KillPlayer())
-         * Also attempts to measure DPS if invincible.
-         * 
-         * If it tries to heal over 100 make it 100 again
-         * If health is at 0 make it kill the player
-         * Display the health bar at the propper percentage
-         */
-        public void DecreaseHealth(float damage)
-        {
-            if (invincible)
-            {
-                dps += damage;
-                dps /= Time.deltaTime;
-                healthString.text = "DPS: " + dps.ToString();
-            }
-            else
-            {
-                health -= damage;
-                if (health > 100) health = 100;
-                else if (health <= 0) throw new UnityException("Tried to die from looking damage but the health script is not tied to the eyes script yet.");
-                slider.value = health / 100;
-            }
         }
         #endregion
 
