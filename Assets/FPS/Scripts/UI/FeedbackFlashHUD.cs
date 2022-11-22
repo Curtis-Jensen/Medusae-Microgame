@@ -109,6 +109,8 @@ namespace Unity.FPS.UI
 
         void OnTakeDamage(float dmg, GameObject damageSource)
         {
+            //If the damage is not large enough then assume it is gradual static damage and don't flash
+            if (dmg < 3) return;
             ResetFlash();
             FlashImage.color = DamageFlashColor;
         }
