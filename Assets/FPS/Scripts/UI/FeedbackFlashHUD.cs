@@ -79,9 +79,7 @@ namespace Unity.FPS.UI
                         ((Mathf.Sin(Time.time * PulsatingVignetteFrequency) / 2) + 0.5f) * vignetteAlpha;
             }
             else
-            {
                 VignetteCanvasGroup.gameObject.SetActive(false);
-            }
 
 
             if (flashActive)

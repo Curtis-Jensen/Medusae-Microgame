@@ -14,35 +14,31 @@ namespace Unity.FPS.Game
 
         void Awake()
         {
-            // find the health component either at the same level, or higher in the hierarchy
+            // Find the health component either at the same level, or higher in the hierarchy
             Health = GetComponent<Health>();
             if (!Health)
-            {
                 Health = GetComponentInParent<Health>();
-            }
         }
 
+        /* 1 skip the crit multiplier if it's from an explosion
+         * 
+         * 2 potentially reduce damages if inflicted by self
+         * 
+         * 3 apply the damages
+         */
         public void InflictDamage(float damage, bool isExplosionDamage, GameObject damageSource)
         {
-            if (Health)
-            {
-                var totalDamage = damage;
+            if (!Health) return;
 
-                // skip the crit multiplier if it's from an explosion
-                if (!isExplosionDamage)
-                {
-                    totalDamage *= DamageMultiplier;
-                }
+            var totalDamage = damage;
 
-                // potentially reduce damages if inflicted by self
-                if (Health.gameObject == damageSource)
-                {
-                    totalDamage *= SensibilityToSelfdamage;
-                }
+            if (!isExplosionDamage)
+                totalDamage *= DamageMultiplier;//1
 
-                // apply the damages
-                Health.TakeDamage(totalDamage, damageSource);
-            }
+            if (Health.gameObject == damageSource)
+                totalDamage *= SensibilityToSelfdamage;//2
+
+            Health.TakeDamage(totalDamage, damageSource);//3
         }
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 using Unity.FPS.UI;
+using Unity.FPS.Game;
 
 namespace Unity.FPS.UI
 {
@@ -18,7 +19,9 @@ namespace Unity.FPS.UI
         public float effectVolume;
         [Tooltip("The intensity of the static effect on screen")]
         public float staticIntensity;
+        [Tooltip("The maximum intensity of the static effect on screen")]
         public float maxStaticIntensity;
+        [Tooltip("Whether Debug.Logs() and errors should be logged when testing how the player looks at the enemy")]
         public bool testing;
         #endregion
         #region Private Variables
@@ -31,6 +34,7 @@ namespace Unity.FPS.UI
         int camWidth;
         int camHeight;
         Vector2 camCenter;
+        Health health;
         #endregion
 
         void Awake()
@@ -44,6 +48,8 @@ namespace Unity.FPS.UI
             camWidth = cam.pixelWidth;
             camHeight = cam.pixelHeight;
             camCenter = new Vector2(camWidth / 2, camHeight / 2);
+
+            health = gameObject.GetComponentInParent<Health>();
         }
 
         #region👁Viewing Steps
@@ -146,8 +152,7 @@ namespace Unity.FPS.UI
             lookTimer += Time.deltaTime * effectMultiplier;
             if (Math.Abs(lookTimer) > 1)
             {
-                //TODO add in reference to player's health script
-                //DecreaseHealth(lookTimer);
+                health.TakeDamage(lookTimer, gameObject);
 
                 lookTimer = 0;
             }

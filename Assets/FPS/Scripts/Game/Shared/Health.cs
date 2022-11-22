@@ -43,6 +43,11 @@ namespace Unity.FPS.Game
             }
         }
 
+        /// <summary>
+        /// Inflict damage, and say what damaged it
+        /// </summary>
+        /// <param name="damage"></param>
+        /// <param name="damageSource"></param>
         public void TakeDamage(float damage, GameObject damageSource)
         {
             if (Invincible)
