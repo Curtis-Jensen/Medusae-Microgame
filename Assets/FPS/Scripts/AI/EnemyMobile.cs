@@ -91,9 +91,7 @@ namespace Unity.FPS.AI
                 case AIState.Attack:
                     // Transition to follow when no longer a target in attack range
                     if (!enemyController.IsTargetInAttackRange)
-                    {
-                        AiState = AIState.Follow;
-                    }
+                    AiState = AIState.Follow;
 
                     break;
             }
@@ -117,13 +115,9 @@ namespace Unity.FPS.AI
                     if (Vector3.Distance(enemyController.KnownDetectedTarget.transform.position,
                             enemyController.DetectionModule.DetectionSourcePoint.position)
                         >= (AttackStopDistanceRatio * enemyController.DetectionModule.AttackRange))
-                    {
-                        enemyController.SetNavDestination(enemyController.KnownDetectedTarget.transform.position);
-                    }
+                    enemyController.SetNavDestination(enemyController.KnownDetectedTarget.transform.position);
                     else
-                    {
-                        enemyController.SetNavDestination(transform.position);
-                    }
+                    enemyController.SetNavDestination(transform.position);
 
                     enemyController.OrientTowards(enemyController.KnownDetectedTarget.transform.position);
                     enemyController.TryAtack(enemyController.KnownDetectedTarget.transform.position);
@@ -139,19 +133,13 @@ namespace Unity.FPS.AI
         void OnDetectedTarget()
         {
             if (AiState == AIState.Patrol)
-            {
                 AiState = AIState.Follow;
-            }
 
             for (int i = 0; i < OnDetectVfx.Length; i++)
-            {
                 OnDetectVfx[i].Play();
-            }
 
             if (OnDetectSfx)
-            {
                 AudioUtility.CreateSFX(OnDetectSfx, transform.position, AudioUtility.AudioGroups.EnemyDetection, 1f);
-            }
 
             Animator.SetBool(animAlertedParameter, true);
         }
@@ -159,14 +147,10 @@ namespace Unity.FPS.AI
         void OnLostTarget()
         {
             if (AiState == AIState.Follow || AiState == AIState.Attack)
-            {
                 AiState = AIState.Patrol;
-            }
 
             for (int i = 0; i < OnDetectVfx.Length; i++)
-            {
                 OnDetectVfx[i].Stop();
-            }
 
             Animator.SetBool(animAlertedParameter, false);
         }

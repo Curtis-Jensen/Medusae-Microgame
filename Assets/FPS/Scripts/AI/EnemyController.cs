@@ -84,6 +84,8 @@ namespace Unity.FPS.AI
         [Tooltip("Color of the sphere gizmo representing the detection range")]
         public Color DetectionRangeColor = Color.blue;
 
+        //These UnityActions are a list of methods that get called at certain times.
+        //They are not implemented for the medusa yet so there are null checks
         public UnityAction onAttack;
         public UnityAction onDetectedTarget;
         public UnityAction onLostTarget;
@@ -227,6 +229,11 @@ namespace Unity.FPS.AI
 
         void OnLostTarget()
         {
+            if (onLostTarget == null)
+            {
+                Debug.Log("EnemyController.onLostTarget is not set.  This is likely because EnemyController has not been fully implemented.");
+                return;
+            }
             onLostTarget.Invoke();
 
             // Set the eye attack color and property block if the eye renderer is set
@@ -240,7 +247,11 @@ namespace Unity.FPS.AI
 
         void OnDetectedTarget()
         {
-            Debug.Log($"onDetectedTarget: {onDetectedTarget}");
+            if (onDetectedTarget == null)
+            {
+                Debug.Log("EnemyController.onDetectedTarget is not set.  This is likely because EnemyController has not been fully implemented.");
+                return;
+            }
             onDetectedTarget.Invoke();
 
             // If there's a big eye set the eye default color and property block if the eye renderer is set
