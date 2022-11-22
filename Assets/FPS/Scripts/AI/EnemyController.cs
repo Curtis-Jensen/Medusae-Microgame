@@ -240,6 +240,7 @@ namespace Unity.FPS.AI
 
         void OnDetectedTarget()
         {
+            Debug.Log($"onDetectedTarget: {onDetectedTarget}");
             onDetectedTarget.Invoke();
 
             // If there's a big eye set the eye default color and property block if the eye renderer is set

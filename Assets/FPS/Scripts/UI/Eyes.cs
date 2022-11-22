@@ -119,7 +119,7 @@ namespace Unity.FPS.UI
             //Debug.Log("The target to view is within frame!");
             foreach (RaycastHit item in Physics.RaycastAll(sightLine))
             {
-                if (item.transform.CompareTag("Wall")) return;
+                if (item.transform.CompareTag("Untagged")) return;
 
                 if (item.collider.Equals(targetInFrame.viewableTarget.GetComponentInChildren<Collider>()))
                 {
