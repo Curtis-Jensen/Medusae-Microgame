@@ -14,6 +14,7 @@ namespace Unity.FPS.UI
         public GameObject eyeLids;
         [Tooltip("The effect that covers the screen when looking at medusae")]
         public Image staticImage;
+        [Tooltip("Where the static sound effect comes from")]
         public AudioSource effectNoise;
         [Tooltip("The volume that static that changes when looking at or not looking at medusae")]
         public float effectVolume;
@@ -150,10 +151,14 @@ namespace Unity.FPS.UI
             //Debug.DrawRay(sightLine.origin, sightLine.direction * 100, lineColor);
 
             lookTimer += Time.deltaTime * effectMultiplier;
-            if (Math.Abs(lookTimer) > 1)
+            if (lookTimer > 1)
             {
                 health.TakeDamage(lookTimer, gameObject);
-
+                lookTimer = 0;
+            }            
+            else if (lookTimer < 1)
+            {
+                health.Heal(-lookTimer);
                 lookTimer = 0;
             }
             medusaeVisualized += effectMultiplier;
