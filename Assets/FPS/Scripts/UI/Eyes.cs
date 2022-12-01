@@ -12,6 +12,11 @@ namespace Unity.FPS.UI
         #region Public Variables
         [Tooltip("The black part of the screen when the player blinks")]
         public GameObject eyeLids;
+        [Tooltip("Whether Debug.Logs() and errors should be logged when testing how the player looks at the enemy")]
+        public bool testing;
+        public float lookHeight;
+
+        [Header("Static")]
         [Tooltip("The effect that covers the screen when looking at medusae")]
         public Image staticImage;
         [Tooltip("Where the static sound effect comes from")]
@@ -22,8 +27,6 @@ namespace Unity.FPS.UI
         public float staticIntensity;
         [Tooltip("The maximum intensity of the static effect on screen")]
         public float maxStaticIntensity;
-        [Tooltip("Whether Debug.Logs() and errors should be logged when testing how the player looks at the enemy")]
-        public bool testing;
         #endregion
         #region Private Variables
         bool eyesViewing;
@@ -98,7 +101,9 @@ namespace Unity.FPS.UI
             {
                 if (viewableList[i] == null) continue;
 
-                var screenPos = cam.WorldToScreenPoint(viewableList[i].viewableTarget.transform.position);
+                var colliderBullsEye = viewableList[i].viewableTarget.transform.position;
+                colliderBullsEye = new Vector3(colliderBullsEye.x, colliderBullsEye.y + lookHeight, colliderBullsEye.z);
+                var screenPos = cam.WorldToScreenPoint(colliderBullsEye);
 
                 bool withinWidth = screenPos.x > 0 && screenPos.x < camWidth;
                 bool withinHeight = screenPos.y > 0 && screenPos.y < camHeight;
@@ -106,7 +111,7 @@ namespace Unity.FPS.UI
                 if (withinHeight && withinWidth)
                 {
                     var sightLine = cam.ScreenPointToRay(screenPos);
-                    Debug.DrawRay(sightLine.origin, sightLine.direction * 100, Color.magenta);
+                    Debug.DrawRay(sightLine.origin, colliderBullsEye - sightLine.origin, Color.magenta);
                     CheckForObstructions(viewableList[i], sightLine);
                 }
             }

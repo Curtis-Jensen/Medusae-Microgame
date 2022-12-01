@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.6263538, g: 0.3411424, b: 0.35542285, a: 1}
+  m_IndirectSpecularColor: {r: 0.1918881, g: 0, b: 0.09503854, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3643,6 +3643,10 @@ PrefabInstance:
       propertyPath: eyeLids
       value: 
       objectReference: {fileID: 1016610462}
+    - target: {fileID: 301687875, guid: 761cdc9e4e883334cbdcea062d0befa7, type: 3}
+      propertyPath: lookHeight
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 301687875, guid: 761cdc9e4e883334cbdcea062d0befa7, type: 3}
       propertyPath: staticImage
       value: 
