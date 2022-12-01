@@ -106,8 +106,10 @@ namespace Unity.FPS.UI
                 colliderBullsEye = new Vector3(colliderBullsEye.x, colliderBullsEye.y + lookHeight, colliderBullsEye.z);
                 var screenPos = cam.WorldToScreenPoint(colliderBullsEye);
 
-                bool withinWidth = screenPos.x > 0 && screenPos.x < camWidth;
+                bool withinWidth =  screenPos.x > 0 && screenPos.x < camWidth;
                 bool withinHeight = screenPos.y > 0 && screenPos.y < camHeight;
+
+                //Debug.Log(screenPos.x);
 
                 if (withinHeight && withinWidth)
                 {
@@ -121,18 +123,18 @@ namespace Unity.FPS.UI
         }
 
         /* Step 3 THIS IS WHERE THE EYES GLITCH RESIDES
-         * Creates a ray to look for the enemy (also makes a ray for the scene to visualize)
+         * For some reason it thinks there is a wall in front of the medusa
          * 
-         * (visualizes the ray when in debug)
-         * 
-         * if the ray hits a wall, it stops looking for stuff
-         * if the ray hits an enemy it keeps looking for stuff (doesn't acknowledge)
+         * if the ray hits a non viewable, it stops looking for stuff
+         * if the ray hits a different viewable with a tag it just keeps going
          * If the ray hits the enemy it was looking for it gives the medusa effect.
          */
         void CheckForObstructions(Viewable targetInFrame, Ray sightLine)
         {
+
             foreach (RaycastHit item in Physics.RaycastAll(sightLine))
             {
+                Debug.Log(item.transform.gameObject.name);
                 if (item.transform.CompareTag("Untagged")) return;
 
                 if (item.collider.Equals(targetInFrame.viewableTarget.GetComponentInChildren<Collider>()))
