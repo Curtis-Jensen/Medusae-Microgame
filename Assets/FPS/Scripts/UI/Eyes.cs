@@ -130,7 +130,6 @@ namespace Unity.FPS.UI
         void CheckForObstructions(Viewable targetInFrame, Ray sightLine)
         {
             var hits = Physics.RaycastAll(sightLine);
-            //Need to sort here
 
             hits = SortRaycasts(hits);
 
@@ -148,15 +147,24 @@ namespace Unity.FPS.UI
 
         private RaycastHit[] SortRaycasts(RaycastHit[] hits)
         {
-            for(int i = 0; i < hits.Length - 1; i++)
+            bool sorted;
+
+            do
             {
-                if(hits[i].distance > hits[i + 1].distance)
+                sorted = true;
+                for (int i = 0; i < hits.Length - 1; i++)
                 {
-                    var temp = hits[i];
-                    hits[i] = hits[i + 1];
-                    hits[i + 1] = temp;
+                    if (hits[i].distance > hits[i + 1].distance)
+                    {
+                        var temp = hits[i];
+                        hits[i] = hits[i + 1];
+                        hits[i + 1] = temp;
+
+                        sorted = false;
+                    }
                 }
-            }
+
+            } while (sorted == false);
 
             return hits;
         }
