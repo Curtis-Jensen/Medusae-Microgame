@@ -14,6 +14,7 @@ namespace Unity.FPS.UI
         public GameObject eyeLids;
         [Tooltip("Whether Debug.Logs() and errors should be logged when testing how the player looks at the enemy")]
         public bool testing;
+        [Tooltip("How high above the center of the collider the player will look.  An attempt at debugging the eyes glitch.")]
         public float lookHeight;
 
         [Header("Static")]
@@ -111,13 +112,15 @@ namespace Unity.FPS.UI
                 if (withinHeight && withinWidth)
                 {
                     var sightLine = cam.ScreenPointToRay(screenPos);
+
                     Debug.DrawRay(sightLine.origin, colliderBullsEye - sightLine.origin, Color.magenta);
+                    //AddLookTime(viewableList[i].effectMultiplier);
                     CheckForObstructions(viewableList[i], sightLine);
                 }
             }
         }
 
-        /* Step 3
+        /* Step 3 THIS IS WHERE THE EYES GLITCH RESIDES
          * Creates a ray to look for the enemy (also makes a ray for the scene to visualize)
          * 
          * (visualizes the ray when in debug)
@@ -128,19 +131,15 @@ namespace Unity.FPS.UI
          */
         void CheckForObstructions(Viewable targetInFrame, Ray sightLine)
         {
-            //Debug.Log("The target to view is within frame!");
             foreach (RaycastHit item in Physics.RaycastAll(sightLine))
             {
                 if (item.transform.CompareTag("Untagged")) return;
 
                 if (item.collider.Equals(targetInFrame.viewableTarget.GetComponentInChildren<Collider>()))
                 {
-                    //Debug.Log("Found: " + targetInFrame.viewableTarget.name);
                     AddLookTime(targetInFrame.effectMultiplier);
                     return;
                 }
-                //else Debug.Log("The current collider is is: " + item.collider +
-                //   ", and the target collider is: " + targetInFrame.viewableTarget.GetComponentInChildren<Collider>());
             }
         }
 
