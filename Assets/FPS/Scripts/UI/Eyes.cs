@@ -109,21 +109,19 @@ namespace Unity.FPS.UI
                 bool withinWidth =  screenPos.x > 0 && screenPos.x < camWidth;
                 bool withinHeight = screenPos.y > 0 && screenPos.y < camHeight;
 
-                //Debug.Log(screenPos.x);
-
                 if (withinHeight && withinWidth)
                 {
                     var sightLine = cam.ScreenPointToRay(screenPos);
 
                     Debug.DrawRay(sightLine.origin, colliderBullsEye - sightLine.origin, Color.magenta);
-                    //AddLookTime(viewableList[i].effectMultiplier);
                     CheckForObstructions(viewableList[i], sightLine);
                 }
             }
         }
 
         /* Step 3 THIS IS WHERE THE EYES GLITCH RESIDES
-         * For some reason it thinks there is a wall in front of the medusa
+         * The order of the results in RaycastAll() is uNdEfInEd so sometimes the wall randomly pops in front of the medusa.
+         * Need to sort by distance from the player or something
          * 
          * if the ray hits a non viewable, it stops looking for stuff
          * if the ray hits a different viewable with a tag it just keeps going
@@ -131,10 +129,13 @@ namespace Unity.FPS.UI
          */
         void CheckForObstructions(Viewable targetInFrame, Ray sightLine)
         {
+            var hits = Physics.RaycastAll(sightLine);
+            //Need to sort here
 
-            foreach (RaycastHit item in Physics.RaycastAll(sightLine))
+            hits = SortRaycasts(hits);
+
+            foreach (RaycastHit item in hits)
             {
-                Debug.Log(item.transform.gameObject.name);
                 if (item.transform.CompareTag("Untagged")) return;
 
                 if (item.collider.Equals(targetInFrame.viewableTarget.GetComponentInChildren<Collider>()))
@@ -145,6 +146,21 @@ namespace Unity.FPS.UI
             }
         }
 
+        private RaycastHit[] SortRaycasts(RaycastHit[] hits)
+        {
+            for(int i = 0; i < hits.Length - 1; i++)
+            {
+                if(hits[i].distance > hits[i + 1].distance)
+                {
+                    var temp = hits[i];
+                    hits[i] = hits[i + 1];
+                    hits[i + 1] = temp;
+                }
+            }
+
+            return hits;
+        }
+
         /* Step 4 ☣
          * This is meant to be the place to decide what will happen when medusae are looked at
          * 
@@ -153,8 +169,6 @@ namespace Unity.FPS.UI
         void AddLookTime(float effectMultiplier)
         {
             eyesViewing = true;
-
-            //Debug.DrawRay(sightLine.origin, sightLine.direction * 100, lineColor);
 
             lookTimer += Time.deltaTime * effectMultiplier;
             if (lookTimer > 1)

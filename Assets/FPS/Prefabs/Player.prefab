@@ -32,36 +32,6 @@ Transform:
   m_Father: {fileID: 8746678193447392789}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1991197507
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1991197508}
-  m_Layer: 0
-  m_Name: Player Front
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1991197508
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1991197507}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 7}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8694137560673455815}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &36420567472693393
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,7 +739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8534e17a0f90604c9afd4f5c73d829f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Id: 648a6c79-1c57-4655-9b6f-2d0085d8cc04
+  m_Id: 1f609c85-e4d3-447d-8ec2-8bf9d8db63a2
 --- !u!114 &2167156688700070320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -782,7 +752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8534e17a0f90604c9afd4f5c73d829f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Id: b7ef103c-6e78-41af-8322-5ac95ed05882
+  m_Id: 8bd68835-11a8-44ba-b55a-e1e1f028f80b
 --- !u!1 &7383874627095517793
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,7 +811,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8694137560673455815}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7442781921941657531
 GameObject:
@@ -876,7 +846,6 @@ Transform:
   m_Children:
   - {fileID: 3809839388784154446}
   - {fileID: 3361326784658045617}
-  - {fileID: 1991197508}
   - {fileID: 2463865042528959516}
   m_Father: {fileID: 8746678193447392789}
   m_RootOrder: 0
@@ -1041,12 +1010,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eyeLids: {fileID: 0}
+  testing: 0
+  lookHeight: 0
   staticImage: {fileID: 0}
   effectNoise: {fileID: 301687876}
   effectVolume: 0.07
   staticIntensity: 0.03
   maxStaticIntensity: 0.5
-  testing: 0
 --- !u!1001 &7263037753131886630
 PrefabInstance:
   m_ObjectHideFlags: 0
