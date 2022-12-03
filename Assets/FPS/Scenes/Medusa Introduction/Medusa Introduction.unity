@@ -1037,6 +1037,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Loot_Health
       objectReference: {fileID: 0}
+    - target: {fileID: 2529580269645609534, guid: 9973c412032becb4ca116ca08be62edf,
+        type: 3}
+      propertyPath: m_TagString
+      value: Health
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9973c412032becb4ca116ca08be62edf, type: 3}
 --- !u!1001 &577741113
@@ -3644,13 +3649,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1016610462}
     - target: {fileID: 301687875, guid: 761cdc9e4e883334cbdcea062d0befa7, type: 3}
-      propertyPath: lookHeight
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 301687875, guid: 761cdc9e4e883334cbdcea062d0befa7, type: 3}
       propertyPath: staticImage
       value: 
       objectReference: {fileID: 1772638618}
+    - target: {fileID: 2729281214152228922, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7253983127304857660, guid: 761cdc9e4e883334cbdcea062d0befa7,
         type: 3}
       propertyPath: m_Name

@@ -119,25 +119,23 @@ namespace Unity.FPS.UI
             }
         }
 
-        /* Step 3 THIS IS WHERE THE EYES GLITCH RESIDES
-         * The order of the results in RaycastAll() is uNdEfInEd so sometimes the wall randomly pops in front of the medusa.
-         * Need to sort by distance from the player or something
-         * 
-         * if the ray hits a non viewable, it stops looking for stuff
-         * if the ray hits a different viewable with a tag it just keeps going
-         * If the ray hits the enemy it was looking for it gives the medusa effect.
+        /* Step 3 
+         * 1 if the ray hits a non viewable, it stops looking for stuff
+         * 2 if the ray hits a different viewable with a tag it just keeps going
+         * 3 If the ray hits the enemy it was looking for it gives the medusa effect.
          */
         void CheckForObstructions(Viewable targetInFrame, Ray sightLine)
         {
             var hits = Physics.RaycastAll(sightLine);
-
             hits = SortRaycasts(hits);
 
             foreach (RaycastHit item in hits)
             {
-                if (item.transform.CompareTag("Untagged")) return;
+                if (item.transform.CompareTag("Untagged")) return;//1
 
-                if (item.collider.Equals(targetInFrame.viewableTarget.GetComponentInChildren<Collider>()))
+                //2
+
+                if (item.collider.Equals(targetInFrame.viewableTarget.GetComponentInChildren<Collider>()))//3
                 {
                     AddLookTime(targetInFrame.effectMultiplier);
                     return;
@@ -145,6 +143,11 @@ namespace Unity.FPS.UI
             }
         }
 
+        /// <summary>
+        /// RayCastAll() does not sort it's own list and this can lead to big bugs, so we need to sort here.  Uses cocktail sort I believe.
+        /// </summary>
+        /// <param name="hits"></param>
+        /// <returns></returns>
         private RaycastHit[] SortRaycasts(RaycastHit[] hits)
         {
             bool sorted;
@@ -154,7 +157,7 @@ namespace Unity.FPS.UI
                 sorted = true;
                 for (int i = 0; i < hits.Length - 1; i++)
                 {
-                    if (hits[i].distance > hits[i + 1].distance)
+                    if (hits[i].distance > hits[i + 1].distance) //This if statement could be inverted, but I keep running into infnite while loops when trying to do so.
                     {
                         var temp = hits[i];
                         hits[i] = hits[i + 1];
@@ -179,6 +182,7 @@ namespace Unity.FPS.UI
             eyesViewing = true;
 
             lookTimer += Time.deltaTime * effectMultiplier;
+
             if (lookTimer > 1)
             {
                 health.TakeDamage(lookTimer, gameObject);
@@ -195,7 +199,7 @@ namespace Unity.FPS.UI
 
         /* Shoots out a very simple ray directly in front of the player to see if anything is there.
          * If there is something there, but the main eyes methods don't see it, then there is something wrong
-         * and an error is thrown.  Hopefully with some detail as to the error.
+         * and an error is thrown.
          * 
          * For each item in viewableList (unless it's null)
          * Get the collider for the viewable target

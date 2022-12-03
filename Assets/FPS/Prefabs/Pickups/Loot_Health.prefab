@@ -25,6 +25,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Loot_Health
       objectReference: {fileID: 0}
+    - target: {fileID: 2620131183356007192, guid: d40ae884302b6684a8b3b6f3d55a71ba,
+        type: 3}
+      propertyPath: m_TagString
+      value: Health
+      objectReference: {fileID: 0}
     - target: {fileID: 2620131183356007194, guid: d40ae884302b6684a8b3b6f3d55a71ba,
         type: 3}
       propertyPath: BobbingAmount
