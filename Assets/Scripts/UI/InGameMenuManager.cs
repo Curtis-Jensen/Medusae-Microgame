@@ -80,17 +80,7 @@ namespace Unity.FPS.UI
                 Cursor.visible = true;
             }
 
-            if (Input.GetButtonDown(GameConstants.buttonNamePauseMenu)
-                || (pauseMenuRoot.activeSelf && Input.GetButtonDown(GameConstants.buttonNameCancel)))
-            {
-                if (ControlImage.activeSelf)
-                {
-                    ControlImage.SetActive(false);
-                    return;
-                }
-
-                SetPauseMenuActivation(!pauseMenuRoot.activeSelf);
-            }
+            Pause();
 
             if (Input.GetAxisRaw(GameConstants.axisNameVertical) != 0)
             {
@@ -99,6 +89,24 @@ namespace Unity.FPS.UI
                     EventSystem.current.SetSelectedGameObject(null);
                     LookSensitivitySlider.Select();
                 }
+            }
+        }
+
+        public void Pause()
+        {
+            bool pauseButtonPressed =  Input.GetButtonDown(GameConstants.buttonNamePauseMenu);
+            bool cancelButtonPressed = Input.GetButtonDown(GameConstants.buttonNameCancel);
+
+            if (pauseButtonPressed
+                || (pauseMenuRoot.activeSelf && cancelButtonPressed))
+            {
+                if (ControlImage.activeSelf)
+                {
+                    ControlImage.SetActive(false);
+                    return;
+                }
+
+                SetPauseMenuActivation(!pauseMenuRoot.activeSelf);
             }
         }
 
