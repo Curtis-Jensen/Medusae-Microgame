@@ -35,6 +35,9 @@ namespace Unity.FPS.Gameplay
         [Tooltip("Position for innactive weapons")]
         public Transform DownWeaponPosition;
 
+        [Tooltip("Position for reversed weapons")]
+        public Transform reverseWeaponPosition;
+
         [Header("Weapon Bob")]
         [Tooltip("Frequency at which the weapon will move around in the screen when the player is in movement")]
         public float BobFrequency = 10f;
@@ -310,6 +313,13 @@ namespace Unity.FPS.Gameplay
                     AimingAnimationSpeed * Time.deltaTime);
                 SetFov(Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView,
                     activeWeapon.AimZoomRatio * DefaultFov, AimingAnimationSpeed * Time.deltaTime));
+            }
+            else if (Input.GetButton(GameConstants.buttonReverseAim))
+            {
+                weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition,
+                    reverseWeaponPosition.localPosition, AimingAnimationSpeed * Time.deltaTime);
+                SetFov(Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView, DefaultFov,
+                    AimingAnimationSpeed * Time.deltaTime));
             }
             else
             {
