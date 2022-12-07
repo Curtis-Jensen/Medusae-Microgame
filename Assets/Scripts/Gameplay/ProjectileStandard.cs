@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Unity.FPS.Gameplay
 {
+    //Contains properties and behaviors that only the standard projectile has
     public class ProjectileStandard : ProjectileBase
     {
         [Header("General")] [Tooltip("Radius of this projectile's collision detection")]
@@ -71,7 +72,7 @@ namespace Unity.FPS.Gameplay
             DebugUtility.HandleErrorIfNullGetComponent<ProjectileBase, ProjectileStandard>(projectileBase, this,
                 gameObject);
 
-            projectileBase.OnShoot += OnShoot;
+            projectileBase.onShoot += OnShoot;
 
             Destroy(gameObject, MaxLifeTime);
         }

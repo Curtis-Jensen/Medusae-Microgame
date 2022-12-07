@@ -26,7 +26,7 @@ namespace Unity.FPS.Gameplay
             DebugUtility.HandleErrorIfNullGetComponent<ProjectileBase, ChargedProjectileEffectsHandler>(
                 projectileBase, this, gameObject);
 
-            projectileBase.OnShoot += OnShoot;
+            projectileBase.onShoot += OnShoot;
 
             affectedRenderers = ChargingObject.GetComponentsInChildren<MeshRenderer>();
             foreach (var ren in affectedRenderers)

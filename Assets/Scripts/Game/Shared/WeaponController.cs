@@ -356,6 +356,13 @@ namespace Unity.FPS.Game
             lastTimeShot = Time.time;
         }
 
+        /// <summary>
+        /// Determine what kind of shooting should occur based off inputs and weapon type.
+        /// </summary>
+        /// <param name="inputDown"></param>
+        /// <param name="inputHeld"></param>
+        /// <param name="inputUp"></param>
+        /// <returns></returns>
         public bool HandleShootInputs(bool inputDown, bool inputHeld, bool inputUp)
         {
             wantsToShoot = inputDown || inputHeld;
@@ -388,6 +395,10 @@ namespace Unity.FPS.Game
             }
         }
 
+        /// <summary>
+        /// Check if shooting is allowed
+        /// </summary>
+        /// <returns></returns>
         bool TryShoot()
         {
             if (currentAmmo >= 1f
@@ -435,13 +446,15 @@ namespace Unity.FPS.Game
             return false;
         }
 
+        /// <summary>
+        /// Handles bullet instantiation, muzzle flash, and sound effects
+        /// </summary>
         void HandleShoot()
         {
             int bulletsPerShotFinal = ShootType == WeaponShootType.Charge
                 ? Mathf.CeilToInt(CurrentCharge * BulletsPerShot)
                 : BulletsPerShot;
 
-            // spawn all bullets with random direction
             for (int i = 0; i < bulletsPerShotFinal; i++)
             {
                 Vector3 shotDirection = GetShotDirectionWithinSpread(WeaponMuzzle);
@@ -482,6 +495,11 @@ namespace Unity.FPS.Game
             OnShootProcessed?.Invoke();
         }
 
+        /// <summary>
+        /// Gives a random vector within a range to simulate bullet spread
+        /// </summary>
+        /// <param name="shootTransform"></param>
+        /// <returns></returns>
         public Vector3 GetShotDirectionWithinSpread(Transform shootTransform)
         {
             float spreadAngleRatio = BulletSpreadAngle / 180f;

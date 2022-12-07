@@ -19,7 +19,7 @@ namespace Unity.FPS.Gameplay
             DebugUtility.HandleErrorIfNullGetComponent<ProjectileBase, ProjectileChargeParameters>(m_ProjectileBase,
                 this, gameObject);
 
-            m_ProjectileBase.OnShoot += OnShoot;
+            m_ProjectileBase.onShoot += OnShoot;
         }
 
         void OnShoot()
