@@ -9,27 +9,21 @@ namespace Unity.FPS.UI
     public class SpawnManager : MonoBehaviour
     {
         #region Variables
-        public int enemyCap;//we need to cap it for performance.
+        [Tooltip("We need to cap total enemies for performance.")]
+        public int enemyCap;
         public int waveNumber;
-        public int pageAppear = 19;
-        public float waveTimeLimit;//The amount of seconds it takes for the next wave to start automatically
+        [Tooltip("The amount of seconds it takes for the next wave to start automatically")]
+        public float waveTimeLimit;
         [Range(0, 1)]
         public float medusaChance;
-        public float damageMultiplier = 5f; //The amount of damage a medusa will do.
         public GameObject medusaPrefab;
-        public GameObject runnerPrefab;
-        public GameObject endingObject;
+        public GameObject hoverBotPrefab;
         public Transform sunTransform;
-        public Text waveText;
+        public Text waveHud;
 
-        Transform spawnList;
-        GameObject[] enemyGroup;
-        GameObject nextSpawn;
-        GameObject chosenEnemy;
+        Transform spawnerList;
         bool nextWave = false;
         float waveTimer;
-        int activeEnemies;
-        int totalEnemies;
         string playerName;
         #endregion
 
@@ -46,9 +40,7 @@ namespace Unity.FPS.UI
          */
         void Awake()
         {
-            enemyGroup = new GameObject[enemyCap];
-            CreateEnemyPool();
-            spawnList = GameObject.Find("Enemy Spawn Points").transform;
+            spawnerList = GameObject.Find("Enemy Spawn Points").transform;
             playerName = PlayerPrefs.GetString("playerName");
             if (waveNumber == 0)
             {
@@ -56,27 +48,7 @@ namespace Unity.FPS.UI
                 if (waveNumber == 0) waveNumber = 1;
             }
 
-            waveText.text = "DAY:" + waveNumber;
-        }
-
-        /* For Each enemy in the enemy group:
-         * Decide which enemy type will be used by doing a random percent, if it's big enough then
-         * a more special option will be used.
-         */
-        void CreateEnemyPool()
-        {
-            for (int i = 0; i < enemyCap; i++)
-            {
-                if (Random.value > medusaChance)//Could probably have a public array of prefabs to condense this a bit
-                    chosenEnemy = medusaPrefab;
-                else
-                    chosenEnemy = runnerPrefab;
-
-                GameObject enemy =
-                    Instantiate(chosenEnemy, new Vector3(0, 0, 0), Quaternion.identity, gameObject.transform);
-                enemy.SetActive(false);
-                enemyGroup[i] = enemy;
-            }
+            waveHud.text = "DAY:" + waveNumber;
         }
 
         void Update()
@@ -107,35 +79,35 @@ namespace Unity.FPS.UI
                 Quaternion.Euler(new Vector3(waveTimer / waveTimeLimit * 360, 0, 0));
         }
 
-        /*Advances the wave, calls spawning, and tells the appropriate scripts about the
+        /* Advances the wave, calls spawning, and tells the appropriate scripts about the
          * increased threat
          */
         public void EndWave()
         {
             waveNumber++;
 
-            if (waveNumber > pageAppear) endingObject.SetActive(true);
             PlayerPrefs.SetInt(playerName + "waveNumber", waveNumber);
             SpawnEnemies();
 
-            waveText.text = waveNumber.ToString();
+            waveHud.text = waveNumber.ToString();
         }
 
-        /* randomly increases or decreases the number of enemies based off how many waves have gone by.
-         * 
-         * Spawns as many enemies as there are waves, and makes sure to leave active enemies alone.
+        /* Spawns as many enemies as there are waves, and makes sure to leave active enemies alone.
          */
         void SpawnEnemies()
         {
+            GameObject chosenEnemy;
+
             for (int i = 0; i < waveNumber; i++)
             {
-                while (enemyGroup[i + activeEnemies].activeInHierarchy) activeEnemies++;
+                if (Random.value > medusaChance)
+                    chosenEnemy = medusaPrefab;
+                else
+                    chosenEnemy = hoverBotPrefab;
 
-                totalEnemies = i + activeEnemies;
-                nextSpawn = spawnList.GetChild(Random.Range(0, spawnList.childCount)).gameObject;
+                var nextSpawn = spawnerList.GetChild(Random.Range(0, spawnerList.childCount)).gameObject;
 
-                enemyGroup[totalEnemies].transform.position = nextSpawn.transform.position;
-                enemyGroup[totalEnemies].SetActive(true);
+                Instantiate(chosenEnemy, nextSpawn.transform.position, Quaternion.identity, gameObject.transform);
             }
         }
     }
