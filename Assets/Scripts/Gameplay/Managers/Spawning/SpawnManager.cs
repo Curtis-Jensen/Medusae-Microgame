@@ -48,7 +48,7 @@ namespace Unity.FPS.UI
                 if (waveNumber == 0) waveNumber = 1;
             }
 
-            waveHud.text = "DAY:" + waveNumber;
+            waveHud.text = waveNumber.ToString();
         }
 
         void Update()

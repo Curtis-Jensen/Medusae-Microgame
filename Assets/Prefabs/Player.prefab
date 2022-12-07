@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 2358408631506811099}
   - component: {fileID: 9072830250654458937}
   m_Layer: 0
-  m_Name: Capsule (1)
+  m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -523,7 +523,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6b4f98e62f1d104f8658bba08e5d56f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartingWeapons: []
+  StartingWeapons:
+  - {fileID: 8323776800172828795, guid: b318fabc73446b746a1005cede0c4ceb, type: 3}
   WeaponCamera: {fileID: 2286125971047457827}
   WeaponParentSocket: {fileID: 3891163784698469781}
   DefaultWeaponPosition: {fileID: 4354021110288562838}
@@ -559,10 +560,10 @@ MonoBehaviour:
   JetpackVfx:
   - {fileID: 8223674029651735323}
   - {fileID: 8145349454922729230}
-  IsJetpackUnlockedAtStart: 0
-  JetpackAcceleration: 8
+  IsJetpackUnlockedAtStart: 1
+  JetpackAcceleration: 30
   JetpackDownwardVelocityCancelingFactor: 1
-  ConsumeDuration: 1.5
+  ConsumeDuration: 0.5
   RefillDurationGrounded: 2
   RefillDurationInTheAir: 5
   RefillDelay: 1
