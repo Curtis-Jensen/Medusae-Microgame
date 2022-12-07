@@ -40,8 +40,7 @@ namespace Unity.FPS.Gameplay
         [Tooltip("Downward acceleration from gravity")]
         public float GravityDownAcceleration = 0f;
 
-        [Tooltip(
-            "Distance over which the projectile will correct its course to fit the intended trajectory (used to drift projectiles towards center of screen in First Person view). At values under 0, there is no correction")]
+        [Tooltip("Distance over which the projectile will correct its course to fit the intended trajectory (used to drift projectiles towards center of screen in First Person view). At values under 0, there is no correction")]
         public float TrajectoryCorrectionDistance = -1;
 
         [Tooltip("Determines if the projectile inherits the velocity that the weapon's muzzle had when firing")]
@@ -77,10 +76,10 @@ namespace Unity.FPS.Gameplay
             Destroy(gameObject, MaxLifeTime);
         }
 
-        new void OnShoot()
+        void OnShoot()
         {
             lastRootPosition = Root.position;
-            velocity = transform.forward * Speed;
+            velocity = transform.forward * Speed; // Determines the direction and speed the projectile will go
             ignoredColliders = new List<Collider>();
             transform.position += projectileBase.InheritedMuzzleVelocity * Time.deltaTime;
 
@@ -90,28 +89,31 @@ namespace Unity.FPS.Gameplay
 
             // Handle case of player shooting (make projectiles not go through walls, and remember center-of-screen trajectory)
             PlayerWeaponsManager playerWeaponsManager = projectileBase.Owner.GetComponent<PlayerWeaponsManager>();
-            if (playerWeaponsManager)
+            if (!playerWeaponsManager) return;
+
+            // If the player is holding down the shoot behind themselves button, shoot behind themselves
+            if (Input.GetButton(GameConstants.buttonReverseAim))
+                velocity *= -1;
+
+            hasTrajectoryOverride = true;
+
+            Vector3 cameraToMuzzle = (projectileBase.InitialPosition -
+                                        playerWeaponsManager.WeaponCamera.transform.position);
+
+            trajectoryCorrectionVector = Vector3.ProjectOnPlane(-cameraToMuzzle,
+                playerWeaponsManager.WeaponCamera.transform.forward);
+            if (TrajectoryCorrectionDistance == 0)
             {
-                hasTrajectoryOverride = true;
-
-                Vector3 cameraToMuzzle = (projectileBase.InitialPosition -
-                                          playerWeaponsManager.WeaponCamera.transform.position);
-
-                trajectoryCorrectionVector = Vector3.ProjectOnPlane(-cameraToMuzzle,
-                    playerWeaponsManager.WeaponCamera.transform.forward);
-                if (TrajectoryCorrectionDistance == 0)
-                {
-                    transform.position += trajectoryCorrectionVector;
-                    consumedTrajectoryCorrectionVector = trajectoryCorrectionVector;
-                }
-                else if (TrajectoryCorrectionDistance < 0)
-                    hasTrajectoryOverride = false;
-
-                if (Physics.Raycast(playerWeaponsManager.WeaponCamera.transform.position, cameraToMuzzle.normalized,
-                    out RaycastHit hit, cameraToMuzzle.magnitude, HittableLayers, triggerInteraction))
-                    if (IsHitValid(hit))
-                        OnHit(hit.point, hit.normal, hit.collider);
+                transform.position += trajectoryCorrectionVector;
+                consumedTrajectoryCorrectionVector = trajectoryCorrectionVector;
             }
+            else if (TrajectoryCorrectionDistance < 0)
+                hasTrajectoryOverride = false;
+
+            if (Physics.Raycast(playerWeaponsManager.WeaponCamera.transform.position, cameraToMuzzle.normalized,
+                out RaycastHit hit, cameraToMuzzle.magnitude, HittableLayers, triggerInteraction))
+                if (IsHitValid(hit))
+                    OnHit(hit.point, hit.normal, hit.collider);
         }
 
         void Update()

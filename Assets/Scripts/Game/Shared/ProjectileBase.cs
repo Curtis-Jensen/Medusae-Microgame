@@ -14,6 +14,7 @@ namespace Unity.FPS.Game
 
         public UnityAction onShoot;
 
+        //This is called after onShoot
         public void Shoot(WeaponController controller)
         {
             Owner = controller.Owner;

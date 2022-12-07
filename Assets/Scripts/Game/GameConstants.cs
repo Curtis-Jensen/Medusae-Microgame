@@ -25,5 +25,6 @@
         public const string buttonNameSubmit = "Submit";
         public const string buttonNameCancel = "Cancel";
         public const string buttonReload = "Reload";
+        public const string buttonReverseAim = "Reverse Aim";
     }
 }

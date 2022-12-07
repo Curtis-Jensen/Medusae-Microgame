@@ -300,24 +300,23 @@ namespace Unity.FPS.Gameplay
         /// </summary>
         void UpdateWeaponAiming()
         {
-            if (weaponSwitchState == WeaponSwitchState.Up)
+            if (weaponSwitchState != WeaponSwitchState.Up) return;
+
+            WeaponController activeWeapon = GetActiveWeapon();
+            if (IsAiming && activeWeapon)
             {
-                WeaponController activeWeapon = GetActiveWeapon();
-                if (IsAiming && activeWeapon)
-                {
-                    weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition,
-                        AimingWeaponPosition.localPosition + activeWeapon.AimOffset,
-                        AimingAnimationSpeed * Time.deltaTime);
-                    SetFov(Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView,
-                        activeWeapon.AimZoomRatio * DefaultFov, AimingAnimationSpeed * Time.deltaTime));
-                }
-                else
-                {
-                    weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition,
-                        DefaultWeaponPosition.localPosition, AimingAnimationSpeed * Time.deltaTime);
-                    SetFov(Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView, DefaultFov,
-                        AimingAnimationSpeed * Time.deltaTime));
-                }
+                weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition,
+                    AimingWeaponPosition.localPosition + activeWeapon.AimOffset,
+                    AimingAnimationSpeed * Time.deltaTime);
+                SetFov(Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView,
+                    activeWeapon.AimZoomRatio * DefaultFov, AimingAnimationSpeed * Time.deltaTime));
+            }
+            else
+            {
+                weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition,
+                    DefaultWeaponPosition.localPosition, AimingAnimationSpeed * Time.deltaTime);
+                SetFov(Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView, DefaultFov,
+                    AimingAnimationSpeed * Time.deltaTime));
             }
         }
 
