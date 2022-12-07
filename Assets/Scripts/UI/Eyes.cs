@@ -127,7 +127,7 @@ namespace Unity.FPS.UI
         void CheckForObstructions(Viewable targetInFrame, Ray sightLine)
         {
             var hits = Physics.RaycastAll(sightLine);
-            hits = SortRaycasts(hits);
+            Array.Sort(hits, (a, b) => (a.distance.CompareTo(b.distance)));
 
             foreach (RaycastHit item in hits)
             {
@@ -141,35 +141,6 @@ namespace Unity.FPS.UI
                     return;
                 }
             }
-        }
-
-        /// <summary>
-        /// RayCastAll() does not sort it's own list and this can lead to big bugs, so we need to sort here.  Uses cocktail sort I believe.
-        /// </summary>
-        /// <param name="hits"></param>
-        /// <returns></returns>
-        private RaycastHit[] SortRaycasts(RaycastHit[] hits)
-        {
-            bool sorted;
-
-            do
-            {
-                sorted = true;
-                for (int i = 0; i < hits.Length - 1; i++)
-                {
-                    if (hits[i].distance > hits[i + 1].distance) //This if statement could be inverted, but I keep running into infnite while loops when trying to do so.
-                    {
-                        var temp = hits[i];
-                        hits[i] = hits[i + 1];
-                        hits[i + 1] = temp;
-
-                        sorted = false;
-                    }
-                }
-
-            } while (sorted == false);
-
-            return hits;
         }
 
         /* Step 4 ☣

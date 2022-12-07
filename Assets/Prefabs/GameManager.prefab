@@ -222,7 +222,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 369, y: -165}
+  m_AnchoredPosition: {x: 369, y: 156.93}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1506949845
@@ -255,7 +255,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 27
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -266,7 +266,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Days:'
+  m_Text: 'Waves:'
 --- !u!1 &1315839542190839943
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +285,6 @@ GameObject:
   - component: {fileID: 6895327427570354697}
   - component: {fileID: 1153891123}
   - component: {fileID: 1153891124}
-  - component: {fileID: 1087393757}
   m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
@@ -524,28 +523,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 18b8bb6d4376a6648a6dc9b526a33827, type: 3}
   - {fileID: 8300000, guid: 9d5ef9aac43ae414b9f1eaf8eb8417c7, type: 3}
   - {fileID: 8300000, guid: 9321c3868f2272045a21f012d7f54820, type: 3}
---- !u!114 &1087393757
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1315839542190839943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ce9d9b0a8b7cc54b986e0cd504ba18d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyCap: 100
-  waveNumber: 0
-  waveTimeLimit: 30
-  medusaChance: 0.5
-  medusaPrefab: {fileID: 1003328744321094, guid: 01c14961d9931d94f9ccb0cf0c46ba9f,
-    type: 3}
-  hoverBotPrefab: {fileID: 2015434656898269652, guid: 25a1b0efadb966e44889fce712c8ff8d,
-    type: 3}
-  sunTransform: {fileID: 0}
-  waveHud: {fileID: 1506949844}
 --- !u!1 &2038141326299345668
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,15 +1004,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ff14361843237d43afc85e1cb16e295, type: 3}
---- !u!4 &5165099716741722572 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7730855410354769530, guid: 7ff14361843237d43afc85e1cb16e295,
-    type: 3}
-  m_PrefabInstance: {fileID: 3235725121163771830}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8041970913709386448 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4863125819350701414, guid: 7ff14361843237d43afc85e1cb16e295,
+    type: 3}
+  m_PrefabInstance: {fileID: 3235725121163771830}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5165099716741722572 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7730855410354769530, guid: 7ff14361843237d43afc85e1cb16e295,
     type: 3}
   m_PrefabInstance: {fileID: 3235725121163771830}
   m_PrefabAsset: {fileID: 0}
