@@ -304,39 +304,36 @@ namespace Unity.FPS.Gameplay
         {
             if (weaponSwitchState != WeaponSwitchState.Up) return;
 
+            Transform weaponLocation;
+            float fov;
+
             WeaponController activeWeapon = GetActiveWeapon();
             // If the player is aiming down sights
             if (IsAiming && activeWeapon)
             {
-                weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition,
-                    AimingWeaponPosition.localPosition + activeWeapon.AimOffset,
-                    AimingAnimationSpeed * Time.deltaTime);
-                SetFov(Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView,
-                    activeWeapon.AimZoomRatio * DefaultFov, AimingAnimationSpeed * Time.deltaTime));
-
-                weaponMainLocalRotation = Quaternion.Lerp(weaponMainLocalRotation,
-                    AimingWeaponPosition.localRotation, AimingAnimationSpeed * Time.deltaTime);
+                weaponLocation = AimingWeaponPosition;
+                fov = activeWeapon.AimZoomRatio * DefaultFov;
             }
             else if (Input.GetButton(GameConstants.buttonReverseAim)) // If the player is aiming behind themselves
             {
-                weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition,
-                    reverseWeaponPosition.localPosition, AimingAnimationSpeed * Time.deltaTime);
-                SetFov(Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView, DefaultFov,
-                    AimingAnimationSpeed * Time.deltaTime));
-
-                weaponMainLocalRotation = Quaternion.Lerp(weaponMainLocalRotation,
-                    reverseWeaponPosition.localRotation, AimingAnimationSpeed * Time.deltaTime);
+                weaponLocation = reverseWeaponPosition;
+                fov = DefaultFov;
             }
             else  // If the player is hip firing
             {
-                weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition,
-                    DefaultWeaponPosition.localPosition, AimingAnimationSpeed * Time.deltaTime);
-                SetFov(Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView, DefaultFov,
-                    AimingAnimationSpeed * Time.deltaTime));
-
-                weaponMainLocalRotation = Quaternion.Lerp(weaponMainLocalRotation,
-                    AimingWeaponPosition.localRotation, AimingAnimationSpeed * Time.deltaTime);
+                weaponLocation = DefaultWeaponPosition;
+                fov = DefaultFov;
             }
+
+            weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition,
+                weaponLocation.localPosition + activeWeapon.AimOffset,
+                AimingAnimationSpeed * Time.deltaTime);
+
+            weaponMainLocalRotation = Quaternion.Lerp(weaponMainLocalRotation,
+                weaponLocation.localRotation, AimingAnimationSpeed * Time.deltaTime);
+
+            SetFov(Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView,
+                fov, AimingAnimationSpeed * Time.deltaTime));
         }
 
         /// <summary>
