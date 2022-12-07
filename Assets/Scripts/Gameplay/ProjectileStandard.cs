@@ -91,10 +91,6 @@ namespace Unity.FPS.Gameplay
             PlayerWeaponsManager playerWeaponsManager = projectileBase.Owner.GetComponent<PlayerWeaponsManager>();
             if (!playerWeaponsManager) return;
 
-            // If the player is holding down the shoot behind themselves button, shoot behind themselves
-            if (Input.GetButton(GameConstants.buttonReverseAim))
-                velocity *= -1;
-
             hasTrajectoryOverride = true;
 
             Vector3 cameraToMuzzle = (projectileBase.InitialPosition -

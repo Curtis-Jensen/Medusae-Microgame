@@ -93,6 +93,7 @@ namespace Unity.FPS.Gameplay
         Vector3 weaponBobLocalPosition;
         Vector3 weaponRecoilLocalPosition;
         Vector3 accumulatedRecoil;
+        Quaternion weaponMainLocalRotation;
         float timeStartedWeaponSwitch;
         WeaponSwitchState weaponSwitchState;
         int weaponSwitchNewWeaponIndex;
@@ -118,9 +119,7 @@ namespace Unity.FPS.Gameplay
 
             // Add starting weapons
             foreach (var weapon in StartingWeapons)
-            {
                 AddWeapon(weapon);
-            }
 
             SwitchWeapon(true);
         }
@@ -208,6 +207,8 @@ namespace Unity.FPS.Gameplay
             // Set final weapon socket position based on all the combined animation influences
             WeaponParentSocket.localPosition =
                 weaponMainLocalPosition + weaponBobLocalPosition + weaponRecoilLocalPosition;
+
+            WeaponParentSocket.localRotation = weaponMainLocalRotation;
         }
         #endregion
 
@@ -290,9 +291,7 @@ namespace Unity.FPS.Gameplay
             {
                 var w = weaponSlots[index];
                 if (w != null && w.SourcePrefab == weaponPrefab.gameObject)
-                {
                     return w;
-                }
             }
 
             return null;
@@ -306,6 +305,7 @@ namespace Unity.FPS.Gameplay
             if (weaponSwitchState != WeaponSwitchState.Up) return;
 
             WeaponController activeWeapon = GetActiveWeapon();
+            // If the player is aiming down sights
             if (IsAiming && activeWeapon)
             {
                 weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition,
@@ -313,20 +313,29 @@ namespace Unity.FPS.Gameplay
                     AimingAnimationSpeed * Time.deltaTime);
                 SetFov(Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView,
                     activeWeapon.AimZoomRatio * DefaultFov, AimingAnimationSpeed * Time.deltaTime));
+
+                weaponMainLocalRotation = Quaternion.Lerp(weaponMainLocalRotation,
+                    AimingWeaponPosition.localRotation, AimingAnimationSpeed * Time.deltaTime);
             }
-            else if (Input.GetButton(GameConstants.buttonReverseAim))
+            else if (Input.GetButton(GameConstants.buttonReverseAim)) // If the player is aiming behind themselves
             {
                 weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition,
                     reverseWeaponPosition.localPosition, AimingAnimationSpeed * Time.deltaTime);
                 SetFov(Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView, DefaultFov,
                     AimingAnimationSpeed * Time.deltaTime));
+
+                weaponMainLocalRotation = Quaternion.Lerp(weaponMainLocalRotation,
+                    reverseWeaponPosition.localRotation, AimingAnimationSpeed * Time.deltaTime);
             }
-            else
+            else  // If the player is hip firing
             {
                 weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition,
                     DefaultWeaponPosition.localPosition, AimingAnimationSpeed * Time.deltaTime);
                 SetFov(Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView, DefaultFov,
                     AimingAnimationSpeed * Time.deltaTime));
+
+                weaponMainLocalRotation = Quaternion.Lerp(weaponMainLocalRotation,
+                    AimingWeaponPosition.localRotation, AimingAnimationSpeed * Time.deltaTime);
             }
         }
 
