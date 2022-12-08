@@ -43,40 +43,11 @@ namespace Unity.FPS.UI
             spawnerList = GameObject.Find("Enemy Spawn Points").transform;
             playerName = PlayerPrefs.GetString("playerName");
             if (waveNumber == 0)
-            {
                 waveNumber = PlayerPrefs.GetInt(playerName + "waveNumber") / 2;
-                if (waveNumber == 0) waveNumber = 1;
-            }
+
+            EndWave();
 
             waveHud.text = waveNumber.ToString();
-        }
-
-        void Update()
-        {
-            ChangeTime();
-        }
-
-        /* Advances time and increments the day counter if daytime is survived. 
-         * 
-         * The reason nextWave exists is because the waves advance and the sun set at two different times,
-         * so two different if statements need to be called
-         */
-        void ChangeTime()
-        {
-            waveTimer += Time.deltaTime;
-            if (waveTimer > waveTimeLimit / 2 && !nextWave)
-            {
-                EndWave();
-                nextWave = true;
-            }
-            else if (waveTimer > waveTimeLimit)
-            {
-                waveTimer = 0;
-                nextWave = false;
-            }
-
-            sunTransform.rotation =
-                Quaternion.Euler(new Vector3(waveTimer / waveTimeLimit * 360, 0, 0));
         }
 
         /* Advances the wave, calls spawning, and tells the appropriate scripts about the
