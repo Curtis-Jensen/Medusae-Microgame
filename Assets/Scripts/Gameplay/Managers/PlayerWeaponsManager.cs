@@ -52,7 +52,7 @@ namespace Unity.FPS.Gameplay
         public float AimingBobAmount = 0.02f;
 
         [Header("Weapon Recoil")]
-        [Tooltip("This will affect how fast the recoil moves the weapon, the bigger the value, the fastest")]
+        [Tooltip("This will affect how fast the recoil moves the weapon, the bigger the value, the faster")]
         public float RecoilSharpness = 50f;
 
         [Tooltip("Maximum distance the recoil can affect the weapon")]
@@ -124,10 +124,23 @@ namespace Unity.FPS.Gameplay
             SwitchWeapon(true);
         }
 
+        /* 10 shoot handling
+         * 
+         * 20 handle aiming down sights
+         * 
+         * 30 handle shooting
+         * 
+         * 40 Handle accumulating recoil if the gun has fired
+         * 
+         * 45 If the accumulated recoil is too much it will be clamped
+         * 
+         * 50 weapon switch handling
+         * 
+         * 60 Pointing at enemy handling
+         */
         void Update()
         {
-            // shoot handling
-            WeaponController activeWeapon = GetActiveWeapon();
+            WeaponController activeWeapon = GetActiveWeapon(); // 10
 
             if (activeWeapon != null && activeWeapon.IsReloading)
                 return;
@@ -140,24 +153,21 @@ namespace Unity.FPS.Gameplay
                     activeWeapon.StartReloadAnimation();
                     return;
                 }
-                // handle aiming down sights
-                IsAiming = inputHandler.GetAimInputHeld();
+                IsAiming = inputHandler.GetAimInputHeld(); // 20
 
-                // handle shooting
-                bool hasFired = activeWeapon.HandleShootInputs(
+                bool hasFired = activeWeapon.HandleShootInputs( // 30
                     inputHandler.GetFireInputDown(),
                     inputHandler.GetFireInputHeld(),
                     inputHandler.GetFireInputReleased());
 
-                // Handle accumulating recoil
-                if (hasFired)
+                if (hasFired) // 40
                 {
                     accumulatedRecoil += Vector3.back * activeWeapon.RecoilForce;
-                    accumulatedRecoil = Vector3.ClampMagnitude(accumulatedRecoil, MaxRecoilDistance);
+                    accumulatedRecoil = Vector3.ClampMagnitude(accumulatedRecoil, MaxRecoilDistance);// 45
                 }
             }
 
-            // weapon switch handling
+            // 50
             if (!IsAiming &&
                 (activeWeapon == null || !activeWeapon.IsCharging) &&
                 (weaponSwitchState == WeaponSwitchState.Up || weaponSwitchState == WeaponSwitchState.Down))
@@ -172,26 +182,18 @@ namespace Unity.FPS.Gameplay
                 {
                     switchWeaponInput = inputHandler.GetSelectWeaponInput();
                     if (switchWeaponInput != 0)
-                    {
                         if (GetWeaponAtSlotIndex(switchWeaponInput - 1) != null)
                             SwitchToWeaponIndex(switchWeaponInput - 1);
-                    }
                 }
             }
 
-            // Pointing at enemy handling
+            // 60
             IsPointingAtEnemy = false;
             if (activeWeapon)
-            {
                 if (Physics.Raycast(WeaponCamera.transform.position, WeaponCamera.transform.forward, out RaycastHit hit,
                     1000, -1, QueryTriggerInteraction.Ignore))
-                {
                     if (hit.collider.GetComponentInParent<Health>() != null)
-                    {
                         IsPointingAtEnemy = true;
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -203,6 +205,8 @@ namespace Unity.FPS.Gameplay
             UpdateWeaponBob();
             UpdateWeaponRecoil();
             UpdateWeaponSwitching();
+
+            //Debug.Log(weaponRecoilLocalPosition);
 
             // Set final weapon socket position based on all the combined animation influences
             WeaponParentSocket.localPosition =
@@ -379,6 +383,8 @@ namespace Unity.FPS.Gameplay
         /// </summary>
         void UpdateWeaponRecoil()
         {
+            //Debug.Log($"weaponRecoilLocalPosition.z = {weaponRecoilLocalPosition.z}, & accumulatedRecoil.z = {accumulatedRecoil.z}");
+
             // if the accumulated recoil is further away from the current position, make the current position move towards the recoil target
             if (weaponRecoilLocalPosition.z >= accumulatedRecoil.z * 0.99f)
             {

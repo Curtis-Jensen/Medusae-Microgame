@@ -355,13 +355,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7109902894305726156}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: -0, w: -0.0000086136615}
+  m_LocalPosition: {x: -0.264, y: -0.347, z: 0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3361326784658045617}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180.001, z: 0}
 --- !u!1 &7126704371940088441
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,6 +561,7 @@ MonoBehaviour:
   DefaultWeaponPosition: {fileID: 4354021110288562838}
   AimingWeaponPosition: {fileID: 6033319682454824337}
   DownWeaponPosition: {fileID: 2050759424792167117}
+  reverseWeaponPosition: {fileID: 1218346354276972616}
   BobFrequency: 10
   BobSharpness: 10
   DefaultBobAmount: 0.05
