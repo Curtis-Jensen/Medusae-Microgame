@@ -160,7 +160,7 @@ namespace Unity.FPS.Gameplay
 
             controller.enableOverlapRecovery = true;
 
-            health.OnDie += OnDie;
+            health.onDie += OnDie;
 
             // force the crouch state to false when starting
             SetCrouchingState(false, true);

@@ -12,8 +12,8 @@ namespace Unity.FPS.Game
             DebugUtility.HandleErrorIfNullGetComponent<Health, Destructable>(health, this, gameObject);
 
             // Subscribe to damage & death actions
-            health.OnDie += OnDie;
-            health.OnDamaged += OnDamaged;
+            health.onDie += OnDie;
+            health.onDamaged += OnDamaged;
         }
 
         void OnDamaged(float damage, GameObject damageSource)

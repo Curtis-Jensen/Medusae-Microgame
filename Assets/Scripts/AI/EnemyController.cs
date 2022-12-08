@@ -143,8 +143,8 @@ namespace Unity.FPS.AI
             DebugUtility.HandleErrorIfNullFindObject<GameFlowManager, EnemyController>(gameFlowManager, this);
 
             // Subscribe to damage & death actions
-            health.OnDie += OnDie;
-            health.OnDamaged += OnDamaged;
+            health.onDie += OnDie;
+            health.onDamaged += OnDamaged;
 
             // Find and initialize all weapons
             FindAndInitializeAllWeapons();

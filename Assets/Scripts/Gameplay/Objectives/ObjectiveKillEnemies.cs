@@ -43,6 +43,8 @@ namespace Unity.FPS.Gameplay
          */
         void OnEnemyKilled(EnemyKillEvent evt)
         {
+            Debug.Log("Got there!");
+
             if (IsCompleted) // 10
                 return;
 

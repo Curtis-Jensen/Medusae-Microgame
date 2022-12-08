@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Unity.FPS.Game
 {
@@ -17,6 +18,7 @@ namespace Unity.FPS.Game
 
         public static void AddListener<T>(Action<T> evt) where T : GameEvent
         {
+            Debug.Log("Event added: " + evt);
             // If the event is already added, ignore it.
             if (!eventLookups.ContainsKey(evt)) return;
 
