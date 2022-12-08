@@ -11,9 +11,9 @@ namespace Unity.FPS.Game
         [Range(0,1)]
         public float CriticalHealthRatio = 0.3f;
 
-        public UnityAction<float, GameObject> onDamaged;
-        public UnityAction<float> onHealed;
-        public UnityAction onDie;
+        public UnityAction<float, GameObject> OnDamaged;
+        public UnityAction<float> OnHealed;
+        public UnityAction OnDie;
 
         public float CurrentHealth { get; set; }
         public bool Invincible { get; set; }
@@ -39,7 +39,7 @@ namespace Unity.FPS.Game
             float trueHealAmount = CurrentHealth - healthBefore;
             if (trueHealAmount > 0f)
             {
-                onHealed?.Invoke(trueHealAmount);
+                OnHealed?.Invoke(trueHealAmount);
             }
         }
 
@@ -60,7 +60,7 @@ namespace Unity.FPS.Game
             // call OnDamage action
             float trueDamageAmount = healthBefore - CurrentHealth;
             if (trueDamageAmount > 0f)
-                onDamaged?.Invoke(trueDamageAmount, damageSource);
+                OnDamaged?.Invoke(trueDamageAmount, damageSource);
 
             HandleDeath();
         }
@@ -70,7 +70,7 @@ namespace Unity.FPS.Game
             CurrentHealth = 0f;
 
             // call OnDamage action
-            onDamaged?.Invoke(MaxHealth, null);
+            OnDamaged?.Invoke(MaxHealth, null);
 
             HandleDeath();
         }
@@ -84,7 +84,7 @@ namespace Unity.FPS.Game
             if (CurrentHealth <= 0f)
             {
                 isDead = true;
-                onDie?.Invoke();
+                OnDie?.Invoke();
             }
         }
     }

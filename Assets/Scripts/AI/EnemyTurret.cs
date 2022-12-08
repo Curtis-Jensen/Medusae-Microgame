@@ -43,7 +43,7 @@ namespace Unity.FPS.AI
         {
             health = GetComponent<Health>();
             DebugUtility.HandleErrorIfNullGetComponent<Health, EnemyTurret>(health, this, gameObject);
-            health.onDamaged += OnDamaged;
+            health.OnDamaged += OnDamaged;
 
             enemyController = GetComponent<EnemyController>();
             DebugUtility.HandleErrorIfNullGetComponent<EnemyController, EnemyTurret>(enemyController, this,

@@ -703,7 +703,7 @@ MonoBehaviour:
   Title: Survive
   Description: 
   IsOptional: 0
-  DelayVisible: 4
+  DelayVisible: 0
   MustKillAllEnemies: 1
   KillsToCompleteObjective: 0
   NotificationEnemiesRemainingThreshold: 1

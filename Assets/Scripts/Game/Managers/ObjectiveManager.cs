@@ -21,6 +21,7 @@ namespace Unity.FPS.Game
             if (objectives.Count == 0 || objectivesCompleted)
                 return;
 
+            Debug.Log(objectives.Count);
             for (int i = 0; i < objectives.Count; i++)
             {
                 // pass every objectives to check if they have been completed
