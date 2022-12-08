@@ -43,40 +43,16 @@ namespace Unity.FPS.UI
             spawnerList = GameObject.Find("Enemy Spawn Points").transform;
             playerName = PlayerPrefs.GetString("playerName");
             if (waveNumber == 0)
-            {
                 waveNumber = PlayerPrefs.GetInt(playerName + "waveNumber") / 2;
-                if (waveNumber == 0) waveNumber = 1;
-            }
+
+            EndWave();
 
             waveHud.text = waveNumber.ToString();
         }
 
         void Update()
         {
-            ChangeTime();
-        }
 
-        /* Advances time and increments the day counter if daytime is survived. 
-         * 
-         * The reason nextWave exists is because the waves advance and the sun set at two different times,
-         * so two different if statements need to be called
-         */
-        void ChangeTime()
-        {
-            waveTimer += Time.deltaTime;
-            if (waveTimer > waveTimeLimit / 2 && !nextWave)
-            {
-                EndWave();
-                nextWave = true;
-            }
-            else if (waveTimer > waveTimeLimit)
-            {
-                waveTimer = 0;
-                nextWave = false;
-            }
-
-            sunTransform.rotation =
-                Quaternion.Euler(new Vector3(waveTimer / waveTimeLimit * 360, 0, 0));
         }
 
         /* Advances the wave, calls spawning, and tells the appropriate scripts about the
@@ -92,7 +68,13 @@ namespace Unity.FPS.UI
             waveHud.text = waveNumber.ToString();
         }
 
-        /* Spawns as many enemies as there are waves, and makes sure to leave active enemies alone.
+        /* Spawns as many enemies as there are waves.
+         * 
+         * 10 Choses what kind of enemy it will be based off random chance
+         * 
+         * 20 Choses which spawn point will be used to spawn the new enemy
+         * 
+         * 30 Instantiates the enemy
          */
         void SpawnEnemies()
         {
@@ -100,14 +82,15 @@ namespace Unity.FPS.UI
 
             for (int i = 0; i < waveNumber; i++)
             {
-                if (Random.value > medusaChance)
+                if (Random.value > medusaChance)// 10
                     chosenEnemy = medusaPrefab;
                 else
                     chosenEnemy = hoverBotPrefab;
 
-                var nextSpawn = spawnerList.GetChild(Random.Range(0, spawnerList.childCount)).gameObject;
+                var nextSpawnPoint = spawnerList.GetChild(Random.Range(0, spawnerList.childCount)).gameObject;// 20
 
-                Instantiate(chosenEnemy, nextSpawn.transform.position, Quaternion.identity, gameObject.transform);
+                // 30
+                Instantiate(chosenEnemy, nextSpawnPoint.transform.position, Quaternion.identity, gameObject.transform);
             }
         }
     }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Unity.FPS.Gameplay
 {
-    public class ObjectiveKillEnemies : Objective
+    public class ObjectiveSurvive : Objective
     {
         #region🌎 Variables
         [Tooltip("Chose whether you need to kill every enemies or only a minimum amount")]

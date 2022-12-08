@@ -10,52 +10,52 @@ namespace Unity.FPS.Game
     // A simple Event System that can be used for remote systems communication
     public static class EventManager
     {
-        static readonly Dictionary<Type, Action<GameEvent>> s_Events = new Dictionary<Type, Action<GameEvent>>();
+        static readonly Dictionary<Type, Action<GameEvent>> events = new Dictionary<Type, Action<GameEvent>>();
 
-        static readonly Dictionary<Delegate, Action<GameEvent>> s_EventLookups =
+        static readonly Dictionary<Delegate, Action<GameEvent>> eventLookups =
             new Dictionary<Delegate, Action<GameEvent>>();
 
         public static void AddListener<T>(Action<T> evt) where T : GameEvent
         {
-            if (!s_EventLookups.ContainsKey(evt))
-            {
-                Action<GameEvent> newAction = (e) => evt((T) e);
-                s_EventLookups[evt] = newAction;
+            // If the event is already added, ignore it.
+            if (!eventLookups.ContainsKey(evt)) return;
 
-                if (s_Events.TryGetValue(typeof(T), out Action<GameEvent> internalAction))
-                    s_Events[typeof(T)] = internalAction += newAction;
-                else
-                    s_Events[typeof(T)] = newAction;
-            }
+            Action<GameEvent> newAction = (e) => evt((T) e);
+            eventLookups[evt] = newAction;
+
+            if (events.TryGetValue(typeof(T), out Action<GameEvent> internalAction))
+                events[typeof(T)] = internalAction += newAction;
+            else
+                events[typeof(T)] = newAction;
         }
 
         public static void RemoveListener<T>(Action<T> evt) where T : GameEvent
         {
-            if (s_EventLookups.TryGetValue(evt, out var action))
+            if (eventLookups.TryGetValue(evt, out var action))
             {
-                if (s_Events.TryGetValue(typeof(T), out var tempAction))
+                if (events.TryGetValue(typeof(T), out var tempAction))
                 {
                     tempAction -= action;
                     if (tempAction == null)
-                        s_Events.Remove(typeof(T));
+                        events.Remove(typeof(T));
                     else
-                        s_Events[typeof(T)] = tempAction;
+                        events[typeof(T)] = tempAction;
                 }
 
-                s_EventLookups.Remove(evt);
+                eventLookups.Remove(evt);
             }
         }
 
         public static void Broadcast(GameEvent evt)
         {
-            if (s_Events.TryGetValue(evt.GetType(), out var action))
+            if (events.TryGetValue(evt.GetType(), out var action))
                 action.Invoke(evt);
         }
 
         public static void Clear()
         {
-            s_Events.Clear();
-            s_EventLookups.Clear();
+            events.Clear();
+            eventLookups.Clear();
         }
     }
 }
