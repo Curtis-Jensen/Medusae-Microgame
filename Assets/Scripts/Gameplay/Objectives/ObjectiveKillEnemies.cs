@@ -5,7 +5,6 @@ namespace Unity.FPS.Gameplay
 {
     public class ObjectiveKillEnemies : Objective
     {
-        #region🌎 Variables
         [Tooltip("Chose whether you need to kill every enemies or only a minimum amount")]
         public bool MustKillAllEnemies = true;
 
@@ -15,48 +14,41 @@ namespace Unity.FPS.Gameplay
         [Tooltip("Start sending notification about remaining enemies when this amount of enemies is left")]
         public int NotificationEnemiesRemainingThreshold = 3;
 
-        int killTotal;
-        #endregion
+        int m_KillTotal;
 
-        /* 10 
-         * 
-         * 20 Display the objective, including by determining if all enemies need to be killed
-         * or just a certain amount
-         * 
-         * 30 Display how many enemies are left
-         */
         protected override void Start()
         {
             base.Start();
 
-            EventManager.AddListener<EnemyKillEvent>(OnEnemyKilled); // 10
+            EventManager.AddListener<EnemyKillEvent>(OnEnemyKilled);
 
-            if (string.IsNullOrEmpty(Title)) // 20
-                Title = $"Eliminate " +
-                    $"{(MustKillAllEnemies ? "all the" : KillsToCompleteObjective.ToString())} enemies";
+            // set a title and description specific for this type of objective, if it hasn't one
+            if (string.IsNullOrEmpty(Title))
+                Title = "Eliminate " + (MustKillAllEnemies ? "all the" : KillsToCompleteObjective.ToString()) +
+                        " enemies";
 
-            if (string.IsNullOrEmpty(Description)) // 30
+            if (string.IsNullOrEmpty(Description))
                 Description = GetUpdatedCounterAmount();
         }
 
-        /* 10 If the level is complete, it doesn't matter if an enemy dies
-         */
         void OnEnemyKilled(EnemyKillEvent evt)
         {
-            if (IsCompleted) // 10
+            if (IsCompleted)
                 return;
 
-            killTotal++;
+            m_KillTotal++;
 
             if (MustKillAllEnemies)
-                KillsToCompleteObjective = evt.RemainingEnemyCount + killTotal;
+                KillsToCompleteObjective = evt.RemainingEnemyCount + m_KillTotal;
 
-            int targetRemaining = MustKillAllEnemies ? evt.RemainingEnemyCount : KillsToCompleteObjective - killTotal;
+            int targetRemaining = MustKillAllEnemies ? evt.RemainingEnemyCount : KillsToCompleteObjective - m_KillTotal;
 
-            // Complete the objective
+            // update the objective text according to how many enemies remain to kill
             if (targetRemaining == 0)
+            {
                 CompleteObjective(string.Empty, GetUpdatedCounterAmount(), "Objective complete : " + Title);
-            else if (targetRemaining == 1) // Declare that there is only one enemy left
+            }
+            else if (targetRemaining == 1)
             {
                 string notificationText = NotificationEnemiesRemainingThreshold >= targetRemaining
                     ? "One enemy left"
@@ -65,7 +57,7 @@ namespace Unity.FPS.Gameplay
             }
             else
             {
-                // Create a notification if there are not many enemies left
+                // create a notification text if needed, if it stays empty, the notification will not be created
                 string notificationText = NotificationEnemiesRemainingThreshold >= targetRemaining
                     ? targetRemaining + " enemies to kill left"
                     : string.Empty;
@@ -76,7 +68,7 @@ namespace Unity.FPS.Gameplay
 
         string GetUpdatedCounterAmount()
         {
-            return $"{killTotal} / {KillsToCompleteObjective}";
+            return m_KillTotal + " / " + KillsToCompleteObjective;
         }
 
         void OnDestroy()

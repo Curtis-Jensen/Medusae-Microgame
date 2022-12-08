@@ -562,7 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 927ff0b4cb9a5dd4fb83c45166cffc50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DetectionSourcePoint: {fileID: 4203470457943290}
+  DetectionSourcePoint: {fileID: 0}
   DetectionRange: 20
   AttackRange: 10
   KnownTargetTimeout: 4
