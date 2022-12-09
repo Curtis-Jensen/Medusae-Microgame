@@ -1,4 +1,5 @@
 ﻿using Unity.FPS.Game;
+using Unity.FPS.UI;
 using UnityEngine;
 
 namespace Unity.FPS.Gameplay
@@ -13,6 +14,8 @@ namespace Unity.FPS.Gameplay
 
         [Tooltip("Start sending notification about remaining enemies when this amount of enemies is left")]
         public int NotificationEnemiesRemainingThreshold = 3;
+
+        public SpawnManager spawnManager;
 
         int killTotal;
 
@@ -46,7 +49,7 @@ namespace Unity.FPS.Gameplay
             // update the objective text according to how many enemies remain to kill
             if (targetRemaining == 0)
             {
-                CompleteObjective(string.Empty, GetUpdatedCounterAmount(), "Objective complete : " + Title);
+                spawnManager.EndWave();
             }
             else if (targetRemaining == 1)
             {
