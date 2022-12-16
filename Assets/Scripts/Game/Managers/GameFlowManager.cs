@@ -27,7 +27,6 @@ namespace Unity.FPS.Game
         [Header("Lose")] [Tooltip("This string has to be the name of the scene you want to load when losing")]
         public string LoseSceneName = "LoseScene";
 
-
         public bool GameIsEnding { get; private set; }
 
         float timeLoadEndGameScene;
