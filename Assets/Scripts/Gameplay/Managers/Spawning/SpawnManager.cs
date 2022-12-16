@@ -20,6 +20,9 @@ namespace Unity.FPS.UI
         public GameObject hoverBotPrefab;
         public Transform sunTransform;
         public Text waveHud;
+        //[Tooltip("Will the map be regenerated with each new wave?")]
+        //public bool generatingChaotically;
+        //public ProceduralGeneration mapGenerator;
 
         Transform spawnerList;
         bool nextWave = false;
@@ -61,6 +64,8 @@ namespace Unity.FPS.UI
             SpawnEnemies();
 
             waveHud.text = waveNumber.ToString();
+
+            //if(generatingChaotically) mapGenerator.CreateMap();
         }
 
         /* Spawns as many enemies as there are waves, and makes sure to leave active enemies alone.
