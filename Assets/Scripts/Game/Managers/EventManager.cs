@@ -19,7 +19,7 @@ namespace Unity.FPS.Game
         {
             if (!s_EventLookups.ContainsKey(evt))
             {
-                Action<GameEvent> newAction = (e) => evt((T) e);
+                Action<GameEvent> newAction = (e) => evt((T)e);
                 s_EventLookups[evt] = newAction;
 
                 if (s_Events.TryGetValue(typeof(T), out Action<GameEvent> internalAction))

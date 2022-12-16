@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Unity.FPS.UI;
 using Unity.FPS.Game;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Unity.FPS.UI
 {
@@ -65,7 +64,7 @@ namespace Unity.FPS.UI
         bool Blinking()
         {
             bool blinking = false;
-            if (InGameMenuManager.isPaused)   blinking = true;
+            if (InGameMenuManager.isPaused) blinking = true;
             else if (Input.GetMouseButton(2)) blinking = true;
 
             eyeLids.SetActive(blinking);
@@ -85,7 +84,7 @@ namespace Unity.FPS.UI
 
             SetStaticIntensity();
             RenderStatic();
-            if(testing)
+            if (testing)
                 EyesTest();
         }
 
@@ -106,7 +105,7 @@ namespace Unity.FPS.UI
                 colliderBullsEye = new Vector3(colliderBullsEye.x, colliderBullsEye.y + lookHeight, colliderBullsEye.z);
                 var screenPos = cam.WorldToScreenPoint(colliderBullsEye);
 
-                bool withinWidth =  screenPos.x > 0 && screenPos.x < camWidth;
+                bool withinWidth = screenPos.x > 0 && screenPos.x < camWidth;
                 bool withinHeight = screenPos.y > 0 && screenPos.y < camHeight;
 
                 if (withinHeight && withinWidth)
@@ -158,7 +157,7 @@ namespace Unity.FPS.UI
             {
                 health.TakeDamage(lookTimer, gameObject);
                 lookTimer = 0;
-            }            
+            }
             else if (lookTimer < 1)
             {
                 health.Heal(-lookTimer);

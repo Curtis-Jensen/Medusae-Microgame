@@ -6,7 +6,8 @@ namespace Unity.FPS.Gameplay
     [RequireComponent(typeof(AudioSource))]
     public class ChargedWeaponEffectsHandler : MonoBehaviour
     {
-        [Header("Visual")] [Tooltip("Object that will be affected by charging scale & color changes")]
+        [Header("Visual")]
+        [Tooltip("Object that will be affected by charging scale & color changes")]
         public GameObject ChargingObject;
 
         [Tooltip("The spinning frame")] public GameObject SpinningFrame;
@@ -14,7 +15,8 @@ namespace Unity.FPS.Gameplay
         [Tooltip("Scale of the charged object based on charge")]
         public MinMaxVector3 Scale;
 
-        [Header("Particles")] [Tooltip("Particles to create when charging")]
+        [Header("Particles")]
+        [Tooltip("Particles to create when charging")]
         public GameObject DiskOrbitParticlePrefab;
 
         [Tooltip("Local position offset of the charge particles (relative to this transform)")]
@@ -32,7 +34,8 @@ namespace Unity.FPS.Gameplay
         [Tooltip("Idle spinning speed of the frame based on charge")]
         public MinMaxFloat SpinningSpeed;
 
-        [Header("Sound")] [Tooltip("Audio clip for charge SFX")]
+        [Header("Sound")]
+        [Tooltip("Audio clip for charge SFX")]
         public AudioClip ChargeSound;
 
         [Tooltip("Sound played in loop after the change is full for this weapon")]

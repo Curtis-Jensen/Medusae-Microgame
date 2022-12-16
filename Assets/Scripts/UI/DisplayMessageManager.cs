@@ -21,7 +21,7 @@ namespace Unity.FPS.UI
          */
         void OnDisplayMessageEvent(DisplayMessageEvent evt)
         {
-            NotificationToast notification = 
+            NotificationToast notification =
                 Instantiate(MessagePrefab, DisplayMessageRect.transform)
                 .GetComponent<NotificationToast>();//1
             pendingMessages.Add((Time.time, evt.DelayBeforeDisplay, evt.Message, notification));

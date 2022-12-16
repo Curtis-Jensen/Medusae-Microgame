@@ -373,7 +373,7 @@ namespace Unity.FPS.EditorExt
 
             for (int i = 0; i < s_CellDatas.Count; i++)
             {
-                s_CellDatas[i].Ratio = (float) s_CellDatas[i].Count / (float) highestCount;
+                s_CellDatas[i].Ratio = (float)s_CellDatas[i].Count / (float)highestCount;
                 Color col = Color.Lerp(Color.green, Color.red, s_CellDatas[i].Ratio);
                 s_CellDatas[i].Color = col;
             }

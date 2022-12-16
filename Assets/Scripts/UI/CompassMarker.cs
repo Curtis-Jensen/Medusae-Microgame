@@ -11,13 +11,15 @@ namespace Unity.FPS.UI
         [Tooltip("Canvas group for the marker")]
         public CanvasGroup CanvasGroup;
 
-        [Header("Enemy element")] [Tooltip("Default color for the marker")]
+        [Header("Enemy element")]
+        [Tooltip("Default color for the marker")]
         public Color DefaultColor;
 
         [Tooltip("Alternative color for the marker")]
         public Color AltColor;
 
-        [Header("Direction element")] [Tooltip("Use this marker as a magnetic direction")]
+        [Header("Direction element")]
+        [Tooltip("Use this marker as a magnetic direction")]
         public bool IsDirection;
 
         [Tooltip("Text content for the direction")]

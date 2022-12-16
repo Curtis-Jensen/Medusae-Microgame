@@ -7,7 +7,8 @@ namespace Unity.FPS.UI
 {
     public class EnemyCounter : MonoBehaviour
     {
-        [Header("Enemies")] [Tooltip("Text component for displaying enemy objective progress")]
+        [Header("Enemies")]
+        [Tooltip("Text component for displaying enemy objective progress")]
         public Text EnemiesText;
 
         EnemyManager enemyManager;

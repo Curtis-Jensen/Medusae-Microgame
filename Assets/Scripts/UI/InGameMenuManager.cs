@@ -12,7 +12,8 @@ namespace Unity.FPS.UI
         public GameObject pauseMenuRoot;
         internal static bool isPaused;
 
-        [Tooltip("Master volume when menu is open")] [Range(0.001f, 1f)]
+        [Tooltip("Master volume when menu is open")]
+        [Range(0.001f, 1f)]
         public float VolumeWhenMenuOpen = 0.5f;
 
         [Tooltip("Slider component for look sensitivity")]
@@ -94,7 +95,7 @@ namespace Unity.FPS.UI
 
         public void Pause()
         {
-            bool pauseButtonPressed =  Input.GetButtonDown(GameConstants.buttonNamePauseMenu);
+            bool pauseButtonPressed = Input.GetButtonDown(GameConstants.buttonNamePauseMenu);
             bool cancelButtonPressed = Input.GetButtonDown(GameConstants.buttonNameCancel);
 
             if (pauseButtonPressed

@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using TMPro;
+﻿using TMPro;
+using UnityEngine;
 
 namespace Unity.FPS.UI
 {
@@ -21,7 +21,7 @@ namespace Unity.FPS.UI
 
             if (accumulatedDeltaTime >= PollingTime)
             {
-                int framerate = Mathf.RoundToInt((float) accumulatedFrameCount / accumulatedDeltaTime);
+                int framerate = Mathf.RoundToInt((float)accumulatedFrameCount / accumulatedDeltaTime);
                 UIText.text = framerate.ToString();
 
                 accumulatedDeltaTime = 0f;

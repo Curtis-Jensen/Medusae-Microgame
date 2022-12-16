@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Unity.FPS.AI
 {
@@ -12,7 +11,7 @@ namespace Unity.FPS.AI
 
         void Start()
         {
-            var assignedEnemies = 
+            var assignedEnemies =
                 assignedEnemiesParent.GetComponentsInChildren<EnemyController>();
 
             foreach (var enemy in assignedEnemies)

@@ -80,8 +80,8 @@ namespace Unity.FPS.Game
             int zCoord = index % GridResolution.z;
 
             Vector3 gridBottomCorner = GridCenter - (GridExtents * 0.5f);
-            Vector3 cellSize = new Vector3(GridExtents.x / (float) GridResolution.x,
-                GridExtents.y / (float) GridResolution.y, GridExtents.z / (float) GridResolution.z);
+            Vector3 cellSize = new Vector3(GridExtents.x / (float)GridResolution.x,
+                GridExtents.y / (float)GridResolution.y, GridExtents.z / (float)GridResolution.z);
             Vector3 cellCenter = gridBottomCorner + (new Vector3((xCoord * cellSize.x) + (cellSize.x * 0.5f),
                 (yCoord * cellSize.y) + (cellSize.y * 0.5f),
                 (zCoord * cellSize.z) + (cellSize.z * 0.5f)));

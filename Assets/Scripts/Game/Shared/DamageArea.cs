@@ -11,7 +11,8 @@ namespace Unity.FPS.Game
         [Tooltip("Damage multiplier over distance for area of effect")]
         public AnimationCurve DamageRatioOverDistance;
 
-        [Header("Debug")] [Tooltip("Color of the area of effect radius")]
+        [Header("Debug")]
+        [Tooltip("Color of the area of effect radius")]
         public Color AreaOfEffectColor = Color.red * 0.5f;
 
         public void InflictDamageInArea(float damage, Vector3 center, LayerMask layers,

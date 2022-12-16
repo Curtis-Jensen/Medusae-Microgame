@@ -6,7 +6,8 @@ namespace Unity.FPS.UI
 {
     public class ObjectiveToast : MonoBehaviour
     {
-        [Header("References")] [Tooltip("Text content that will display the title")]
+        [Header("References")]
+        [Tooltip("Text content that will display the title")]
         public TMPro.TextMeshProUGUI TitleTextContent;
 
         [Tooltip("Text content that will display the description")]
@@ -24,19 +25,22 @@ namespace Unity.FPS.UI
         [Tooltip("Layout group containing the objective")]
         public HorizontalOrVerticalLayoutGroup LayoutGroup;
 
-        [Header("Transitions")] [Tooltip("Delay before moving complete")]
+        [Header("Transitions")]
+        [Tooltip("Delay before moving complete")]
         public float CompletionDelay;
 
         [Tooltip("Duration of the fade in")] public float FadeInDuration = 0.5f;
         [Tooltip("Duration of the fade out")] public float FadeOutDuration = 2f;
 
-        [Header("Sound")] [Tooltip("Sound that will be player on initialization")]
+        [Header("Sound")]
+        [Tooltip("Sound that will be player on initialization")]
         public AudioClip InitSound;
 
         [Tooltip("Sound that will be player on completion")]
         public AudioClip CompletedSound;
 
-        [Header("Movement")] [Tooltip("Time it takes to move in the screen")]
+        [Header("Movement")]
+        [Tooltip("Time it takes to move in the screen")]
         public float MoveInDuration = 0.5f;
 
         [Tooltip("Animation curve for move in, position in x over time")]
@@ -119,7 +123,7 @@ namespace Unity.FPS.UI
                 // move in
                 if (timeSinceFadeStarted < MoveInDuration)
                 {
-                    LayoutGroup.padding.left = (int) MoveInCurve.Evaluate(timeSinceFadeStarted / MoveInDuration);
+                    LayoutGroup.padding.left = (int)MoveInCurve.Evaluate(timeSinceFadeStarted / MoveInDuration);
 
                     if (GetComponent<RectTransform>())
                     {
@@ -164,7 +168,7 @@ namespace Unity.FPS.UI
                 // move out
                 if (timeSinceFadeStarted < MoveOutDuration)
                 {
-                    LayoutGroup.padding.left = (int) MoveOutCurve.Evaluate(timeSinceFadeStarted / MoveOutDuration);
+                    LayoutGroup.padding.left = (int)MoveOutCurve.Evaluate(timeSinceFadeStarted / MoveOutDuration);
 
                     if (GetComponent<RectTransform>())
                     {

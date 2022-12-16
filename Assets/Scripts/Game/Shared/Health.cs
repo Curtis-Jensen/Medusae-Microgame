@@ -8,7 +8,7 @@ namespace Unity.FPS.Game
         [Tooltip("Maximum amount of health")] public float MaxHealth = 10f;
 
         [Tooltip("Health ratio at which the critical health vignette starts appearing")]
-        [Range(0,1)]
+        [Range(0, 1)]
         public float CriticalHealthRatio = 0.3f;
 
         public UnityAction<float, GameObject> OnDamaged;

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,7 +9,8 @@ public class ProceduralGeneration : MonoBehaviour
     [Tooltip("The wall that will be sprinkled around")]
     public GameObject wallPrefab;
 
-    [Range(0,1)]  [Tooltip("What percentage of the map will be filled with walls")]
+    [Range(0, 1)]
+    [Tooltip("What percentage of the map will be filled with walls")]
     public float wallChance;
 
     void Start()
