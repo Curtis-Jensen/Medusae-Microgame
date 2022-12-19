@@ -10,7 +10,7 @@ public class SpawnManager : MonoBehaviour
     public GameObject medusaPrefab;
     public GameObject hoverBotPrefab;
     public Text waveHud;
-    [Tooltip("Whether or not the map be regenerated with each new wave")]
+    [Tooltip("Whether or not the map is regenerated with each new wave")]
     public bool generatingChaotically;
     public ProceduralGeneration mapGenerator;
 

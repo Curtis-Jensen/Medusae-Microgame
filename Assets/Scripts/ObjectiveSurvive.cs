@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class ObjectiveSurvive : Objective
 {
-    [Tooltip("Chose whether you need to kill every enemies or only a minimum amount")]
-    public bool MustKillAllEnemies = true;
-
     [Tooltip("If MustKillAllEnemies is false, this is the amount of enemy kills required")]
     public int KillsToCompleteObjective = 5;
 
@@ -25,10 +22,6 @@ public class ObjectiveSurvive : Objective
 
         EventManager.AddListener<EnemyKillEvent>(OnEnemyKilled);
 
-        // set a title and description specific for this type of objective, if it doesn't have one
-        if (string.IsNullOrEmpty(Title))
-            Title = "Eliminate " + (MustKillAllEnemies ? "all the" : KillsToCompleteObjective.ToString()) +
-                    " enemies";
 
         if (string.IsNullOrEmpty(Description))
             Description = GetUpdatedCounterAmount();
@@ -41,10 +34,9 @@ public class ObjectiveSurvive : Objective
 
         killTotal++;
 
-        if (MustKillAllEnemies)
-            KillsToCompleteObjective = evt.RemainingEnemyCount + killTotal;
+        KillsToCompleteObjective = evt.RemainingEnemyCount + killTotal;
 
-        int targetRemaining = MustKillAllEnemies ? evt.RemainingEnemyCount : KillsToCompleteObjective - killTotal;
+        int targetRemaining = evt.RemainingEnemyCount;
 
         // update the objective text according to how many enemies remain to kill
         if (targetRemaining == 0)
