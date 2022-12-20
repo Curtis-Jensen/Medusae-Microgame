@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class SpawnManager : MonoBehaviour
@@ -13,6 +14,7 @@ public class SpawnManager : MonoBehaviour
     [Tooltip("Whether or not the map is regenerated with each new wave")]
     public bool generatingChaotically;
     public ProceduralGeneration mapGenerator;
+    public float endWaveDelay = 3;
 
     string playerName;
     #endregion
@@ -34,7 +36,7 @@ public class SpawnManager : MonoBehaviour
         if (waveNumber == 0)
             waveNumber = PlayerPrefs.GetInt(playerName + "waveNumber") / 2;
 
-        EndWave();
+        StartCoroutine(EndWave());
 
         waveHud.text = waveNumber.ToString();
     }
@@ -42,14 +44,15 @@ public class SpawnManager : MonoBehaviour
     /* Advances the wave, calls spawning, and tells the appropriate scripts about the
      * increased threat
      */
-    public void EndWave()
+    public IEnumerator EndWave()
     {
         waveNumber++;
-
-        PlayerPrefs.SetInt(playerName + "waveNumber", waveNumber);
-        SpawnEnemies();
-
         waveHud.text = waveNumber.ToString();
+        PlayerPrefs.SetInt(playerName + "waveNumber", waveNumber);
+
+        yield return new WaitForSeconds(endWaveDelay);
+
+        SpawnEnemies();
 
         if(generatingChaotically) mapGenerator.CreateMap();
     }
