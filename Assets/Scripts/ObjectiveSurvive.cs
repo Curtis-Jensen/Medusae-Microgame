@@ -15,9 +15,7 @@ public class ObjectiveSurvive : Objective
 
     void OnEnemyKilled(EnemyKillEvent evt)
     {
-        int targetRemaining = evt.RemainingEnemyCount;
-
-        if (targetRemaining == 0)
+        if (evt.RemainingEnemyCount == 0)
             StartCoroutine(spawnManager.EndWave());
     }
 }
