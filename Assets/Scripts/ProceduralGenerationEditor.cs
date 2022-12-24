@@ -9,14 +9,15 @@ public class ProceduralGenerationEditor : Editor
      * 
      * 20 Render the things that usually render
      */
-    public override void OnInspectorGUI()// 10
+    public override void OnInspectorGUI() // 10
     {
-        var mapGenerator = (ProceduralGeneration)target;
-
         DrawDefaultInspector(); // 20
 
         if (GUILayout.Button("Generate"))
+        {
+            var mapGenerator = (ProceduralGeneration)target;
             mapGenerator.CreateMap();
+        }
     }
 }
 #endif

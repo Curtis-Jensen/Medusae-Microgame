@@ -3325,7 +3325,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3146095651562374519}
   - component: {fileID: 9069628648183320831}
-  - component: {fileID: 4147038368156002903}
   m_Layer: 0
   m_Name: LifeLight
   m_TagString: Enemy
@@ -3359,7 +3358,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.2, g: 0.011764706, b: 0.18431373, a: 0.92156863}
-  m_Intensity: 0.5
+  m_Intensity: 1
   m_Range: 456.42
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3391,7 +3390,7 @@ Light:
       e33: 1
     m_UseCullingMatrixOverride: 0
   m_Cookie: {fileID: 0}
-  m_DrawHalo: 1
+  m_DrawHalo: 0
   m_Flare: {fileID: 0}
   m_RenderMode: 0
   m_CullingMask:
@@ -3409,18 +3408,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!122 &4147038368156002903
-Halo:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5226213690554643364}
-  m_Enabled: 0
-  m_Color:
-    serializedVersion: 2
-    rgba: 1291780260
-  m_Size: 0.12
 --- !u!1 &5927672288028123951
 GameObject:
   m_ObjectHideFlags: 0

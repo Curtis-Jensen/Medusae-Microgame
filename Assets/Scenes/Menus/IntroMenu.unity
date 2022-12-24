@@ -686,7 +686,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Gazing kills you
+  m_text: Looking at them kills you
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 75063828274bdb145a55f6dd2f22e8b2, type: 2}
   m_sharedMaterial: {fileID: 21098970014090698, guid: 75063828274bdb145a55f6dd2f22e8b2,
@@ -1133,16 +1133,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: MEDUSAE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 75063828274bdb145a55f6dd2f22e8b2, type: 2}
-  m_sharedMaterial: {fileID: 21098970014090698, guid: 75063828274bdb145a55f6dd2f22e8b2,
+  m_fontAsset: {fileID: 11400000, guid: 0969955e82906924f9ebf1bfebb6ad83, type: 2}
+  m_sharedMaterial: {fileID: -4179602073191208539, guid: 0969955e82906924f9ebf1bfebb6ad83,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4288413860
+  m_fontColor: {r: 0.6415094, g: 0, b: 0.61099815, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1159,8 +1159,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 72
+  m_fontSize: 94.18
+  m_fontSizeBase: 94.18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
