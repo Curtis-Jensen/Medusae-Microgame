@@ -150,20 +150,16 @@ namespace Unity.FPS.UI
         void AddLookTime(float effectMultiplier)
         {
             eyesViewing = true;
+            medusaeVisualized += effectMultiplier;
 
             lookTimer += Time.deltaTime * effectMultiplier;
 
-            if (lookTimer > 1)
-            {
+            if (lookTimer > 0)
                 health.TakeDamage(lookTimer, gameObject);
-                lookTimer = 0;
-            }
-            else if (lookTimer < 1)
-            {
+            else if (lookTimer < 0)
                 health.Heal(-lookTimer);
-                lookTimer = 0;
-            }
-            medusaeVisualized += effectMultiplier;
+
+            lookTimer = 0;
         }
         #endregion
 

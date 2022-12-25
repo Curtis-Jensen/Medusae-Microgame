@@ -21,7 +21,9 @@ namespace Unity.FPS.Game
                 Health = GetComponentInParent<Health>();
         }
 
-        /* 1 skip the crit multiplier if it's from an explosion
+        /* 0 If there is no health component, return
+         * 
+         * 1 skip the crit multiplier if it's from an explosion
          * 
          * 2 potentially reduce damages if inflicted by self
          * 
@@ -29,17 +31,17 @@ namespace Unity.FPS.Game
          */
         public void InflictDamage(float damage, bool isExplosionDamage, GameObject damageSource)
         {
-            if (!Health) return;
+            if (!Health) return; // 0 
 
             var totalDamage = damage;
 
             if (!isExplosionDamage)
-                totalDamage *= DamageMultiplier;//1
+                totalDamage *= DamageMultiplier; // 1
 
             if (Health.gameObject == damageSource)
-                totalDamage *= SensibilityToSelfdamage;//2
+                totalDamage *= SensibilityToSelfdamage; // 2
 
-            Health.TakeDamage(totalDamage, damageSource);//3
+            Health.TakeDamage(totalDamage, damageSource); // 3
         }
     }
 }

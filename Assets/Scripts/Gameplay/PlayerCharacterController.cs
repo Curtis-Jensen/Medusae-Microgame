@@ -180,9 +180,7 @@ namespace Unity.FPS.Gameplay
         {
             // check for Y kill
             if (!IsDead && transform.position.y < KillHeight)
-            {
                 health.Kill();
-            }
 
             HasJumpedThisFrame = false;
 
