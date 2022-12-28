@@ -39,7 +39,10 @@ namespace Unity.FPS.AI
             bool nodeIsNull = pathNodes[nodeIndex] == null;
 
             if (noNodeIndex || nodeIndexGreaterThanLength || nodeIsNull)
+            {
+                Debug.LogWarning("Something may be wrong with the patrol path nodes.");
                 return Vector3.zero;
+            }
 
             return pathNodes[nodeIndex].position;
         }
