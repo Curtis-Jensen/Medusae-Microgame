@@ -265,7 +265,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 0
+  m_Speed: 15
   m_Acceleration: 999
   avoidancePriority: 50
   m_AngularSpeed: 20
@@ -290,26 +290,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookRadius: 100
-  ammoChance: 0.3
   speed: 15
   gazeHeight: 7
-  deathScreams:
-  - {fileID: 8300000, guid: 01db871b25a483b46aeb1d6184dc8d48, type: 3}
-  - {fileID: 8300000, guid: 87c9d454d3be93f4aa49532fcb665ace, type: 3}
-  - {fileID: 8300000, guid: 576871c2eac0b494db0ba13caa49c97b, type: 3}
-  - {fileID: 8300000, guid: a69913238a7e70448813660380845866, type: 3}
-  - {fileID: 8300000, guid: fa791d04d2acf0a458f599ebfefb5669, type: 3}
-  - {fileID: 8300000, guid: 832dd56e5200a31439623209467397d1, type: 3}
-  - {fileID: 8300000, guid: 57fdac43215e49340979b3cbdbaf55dc, type: 3}
-  - {fileID: 8300000, guid: eaeb162c8ed598b4bb9e5972ff47feda, type: 3}
-  - {fileID: 8300000, guid: 3e41f2fc71435ad4aac6062aa6e89e14, type: 3}
-  - {fileID: 8300000, guid: 35d00993a0ef6e54083b6f292307449b, type: 3}
-  - {fileID: 8300000, guid: bc54a69f59a112e468f14201cbac4e7e, type: 3}
-  - {fileID: 8300000, guid: 1b2c91ca8c7204044b4d51f6132c2431, type: 3}
-  - {fileID: 8300000, guid: 2643ac89564b58544acf54766e0b0020, type: 3}
-  ammoCrate: {fileID: 1435504021497250, guid: b963da668571b714eb68621d7518e0c4, type: 3}
-  glowingMaterial: {fileID: 2100000, guid: 9b032c7a4397c5645970223107681db9, type: 2}
-  dimMaterial: {fileID: 0}
 --- !u!82 &5581391596774759321
 AudioSource:
   m_ObjectHideFlags: 0

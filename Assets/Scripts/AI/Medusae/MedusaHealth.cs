@@ -45,7 +45,7 @@ namespace Unity.FPS.Game
             if (health <= 0)
             {
                 health = maxHealth;//3
-                StartCoroutine(medusaController.Die());
+                //StartCoroutine(medusaController.Die());
             }
         }
     }
