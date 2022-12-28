@@ -203,8 +203,8 @@ MonoBehaviour:
   SimultaneousFuelCellsUsage: 0
   FuelCells:
   - {fileID: 6867164318175680859}
-  - {fileID: 6867164318175680853}
   - {fileID: 6867164318175680855}
+  - {fileID: 6867164318175680853}
   - {fileID: 6867164318175680849}
   FuelCellUsedPosition: {x: 0, y: 0.1, z: 0}
   FuelCellUnusedPosition: {x: 0, y: 0, z: 0}
