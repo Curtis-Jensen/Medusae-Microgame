@@ -15,14 +15,11 @@ namespace Unity.FPS.Game
         Transform target; //Whatever is the intended destination of the enemy at the moment
         Transform player; //Player 1, used for targeting
         Transform playerFront; //The front of the player.  Used for targeting
-        [Tooltip("The number of enemies alive in the wave.")]
-        public static int enemyNum = 1;
         #endregion
 
         /* Just getting a bunch of components
          * 
-         * The life lights are actually the game objects that house the lights,
-         * so a bit more work needs to be done to turn those off.
+         * TODO: Might want to get the player by component instead of name so that if the name changes we're okay
          */
         void Awake()
         {
