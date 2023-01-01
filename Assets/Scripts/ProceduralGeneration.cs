@@ -9,6 +9,15 @@ public class ProceduralGeneration : MonoBehaviour
     [Tooltip("The wall that will be sprinkled around")]
     public GameObject wallPrefab;
 
+    [Tooltip("How far, multiplied by 10, the walls will go.")]
+    public int widthMin = -5;
+    [Tooltip("How far, multiplied by 10, the walls will go.")]
+    public int widthMax = 6;
+    [Tooltip("How far, multiplied by 10, the walls will go.")]
+    public int lengthMin = 15;
+    [Tooltip("How far, multiplied by 10, the walls will go.")]
+    public int lengthMax = 26;
+
     [Range(0, 1)]
     [Tooltip("What percentage of the map will be filled with walls")]
     public float wallChance;
@@ -26,9 +35,8 @@ public class ProceduralGeneration : MonoBehaviour
      * 30 Random chance that they don’t show up
      *     
      * 40 Random rotation
-     *   
      * 
-     * Bake navigation map
+     * 50 Bake navigation map
      */
     public void CreateMap()
     {
@@ -37,8 +45,8 @@ public class ProceduralGeneration : MonoBehaviour
         for (int i = 1; i < children.Length; i++) // 10
             DestroyImmediate(children[i].gameObject);
 
-        for (int x = -5; x < 6; x++) // 20
-            for (int z = 15; z < 26; z++)
+        for (int x = widthMin; x < widthMax; x++) // 20
+            for (int z = lengthMin; z < lengthMax; z++)
             {
                 if (Random.value > wallChance) continue; // 30
 
@@ -47,6 +55,6 @@ public class ProceduralGeneration : MonoBehaviour
                 Instantiate(wallPrefab, position, Quaternion.Euler(rotation), gameObject.transform);
             }
 
-        floor.BuildNavMesh();
+        floor.BuildNavMesh(); // 50
     }
 }

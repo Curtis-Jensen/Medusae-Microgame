@@ -289,9 +289,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a4b52f2daf2364ab30db187cbfb533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookRadius: 100
-  speed: 15
+  detectionRadius: 100
   gazeHeight: 7
+  isMedusa: 1
 --- !u!82 &5581391596774759321
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1972,7 +1972,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c61fce6019fd93e449a58fdca9acd412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMultiplier: 11
+  damageMultiplier: 11
 --- !u!1 &1429808955883776
 GameObject:
   m_ObjectHideFlags: 0

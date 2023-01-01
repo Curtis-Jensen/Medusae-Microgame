@@ -9,7 +9,7 @@ namespace Unity.FPS.Game
         public int health;
         [Range(0, 1)]
         public float hitVolume;
-        public MedusaController medusaController;
+        public NavigateToPlayer medusaController;
         public AudioClip hitSound;
 
         int maxHealth;

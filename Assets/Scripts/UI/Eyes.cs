@@ -136,7 +136,7 @@ namespace Unity.FPS.UI
 
                 if (item.collider.Equals(targetInFrame.viewableTarget.GetComponentInChildren<Collider>()))//3
                 {
-                    AddLookTime(targetInFrame.effectMultiplier);
+                    AddLookTime(targetInFrame.damageMultiplier);
                     return;
                 }
             }

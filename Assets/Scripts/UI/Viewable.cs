@@ -5,7 +5,7 @@ namespace Unity.FPS.UI
     public class Viewable : MonoBehaviour //What will be accessed by Eyes.cs to be looked at
     {
         [Tooltip("By how much this object will increase or decrease effects (such as giving damage or healing)")]
-        public float effectMultiplier;
+        public float damageMultiplier;
 
         internal GameObject viewableTarget;//The object itself that is being looked
 

@@ -4,17 +4,20 @@ using UnityEngine.AI;
 
 namespace Unity.FPS.Game
 {
-    public class MedusaController : MonoBehaviour
+    public class NavigateToPlayer : MonoBehaviour
     {
         #region Variables
-        public float lookRadius = 10f;
+        [Tooltip("How far the player/target can be before the enemy stops trying to reach them altogether")]
+        public float detectionRadius = 100f;
         [Tooltip("Used to determine how high the player can look before they are determined to be looking above the medusae")]
         public float gazeHeight;
+        [Tooltip("If the enemy will aim toward the player front and look at the player or just navigate toward the player.")]
+        public bool isMedusa;
 
         NavMeshAgent agent;
-        Transform target; //Whatever is the intended destination of the enemy at the moment
-        Transform player; //Player 1, used for targeting
-        Transform playerFront; //The front of the player.  Used for targeting
+        Transform target; // Whatever is the intended destination of the enemy at the moment
+        Transform player; // Player 1, used for targeting
+        Transform playerFront; // The front of the player.  Used for targeting
         #endregion
 
         /* Just getting a bunch of components
@@ -27,7 +30,6 @@ namespace Unity.FPS.Game
 
             player = GameObject.Find("Player").transform;
             playerFront = GameObject.Find("Player Front").transform;
-            target = player;
         }
 
         /* If the target is in range, set it as the destination.
@@ -42,18 +44,17 @@ namespace Unity.FPS.Game
 
         void PathFind()
         {
+            if (playerFront.position.y < gazeHeight && isMedusa) target = playerFront;
+            else target = player;
+
             float distance = Vector3.Distance(target.position, transform.position);
 
-            if (distance >= lookRadius) return;
-
-            Debug.Log("The player is not too far away");
+            if (distance >= detectionRadius) return;
 
             agent.SetDestination(target.position);
 
-            if (playerFront.position.y > gazeHeight) target = player;
-            else target = playerFront;
-
-            LookAtPlayer(distance);
+            if(isMedusa)
+                LookAtPlayer(distance);
         }
 
         void LookAtPlayer(float distance)
@@ -68,7 +69,7 @@ namespace Unity.FPS.Game
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, lookRadius);
+            Gizmos.DrawWireSphere(transform.position, detectionRadius);
         }
     }
 }
