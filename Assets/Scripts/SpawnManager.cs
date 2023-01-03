@@ -6,10 +6,13 @@ public class SpawnManager : MonoBehaviour
 {
     #region Variables
     public int waveNumber;
-    [Range(0, 1)] [Tooltip("The percent chance the enemy will be a medusa or a hoverbot")]
-    public float medusaChance;
+    [Range(0, 1)] [Tooltip("The percent chance the enemy will be a medusa")]
+    public float medusaChance;    
+    [Range(0, 1)] [Tooltip("The percent chance the enemy will be a turret")]
+    public float turretChance;
     public GameObject medusaPrefab;
     public GameObject hoverBotPrefab;
+    public GameObject turretPrefab;
     public Text waveHud;
     [Tooltip("Whether or not the map is regenerated with each new wave")]
     public bool generatingChaotically;
@@ -65,10 +68,11 @@ public class SpawnManager : MonoBehaviour
     void SpawnEnemies()
     {
         GameObject chosenEnemy;
+        var randomValue = Random.value;
 
         for (int i = 0; i < waveNumber; i++)
         {
-            if (Random.value < medusaChance)
+            if (randomValue < medusaChance)
                 chosenEnemy = medusaPrefab;
             else
                 chosenEnemy = hoverBotPrefab;
