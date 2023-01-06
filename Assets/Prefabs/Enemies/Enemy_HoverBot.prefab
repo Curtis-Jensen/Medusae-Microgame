@@ -119,10 +119,10 @@ MonoBehaviour:
   BodyMaterial: {fileID: 2100000, guid: c3dc5a90c49c99142999f85d6b419d80, type: 2}
   OnHitBodyGradient:
     serializedVersion: 2
-    key0: {r: 0, g: 0, b: 0, a: 1}
+    key0: {r: 0.0007314645, g: 0, b: 0, a: 1}
     key1: {r: 1, g: 1, b: 1, a: 1}
     key2: {r: 1, g: 1, b: 1, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0.000030637257, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 320366457759794871}
-  AttackStopDistanceRatio: 0.08
+  AttackStopDistanceRatio: 0.75
   RandomHitSparks:
   - {fileID: 9125706537325074547}
   - {fileID: 8158939429672774431}
@@ -484,8 +484,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DetectionSourcePoint: {fileID: 6571005840976436832}
   DetectionRange: 50
-  AttackRange: 10
-  KnownTargetTimeout: 12
+  AttackRange: 50
+  KnownTargetTimeout: 1
   Animator: {fileID: 0}
 --- !u!1 &6421371450313891992
 GameObject:
@@ -793,7 +793,7 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 8924682559891268397, guid: ec753d54f333bb944b8b04884ad63828,
     type: 3}
   DelayBetweenShots: 0.8
-  BulletSpreadAngle: 0
+  BulletSpreadAngle: 2
   BulletsPerShot: 1
   RecoilForce: 1
   AimZoomRatio: 1

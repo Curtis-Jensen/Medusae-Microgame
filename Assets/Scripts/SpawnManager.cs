@@ -68,10 +68,11 @@ public class SpawnManager : MonoBehaviour
     void SpawnEnemies()
     {
         GameObject chosenEnemy;
-        var randomValue = Random.value;
 
         for (int i = 0; i < waveNumber; i++)
         {
+            var randomValue = Random.value;
+
             if (randomValue < medusaChance)
                 chosenEnemy = medusaPrefab;
             else
