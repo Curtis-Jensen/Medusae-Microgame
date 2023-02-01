@@ -51,7 +51,7 @@ public class ProceduralGeneration : MonoBehaviour
                 if (Random.value > wallChance) continue; // 30
 
                 var position = new Vector3(x * 10, 2, z * 10);
-                var rotation = new Vector3(0, Random.Range(0, 360), 0); // 40
+                var rotation = new Vector3(Random.Range(-10, 10), Random.Range(0, 360), Random.Range(-10, 10)); // 40
                 Instantiate(wallPrefab, position, Quaternion.Euler(rotation), gameObject.transform);
             }
 
