@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6275561476046798665}
   - component: {fileID: 7768075521002234449}
   m_Layer: 0
-  m_Name: Pickup_Health
+  m_Name: Healing Cross
   m_TagString: Health
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -230,7 +230,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 10
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -400,7 +400,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 0.1
-      minScalar: 0.05
+      minScalar: 0.44
       maxCurve:
         serializedVersion: 2
         m_Curve:
