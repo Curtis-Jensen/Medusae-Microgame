@@ -64,8 +64,8 @@ namespace Unity.FPS.UI
         bool Blinking()
         {
             bool blinking = false;
-            if (InGameMenuManager.isPaused) blinking = true;
-            else if (Input.GetMouseButton(2)) blinking = true;
+            if (InGameMenuManager.isPaused)                       blinking = true;
+            else if (Input.GetButton(InputNames.buttonCloseEyes)) blinking = true;
 
             eyeLids.SetActive(blinking);
             return blinking;

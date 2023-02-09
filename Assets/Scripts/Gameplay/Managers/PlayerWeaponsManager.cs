@@ -314,6 +314,9 @@ namespace Unity.FPS.Gameplay
             float fov;
 
             WeaponController activeWeapon = GetActiveWeapon();
+
+            fov = DefaultFov; // Settting the default FOV; may be changed if aiming, but otherwise it will stay the same
+
             // If the player is aiming down sights
             if (IsAiming && activeWeapon)
             {
@@ -321,15 +324,9 @@ namespace Unity.FPS.Gameplay
                 fov = activeWeapon.AimZoomRatio * DefaultFov;
             }
             else if (Input.GetButton(InputNames.buttonReverseAim)) // If the player is aiming behind themselves
-            {
                 weaponLocation = reverseWeaponPosition;
-                fov = DefaultFov;
-            }
             else  // If the player is hip firing
-            {
                 weaponLocation = DefaultWeaponPosition;
-                fov = DefaultFov;
-            }
 
             weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition,
                 weaponLocation.localPosition + activeWeapon.AimOffset,

@@ -2,7 +2,7 @@
 {
     public class InputNames
     {
-        // all the constant string used across the game
+        // all the constant strings used across the game
         public const string axisNameVertical = "Vertical";
         public const string axisNameHorizontal = "Horizontal";
         public const string mouseAxisNameVertical = "Mouse Y";
@@ -26,5 +26,6 @@
         public const string buttonNameCancel = "Cancel";
         public const string buttonReload = "Reload";
         public const string buttonReverseAim = "Reverse Aim";
+        public const string buttonCloseEyes = "Close Eyes";
     }
 }

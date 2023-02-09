@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4354021110288562838}
   m_Layer: 0
-  m_Name: DefaultWeaponPosition
+  m_Name: Default Weapon Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,6 +61,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3361326784658045617}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &684531149953512367
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4421461369601733184}
+  m_Layer: 0
+  m_Name: Default Melee Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4421461369601733184
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684531149953512367}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3361326784658045617}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1366489067270903580
 GameObject:
@@ -329,6 +359,7 @@ Transform:
   - {fileID: 2050759424792167117}
   - {fileID: 3891163784698469781}
   - {fileID: 1218346354276972616}
+  - {fileID: 4421461369601733184}
   m_Father: {fileID: 8694137560673455815}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -342,7 +373,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1218346354276972616}
   m_Layer: 0
-  m_Name: ReverseAimingPosition
+  m_Name: Reverse Aiming Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -372,7 +403,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6033319682454824337}
   m_Layer: 0
-  m_Name: AimingWeaponPosition
+  m_Name: Aiming Weapon Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -402,7 +433,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3891163784698469781}
   m_Layer: 0
-  m_Name: WeaponParentSocket
+  m_Name: Weapon Parent Socket
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -555,6 +586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingWeapons:
+  - {fileID: 3560875662679413515, guid: 5acadaa2a4c4d9b47a63172642d349bb, type: 3}
   - {fileID: 8323776800172828795, guid: b318fabc73446b746a1005cede0c4ceb, type: 3}
   - {fileID: 8323776800172828795, guid: ff5a8c20084bd444a86f5f83e1e30ff7, type: 3}
   - {fileID: 8323776800172828795, guid: 3439b4874b7b44e4eb2216314c46b85c, type: 3}
@@ -852,7 +884,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2050759424792167117}
   m_Layer: 0
-  m_Name: DownWeaponPosition
+  m_Name: Down Weapon Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
