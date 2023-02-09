@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 23000012303784570}
   - component: {fileID: -211145922323103902}
   - component: {fileID: -1153407307839777507}
+  - component: {fileID: 7641264211781747312}
   m_Layer: 0
   m_Name: Greatsword
   m_TagString: Untagged
@@ -27,13 +28,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000013525765334}
-  m_LocalRotation: {x: 0.9848078, y: 0, z: 0, w: 0.17364816}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0.16}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 20, y: 180, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &33000012172664848
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -235,3 +236,16 @@ MonoBehaviour:
   ContinuousShootLoopSfx: {fileID: 0}
   ContinuousShootEndSfx: {fileID: 0}
   meleeWeapon: 0
+--- !u!65 &7641264211781747312
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013525765334}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.07613244, y: 1.9771351, z: 0.20222968}
+  m_Center: {x: 0.0000035235037, y: -0.6676634, z: -0.000088870525}
