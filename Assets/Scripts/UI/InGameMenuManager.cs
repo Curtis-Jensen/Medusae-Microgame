@@ -83,7 +83,7 @@ namespace Unity.FPS.UI
 
             Pause();
 
-            if (Input.GetAxisRaw(GameConstants.axisNameVertical) != 0)
+            if (Input.GetAxisRaw(InputNames.axisNameVertical) != 0)
             {
                 if (EventSystem.current.currentSelectedGameObject == null)
                 {
@@ -95,8 +95,8 @@ namespace Unity.FPS.UI
 
         public void Pause()
         {
-            bool pauseButtonPressed = Input.GetButtonDown(GameConstants.buttonNamePauseMenu);
-            bool cancelButtonPressed = Input.GetButtonDown(GameConstants.buttonNameCancel);
+            bool pauseButtonPressed = Input.GetButtonDown(InputNames.buttonNamePauseMenu);
+            bool cancelButtonPressed = Input.GetButtonDown(InputNames.buttonNameCancel);
 
             if (pauseButtonPressed
                 || (pauseMenuRoot.activeSelf && cancelButtonPressed))

@@ -50,8 +50,8 @@ namespace Unity.FPS.Gameplay
         {
             if (CanProcessInput())
             {
-                Vector3 move = new Vector3(Input.GetAxisRaw(GameConstants.axisNameHorizontal), 0f,
-                    Input.GetAxisRaw(GameConstants.axisNameVertical));
+                Vector3 move = new Vector3(Input.GetAxisRaw(InputNames.axisNameHorizontal), 0f,
+                    Input.GetAxisRaw(InputNames.axisNameVertical));
 
                 // constrain move input to a maximum magnitude of 1, otherwise diagonal movement might exceed the max move speed defined
                 move = Vector3.ClampMagnitude(move, 1);
@@ -64,20 +64,20 @@ namespace Unity.FPS.Gameplay
 
         public float GetLookInputsHorizontal()
         {
-            return GetMouseOrStickLookAxis(GameConstants.mouseAxisNameHorizontal,
-                GameConstants.axisNameJoystickLookHorizontal);
+            return GetMouseOrStickLookAxis(InputNames.mouseAxisNameHorizontal,
+                InputNames.axisNameJoystickLookHorizontal);
         }
 
         public float GetLookInputsVertical()
         {
-            return GetMouseOrStickLookAxis(GameConstants.mouseAxisNameVertical,
-                GameConstants.axisNameJoystickLookVertical);
+            return GetMouseOrStickLookAxis(InputNames.mouseAxisNameVertical,
+                InputNames.axisNameJoystickLookVertical);
         }
 
         public bool GetJumpInputDown()
         {
             if (CanProcessInput())
-                return Input.GetButtonDown(GameConstants.buttonNameJump);
+                return Input.GetButtonDown(InputNames.buttonNameJump);
 
             return false;
         }
@@ -85,7 +85,7 @@ namespace Unity.FPS.Gameplay
         public bool GetJumpInputHeld()
         {
             if (CanProcessInput())
-                return Input.GetButton(GameConstants.buttonNameJump);
+                return Input.GetButton(InputNames.buttonNameJump);
 
             return false;
         }
@@ -104,11 +104,11 @@ namespace Unity.FPS.Gameplay
         {
             if (CanProcessInput())
             {
-                bool isGamepad = Input.GetAxis(GameConstants.buttonNameGamepadFire) != 0f;
+                bool isGamepad = Input.GetAxis(InputNames.buttonNameGamepadFire) != 0f;
                 if (isGamepad)
-                    return Input.GetAxis(GameConstants.buttonNameGamepadFire) >= TriggerAxisThreshold;
+                    return Input.GetAxis(InputNames.buttonNameGamepadFire) >= TriggerAxisThreshold;
                 else
-                    return Input.GetButton(GameConstants.buttonNameFire);
+                    return Input.GetButton(InputNames.buttonNameFire);
             }
 
             return false;
@@ -118,10 +118,10 @@ namespace Unity.FPS.Gameplay
         {
             if (CanProcessInput())
             {
-                bool isGamepad = Input.GetAxis(GameConstants.buttonNameGamepadAim) != 0f;
+                bool isGamepad = Input.GetAxis(InputNames.buttonNameGamepadAim) != 0f;
                 bool i = isGamepad
-                    ? (Input.GetAxis(GameConstants.buttonNameGamepadAim) > 0f)
-                    : Input.GetButton(GameConstants.buttonNameAim);
+                    ? (Input.GetAxis(InputNames.buttonNameGamepadAim) > 0f)
+                    : Input.GetButton(InputNames.buttonNameAim);
                 return i;
             }
 
@@ -131,7 +131,7 @@ namespace Unity.FPS.Gameplay
         public bool GetSprintInputHeld()
         {
             if (CanProcessInput())
-                return Input.GetButton(GameConstants.buttonNameSprint);
+                return Input.GetButton(InputNames.buttonNameSprint);
 
             return false;
         }
@@ -139,7 +139,7 @@ namespace Unity.FPS.Gameplay
         public bool GetCrouchInputDown()
         {
             if (CanProcessInput())
-                return Input.GetButtonDown(GameConstants.buttonNameCrouch);
+                return Input.GetButtonDown(InputNames.buttonNameCrouch);
 
             return false;
         }
@@ -147,7 +147,7 @@ namespace Unity.FPS.Gameplay
         public bool GetCrouchInputReleased()
         {
             if (CanProcessInput())
-                return Input.GetButtonUp(GameConstants.buttonNameCrouch);
+                return Input.GetButtonUp(InputNames.buttonNameCrouch);
 
             return false;
         }
@@ -155,7 +155,7 @@ namespace Unity.FPS.Gameplay
         public bool GetReloadButtonDown()
         {
             if (CanProcessInput())
-                return Input.GetButtonDown(GameConstants.buttonReload);
+                return Input.GetButtonDown(InputNames.buttonReload);
 
             return false;
         }
@@ -165,18 +165,18 @@ namespace Unity.FPS.Gameplay
             if (CanProcessInput())
             {
 
-                bool isGamepad = Input.GetAxis(GameConstants.buttonNameGamepadSwitchWeapon) != 0f;
+                bool isGamepad = Input.GetAxis(InputNames.buttonNameGamepadSwitchWeapon) != 0f;
                 string axisName = isGamepad
-                    ? GameConstants.buttonNameGamepadSwitchWeapon
-                    : GameConstants.buttonNameSwitchWeapon;
+                    ? InputNames.buttonNameGamepadSwitchWeapon
+                    : InputNames.buttonNameSwitchWeapon;
 
                 if (Input.GetAxis(axisName) > 0f)
                     return -1;
                 else if (Input.GetAxis(axisName) < 0f)
                     return 1;
-                else if (Input.GetAxis(GameConstants.buttonNameNextWeapon) > 0f)
+                else if (Input.GetAxis(InputNames.buttonNameNextWeapon) > 0f)
                     return -1;
-                else if (Input.GetAxis(GameConstants.buttonNameNextWeapon) < 0f)
+                else if (Input.GetAxis(InputNames.buttonNameNextWeapon) < 0f)
                     return 1;
             }
 

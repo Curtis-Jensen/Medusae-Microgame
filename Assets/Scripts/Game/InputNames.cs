@@ -1,6 +1,6 @@
 ﻿namespace Unity.FPS.Game
 {
-    public class GameConstants
+    public class InputNames
     {
         // all the constant string used across the game
         public const string axisNameVertical = "Vertical";

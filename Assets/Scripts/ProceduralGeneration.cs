@@ -3,12 +3,14 @@ using UnityEngine.AI;
 
 public class ProceduralGeneration : MonoBehaviour
 {
+    [Header("Inputs")]
     [Tooltip("The floor needs to be kept in mind so the nav meshes can be baked.")]
     public NavMeshSurface floor;
 
     [Tooltip("The wall that will be sprinkled around")]
     public GameObject wallPrefab;
 
+    [Header("Dimensions")]
     [Tooltip("How far, multiplied by 10, the walls will go.")]
     public int widthMin = -5;
     [Tooltip("How far, multiplied by 10, the walls will go.")]
@@ -17,6 +19,9 @@ public class ProceduralGeneration : MonoBehaviour
     public int lengthMin = 15;
     [Tooltip("How far, multiplied by 10, the walls will go.")]
     public int lengthMax = 26;
+    [Tooltip("How much the prefabs can be stretched in any direction")]
+    [Min(1)]
+    public float stretchAmounts = 1;
 
     [Range(0, 1)]
     [Tooltip("What percentage of the map will be filled with walls")]
@@ -52,7 +57,9 @@ public class ProceduralGeneration : MonoBehaviour
 
                 var position = new Vector3(x * 10, 2, z * 10);
                 var rotation = new Vector3(Random.Range(-10, 10), Random.Range(0, 360), Random.Range(-10, 10)); // 40
-                Instantiate(wallPrefab, position, Quaternion.Euler(rotation), gameObject.transform);
+                var newPrefab = Instantiate(wallPrefab, position, Quaternion.Euler(rotation), gameObject.transform);
+
+                newPrefab.transform.localScale = new Vector3(Random.Range(1, stretchAmounts), Random.Range(1, stretchAmounts), Random.Range(1, stretchAmounts));
             }
 
         floor.BuildNavMesh(); // 50

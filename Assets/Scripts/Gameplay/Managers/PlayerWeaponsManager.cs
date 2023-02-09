@@ -320,7 +320,7 @@ namespace Unity.FPS.Gameplay
                 weaponLocation = AimingWeaponPosition;
                 fov = activeWeapon.AimZoomRatio * DefaultFov;
             }
-            else if (Input.GetButton(GameConstants.buttonReverseAim)) // If the player is aiming behind themselves
+            else if (Input.GetButton(InputNames.buttonReverseAim)) // If the player is aiming behind themselves
             {
                 weaponLocation = reverseWeaponPosition;
                 fov = DefaultFov;
