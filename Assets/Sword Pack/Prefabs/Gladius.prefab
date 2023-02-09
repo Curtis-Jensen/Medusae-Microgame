@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33000011683185294}
   - component: {fileID: 23000010166128840}
   - component: {fileID: -2378260125033168631}
-  - component: {fileID: 7933487842682120569}
+  - component: {fileID: -54237267440988613}
   m_Layer: 0
   m_Name: Gladius
   m_TagString: Untagged
@@ -179,7 +179,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7933487842682120569
+--- !u!114 &-54237267440988613
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000012599527578}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ad90ba0b1477764da373f5ec01a8cb5, type: 3}
+  m_Script: {fileID: 11500000, guid: d5df8e3fa66f3ff4e9b28a021fa9b3ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponName: 
@@ -234,3 +234,4 @@ MonoBehaviour:
   ContinuousShootStartSfx: {fileID: 0}
   ContinuousShootLoopSfx: {fileID: 0}
   ContinuousShootEndSfx: {fileID: 0}
+  meleeWeapon: 0

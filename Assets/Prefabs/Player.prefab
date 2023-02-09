@@ -60,7 +60,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3361326784658045617}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &684531149953512367
 GameObject:
@@ -85,13 +85,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 684531149953512367}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.8962008, y: -0.102847435, z: 0.28257102, w: 0.32619038}
+  m_LocalPosition: {x: 0.2, y: -0.3, z: 0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3361326784658045617}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 40, y: 145, z: 180}
 --- !u!1 &1366489067270903580
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,10 +354,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 3891163784698469781}
   - {fileID: 4354021110288562838}
   - {fileID: 6033319682454824337}
   - {fileID: 2050759424792167117}
-  - {fileID: 3891163784698469781}
   - {fileID: 1218346354276972616}
   - {fileID: 4421461369601733184}
   m_Father: {fileID: 8694137560673455815}
@@ -421,7 +421,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3361326784658045617}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7247205726325752422
 GameObject:
@@ -451,7 +451,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3361326784658045617}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7253983127304857660
 GameObject:
@@ -593,6 +593,7 @@ MonoBehaviour:
   WeaponCamera: {fileID: 2286125971047457827}
   WeaponParentSocket: {fileID: 3891163784698469781}
   DefaultWeaponPosition: {fileID: 4354021110288562838}
+  defaultMeleePosition: {fileID: 0}
   AimingWeaponPosition: {fileID: 6033319682454824337}
   DownWeaponPosition: {fileID: 2050759424792167117}
   reverseWeaponPosition: {fileID: 1218346354276972616}
@@ -902,7 +903,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3361326784658045617}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7401131204678404625
 GameObject:

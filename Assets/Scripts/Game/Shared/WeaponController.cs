@@ -136,6 +136,8 @@ namespace Unity.FPS.Game
         public AudioClip ContinuousShootEndSfx;
         AudioSource continuousShootAudioSource = null;
         bool wantsToShoot = false;
+        [HideInInspector]
+        public bool meleeWeapon = false;  // Used to check if behaviors should follow a melee weapon or a gun.  Set to false by default.  Set to true within melee child classes Start().
 
         public UnityAction OnShoot;
         public event Action OnShootProcessed;

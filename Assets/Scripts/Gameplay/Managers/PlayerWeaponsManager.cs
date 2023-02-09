@@ -30,6 +30,9 @@ namespace Unity.FPS.Gameplay
         [Tooltip("Position for weapons when active but not actively aiming")]
         public Transform DefaultWeaponPosition;
 
+        [Tooltip("Position for melee weapons when active but not swinging")]
+        public Transform defaultMeleePosition;
+
         [Tooltip("Position for weapons when aiming")]
         public Transform AimingWeaponPosition;
 
@@ -325,6 +328,8 @@ namespace Unity.FPS.Gameplay
             }
             else if (Input.GetButton(InputNames.buttonReverseAim)) // If the player is aiming behind themselves
                 weaponLocation = reverseWeaponPosition;
+            else if (activeWeapon.meleeWeapon) // If it's a melee weapon
+                weaponLocation = defaultMeleePosition;
             else  // If the player is hip firing
                 weaponLocation = DefaultWeaponPosition;
 
