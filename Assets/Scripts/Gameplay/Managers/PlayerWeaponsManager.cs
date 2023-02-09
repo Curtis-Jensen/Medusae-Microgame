@@ -147,10 +147,10 @@ namespace Unity.FPS.Gameplay
         {
             WeaponController activeWeapon = GetActiveWeapon(); // 10
 
-            if (activeWeapon != null && activeWeapon.IsReloading)
+            if (activeWeapon == null || activeWeapon.IsReloading)
                 return;
 
-            if (activeWeapon != null && weaponSwitchState == WeaponSwitchState.Up)
+            if (weaponSwitchState == WeaponSwitchState.Up)
             {
                 if (!activeWeapon.AutomaticReload && inputHandler.GetReloadButtonDown() && activeWeapon.CurrentAmmoRatio < 1.0f)
                 {
@@ -174,7 +174,7 @@ namespace Unity.FPS.Gameplay
 
             // 50
             if (!IsAiming &&
-                (activeWeapon == null || !activeWeapon.IsCharging) &&
+                !activeWeapon.IsCharging &&
                 (weaponSwitchState == WeaponSwitchState.Up || weaponSwitchState == WeaponSwitchState.Down))
             {
                 int switchWeaponInput = inputHandler.GetSwitchWeaponInput();
@@ -194,11 +194,11 @@ namespace Unity.FPS.Gameplay
 
             // 60
             IsPointingAtEnemy = false;
-            if (activeWeapon)
-                if (Physics.Raycast(WeaponCamera.transform.position, WeaponCamera.transform.forward, out RaycastHit hit,
-                    1000, -1, QueryTriggerInteraction.Ignore))
-                    if (hit.collider.GetComponentInParent<Health>() != null)
-                        IsPointingAtEnemy = true;
+
+            if (Physics.Raycast(WeaponCamera.transform.position, WeaponCamera.transform.forward, out RaycastHit hit,
+                1000, -1, QueryTriggerInteraction.Ignore))
+                if (hit.collider.GetComponentInParent<Health>() != null)
+                    IsPointingAtEnemy = true;
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace Unity.FPS.Gameplay
                     weaponSwitchState = WeaponSwitchState.PutUpNew;
                     ActiveWeaponIndex = weaponSwitchNewWeaponIndex;
 
-                    WeaponController newWeapon = GetWeaponAtSlotIndex(weaponSwitchNewWeaponIndex);
+                    GunController newWeapon = GetWeaponAtSlotIndex(weaponSwitchNewWeaponIndex);
                     if (OnSwitchedToWeapon != null)
                     {
                         OnSwitchedToWeapon.Invoke(newWeapon);
@@ -299,7 +299,7 @@ namespace Unity.FPS.Gameplay
             for (var index = 0; index < weaponSlots.Length; index++)
             {
                 var w = weaponSlots[index];
-                if (w != null && w.SourcePrefab == weaponPrefab.gameObject)
+                if (w != null && w.sourcePrefab == weaponPrefab.gameObject)
                     return w;
             }
 
@@ -316,7 +316,7 @@ namespace Unity.FPS.Gameplay
             Transform weaponLocation;
             float fov;
 
-            WeaponController activeWeapon = GetActiveWeapon();
+            GunController activeWeapon = (GunController)GetActiveWeapon();
 
             fov = DefaultFov; // Settting the default FOV; may be changed if aiming, but otherwise it will stay the same
 
@@ -426,7 +426,7 @@ namespace Unity.FPS.Gameplay
                 if (weaponSwitchState == WeaponSwitchState.PutDownPrevious)
                 {
                     // Deactivate old weapon
-                    WeaponController oldWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
+                    GunController oldWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
                     if (oldWeapon != null)
                     {
                         oldWeapon.ShowWeapon(false);
@@ -436,7 +436,7 @@ namespace Unity.FPS.Gameplay
                     switchingTimeFactor = 0f;
 
                     // Activate new weapon
-                    WeaponController newWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
+                    GunController newWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
                     if (OnSwitchedToWeapon != null)
                     {
                         OnSwitchedToWeapon.Invoke(newWeapon);
@@ -472,6 +472,20 @@ namespace Unity.FPS.Gameplay
             }
         }
 
+        /* 1 if we already hold this weapon type (a weapon coming from the same source prefab), don't add the weapon
+         * 
+         * 2 search our weapon slots for the first free one, assign the weapon to it, and return true if we found one. Return false otherwise
+         * 
+         * 3 only add the weapon if the slot is free
+         * 
+         * 4 spawn the weapon prefab as child of the weapon socket
+         * 
+         * 5 Set owner to this gameObject so the weapon can alter projectile/damage logic accordingly
+         * 
+         * 6 Assign the first person layer to the weapon
+         * 
+         * 7 This function converts a layermask to a layer index
+         */
         /// <summary>
         /// Adds a weapon to our inventory
         /// </summary>
@@ -479,32 +493,32 @@ namespace Unity.FPS.Gameplay
         /// <returns></returns>
         public bool AddWeapon(WeaponController weaponPrefab)
         {
-            // if we already hold this weapon type (a weapon coming from the same source prefab), don't add the weapon
+            // 1
             if (HasWeapon(weaponPrefab) != null)
             {
                 return false;
             }
 
-            // search our weapon slots for the first free one, assign the weapon to it, and return true if we found one. Return false otherwise
+            // 2
             for (int i = 0; i < weaponSlots.Length; i++)
             {
-                // only add the weapon if the slot is free
+                // 3
                 if (weaponSlots[i] == null)
                 {
-                    // spawn the weapon prefab as child of the weapon socket
+                    // 4
                     WeaponController weaponInstance = Instantiate(weaponPrefab, WeaponParentSocket);
                     weaponInstance.transform.localPosition = Vector3.zero;
                     weaponInstance.transform.localRotation = Quaternion.identity;
 
-                    // Set owner to this gameObject so the weapon can alter projectile/damage logic accordingly
-                    weaponInstance.Owner = gameObject;
-                    weaponInstance.SourcePrefab = weaponPrefab.gameObject;
+                    // 5
+                    weaponInstance.owner = gameObject;
+                    weaponInstance.sourcePrefab = weaponPrefab.gameObject;
                     weaponInstance.ShowWeapon(false);
 
-                    // Assign the first person layer to the weapon
+                    // 6
                     int layerIndex =
                         Mathf.RoundToInt(Mathf.Log(FpsWeaponLayer.value,
-                            2)); // This function converts a layermask to a layer index
+                            2)); // 7
                     foreach (Transform t in weaponInstance.gameObject.GetComponentsInChildren<Transform>(true))
                     {
                         t.gameObject.layer = layerIndex;
@@ -607,12 +621,11 @@ namespace Unity.FPS.Gameplay
             return distanceBetweenSlots;
         }
 
-        void OnWeaponSwitched(WeaponController newWeapon)
+        void OnWeaponSwitched(GunController newWeapon)
         {
-            if (newWeapon != null)
-            {
-                newWeapon.ShowWeapon(true);
-            }
+            if (newWeapon == null) return;
+
+            newWeapon.ShowWeapon(true);
         }
     }
 }

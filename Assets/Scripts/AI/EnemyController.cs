@@ -127,8 +127,8 @@ namespace Unity.FPS.AI
         bool wasDamagedThisFrame;
         float lastTimeWeaponSwapped = Mathf.NegativeInfinity;
         int currentWeaponIndex;
-        WeaponController currentWeapon;
-        WeaponController[] weapons;
+        GunController currentWeapon;
+        GunController[] weapons;
         NavigationModule navigationModule;
 
         void Start()
@@ -473,18 +473,18 @@ namespace Unity.FPS.AI
             // Check if we already found and initialized the weapons
             if (weapons == null)
             {
-                weapons = GetComponentsInChildren<WeaponController>();
-                DebugUtility.HandleErrorIfNoComponentFound<WeaponController, EnemyController>(weapons.Length, this,
+                weapons = GetComponentsInChildren<GunController>();
+                DebugUtility.HandleErrorIfNoComponentFound<GunController, EnemyController>(weapons.Length, this,
                     gameObject);
 
                 for (int i = 0; i < weapons.Length; i++)
                 {
-                    weapons[i].Owner = gameObject;
+                    weapons[i].owner = gameObject;
                 }
             }
         }
 
-        public WeaponController GetCurrentWeapon()
+        public GunController GetCurrentWeapon()
         {
             FindAndInitializeAllWeapons();
             // Check if no weapon is currently selected
@@ -492,7 +492,7 @@ namespace Unity.FPS.AI
                 // Set the first weapon of the weapons list as the current weapon
                 SetCurrentWeapon(0);
 
-            DebugUtility.HandleErrorIfNullGetComponent<WeaponController, EnemyController>(currentWeapon, this,
+            DebugUtility.HandleErrorIfNullGetComponent<GunController, EnemyController>(currentWeapon, this,
                 gameObject);
 
             return currentWeapon;

@@ -22,7 +22,7 @@ namespace Unity.FPS.UI
             DebugUtility.HandleErrorIfNullFindObject<PlayerWeaponsManager, WeaponHUDManager>(m_PlayerWeaponsManager,
                 this);
 
-            WeaponController activeWeapon = m_PlayerWeaponsManager.GetActiveWeapon();
+            GunController activeWeapon = m_PlayerWeaponsManager.GetActiveWeapon();
             if (activeWeapon)
             {
                 AddWeapon(activeWeapon, m_PlayerWeaponsManager.ActiveWeaponIndex);
@@ -34,7 +34,7 @@ namespace Unity.FPS.UI
             m_PlayerWeaponsManager.OnSwitchedToWeapon += ChangeWeapon;
         }
 
-        void AddWeapon(WeaponController newWeapon, int weaponIndex)
+        void AddWeapon(GunController newWeapon, int weaponIndex)
         {
             GameObject ammoCounterInstance = Instantiate(AmmoCounterPrefab, AmmoPanel);
             AmmoCounter newAmmoCounter = ammoCounterInstance.GetComponent<AmmoCounter>();
@@ -46,7 +46,7 @@ namespace Unity.FPS.UI
             m_AmmoCounters.Add(newAmmoCounter);
         }
 
-        void RemoveWeapon(WeaponController newWeapon, int weaponIndex)
+        void RemoveWeapon(GunController newWeapon, int weaponIndex)
         {
             int foundCounterIndex = -1;
             for (int i = 0; i < m_AmmoCounters.Count; i++)
@@ -64,7 +64,7 @@ namespace Unity.FPS.UI
             }
         }
 
-        void ChangeWeapon(WeaponController weapon)
+        void ChangeWeapon(GunController weapon)
         {
             UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(AmmoPanel);
         }

@@ -49,7 +49,7 @@ namespace Unity.FPS.UI
         public int WeaponCounterIndex { get; set; }
 
         PlayerWeaponsManager playerWeaponsManager;
-        WeaponController weapon;
+        GunController weapon;
 
         void Awake()
         {
@@ -62,7 +62,7 @@ namespace Unity.FPS.UI
                 BulletCounter.text = weapon.GetCarriedPhysicalBullets().ToString();
         }
 
-        public void Initialize(WeaponController weapon, int weaponIndex)
+        public void Initialize(GunController weapon, int weaponIndex)
         {
             this.weapon = weapon;
             WeaponCounterIndex = weaponIndex;
