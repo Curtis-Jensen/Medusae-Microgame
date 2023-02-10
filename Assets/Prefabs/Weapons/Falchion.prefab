@@ -212,6 +212,7 @@ MonoBehaviour:
   AmmoUsedOnStartCharge: 1
   BulletsPerShot: 1
   meleeWeapon: 0
+  Damage: 40
 --- !u!65 &-2594261548889407757
 BoxCollider:
   m_ObjectHideFlags: 0

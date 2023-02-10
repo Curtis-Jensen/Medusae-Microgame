@@ -52,7 +52,7 @@ namespace Unity.FPS.Gameplay
         [Tooltip("Damage of the projectile")]
         public float Damage = 40f;
 
-        [Tooltip("Area of damage. Keep empty if you don<t want area damage")]
+        [Tooltip("Area of damage. Keep empty if you don't want area damage")]
         public DamageArea AreaOfDamage;
 
         [Header("Debug")]
@@ -152,8 +152,10 @@ namespace Unity.FPS.Gameplay
 
             // Hit detection
             {
-                RaycastHit closestHit = new RaycastHit();
-                closestHit.distance = Mathf.Infinity;
+                RaycastHit closestHit = new RaycastHit
+                {
+                    distance = Mathf.Infinity
+                };
                 bool foundHit = false;
 
                 // Sphere cast

@@ -5,11 +5,11 @@ namespace Unity.FPS.Game
     public abstract class WeaponController : MonoBehaviour
     {
         #region🌎Variables
-        [Header("Information")]
+        [Header("Weapon Information")]
         [Tooltip("The image that will be displayed in the UI for this weapon")]
         public Sprite WeaponIcon;
 
-        [Header("Internal References")]
+        [Header("Weapon Internal References")]
         [Tooltip("The root object for the weapon, this is what will be deactivated when the weapon isn't active")]
         public GameObject WeaponRoot;
 
@@ -22,7 +22,7 @@ namespace Unity.FPS.Game
         [Tooltip("Data for the crosshair when targeting an enemy")]
         public CrosshairData CrosshairDataTargetInSight;
 
-        [Header("Shoot Parameters")]
+        [Header("Weapon Shoot Parameters")]
         [Tooltip("The type of weapon wil affect how it shoots")]
         public WeaponShootType ShootType;
 
@@ -33,7 +33,7 @@ namespace Unity.FPS.Game
         [Tooltip("Translation to apply to weapon arm when aiming with this weapon")]
         public Vector3 AimOffset;
 
-        [Header("Ammo Parameters")]
+        [Header("Weapon Ammo Parameters")]
         [Tooltip("Has physical clip on the weapon and ammo shells are ejected when firing")]
         public bool hasPhysicalBullets = false;
 
@@ -69,7 +69,7 @@ namespace Unity.FPS.Game
             carriedPhysicalBullets = hasPhysicalBullets ? ClipSize : 0;
         }
 
-            public void ShowWeapon(bool show)
+        public void ShowWeapon(bool show)
         {
             WeaponRoot.SetActive(show);
 

@@ -489,8 +489,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad90ba0b1477764da373f5ec01a8cb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponName: 
   WeaponIcon: {fileID: 0}
+  WeaponRoot: {fileID: 1003328744321094}
+  ChangeWeaponSfx: {fileID: 0}
   CrosshairDataDefault:
     CrosshairSprite: {fileID: 0}
     CrosshairSize: 0
@@ -499,35 +500,33 @@ MonoBehaviour:
     CrosshairSprite: {fileID: 0}
     CrosshairSize: 0
     CrosshairColor: {r: 0, g: 0, b: 0, a: 0}
-  WeaponRoot: {fileID: 1003328744321094}
-  WeaponMuzzle: {fileID: 4203470457943290}
   ShootType: 0
+  AimZoomRatio: 1
+  AimOffset: {x: 0, y: 0, z: 0}
+  hasPhysicalBullets: 0
+  MaxAmmo: 8
+  ClipSize: 30
+  AmmoUsedOnStartCharge: 1
+  BulletsPerShot: 1
+  meleeWeapon: 0
+  WeaponMuzzle: {fileID: 4203470457943290}
   ProjectilePrefab: {fileID: 0}
   DelayBetweenShots: 0.5
   BulletSpreadAngle: 0
-  BulletsPerShot: 1
   RecoilForce: 1
-  AimZoomRatio: 1
-  AimOffset: {x: 0, y: 0, z: 0}
-  AutomaticReload: 1
-  HasPhysicalBullets: 0
-  ClipSize: 30
   ShellCasing: {fileID: 0}
   EjectionPort: {fileID: 0}
   ShellCasingEjectionForce: 2
   ShellPoolSize: 1
   AmmoReloadRate: 1
   AmmoReloadDelay: 2
-  MaxAmmo: 8
   AutomaticReleaseOnCharged: 0
   MaxChargeDuration: 2
-  AmmoUsedOnStartCharge: 1
   AmmoUsageRateWhileCharging: 1
   WeaponAnimator: {fileID: 0}
   MuzzleFlashPrefab: {fileID: 0}
   UnparentMuzzleFlash: 0
   ShootSfx: {fileID: 0}
-  ChangeWeaponSfx: {fileID: 0}
   UseContinuousShootSound: 0
   ContinuousShootStartSfx: {fileID: 0}
   ContinuousShootLoopSfx: {fileID: 0}
@@ -1813,6 +1812,7 @@ GameObject:
   - component: {fileID: 4210231627047411324}
   - component: {fileID: 1376848047}
   - component: {fileID: 1945955809368346040}
+  - component: {fileID: 7291931427603741635}
   m_Layer: 0
   m_Name: Medusa Torso Hitbox
   m_TagString: Enemy
@@ -1973,6 +1973,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageMultiplier: 11
+--- !u!54 &7291931427603741635
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386238558992680}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 16
+  m_CollisionDetection: 0
 --- !u!1 &1429808955883776
 GameObject:
   m_ObjectHideFlags: 0
