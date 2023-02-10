@@ -32,10 +32,10 @@ namespace Unity.FPS.UI
                 CreateNotification(evt.NotificationText);
         }
 
-        void OnPickupWeapon(GunController weaponController, int index)
+        void OnPickupWeapon(WeaponController weaponController, int index)
         {
             if (index != 0)
-                CreateNotification("Picked up weapon : " + weaponController.WeaponName);
+                CreateNotification("Picked up weapon : " + weaponController.gameObject.name);
         }
 
         void OnUnlockJetpack(bool unlock)

@@ -16,7 +16,7 @@ namespace Unity.FPS.Gameplay
             PlayerWeaponsManager playerWeaponsManager = byPlayer.GetComponent<PlayerWeaponsManager>();
             if (playerWeaponsManager)
             {
-                GunController weapon = playerWeaponsManager.HasWeapon(Weapon);
+                GunController weapon = (GunController)playerWeaponsManager.HasWeapon(Weapon);
                 if (weapon != null)
                 {
                     weapon.AddCarriablePhysicalBullets(BulletCount);

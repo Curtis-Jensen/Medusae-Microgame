@@ -32,17 +32,8 @@ namespace Unity.FPS.Game
     {
         #region 🌎 Variables
         [Header("Information")]
-        [Tooltip("The name that will be displayed in the UI for this weapon")]
-        public string WeaponName;
-
         [Tooltip("The image that will be displayed in the UI for this weapon")]
         public Sprite WeaponIcon;
-
-        [Tooltip("Default data for the crosshair")]
-        public CrosshairData CrosshairDataDefault;
-
-        [Tooltip("Data for the crosshair when targeting an enemy")]
-        public CrosshairData CrosshairDataTargetInSight;
 
         [Tooltip("Tip of the weapon, where the projectiles are shot")]
         public Transform WeaponMuzzle;
@@ -137,7 +128,6 @@ namespace Unity.FPS.Game
         public float LastChargeTriggerTimestamp { get; private set; }
         Vector3 lastMuzzlePosition;
 
-        public bool IsCharging { get; private set; }
         public float CurrentAmmoRatio { get; private set; }
         public bool IsCooling { get; private set; }
         public float CurrentCharge { get; private set; }
@@ -458,6 +448,11 @@ namespace Unity.FPS.Game
                 spreadAngleRatio);
 
             return spreadWorldDirection;
+        }
+
+        public override float AttackAnimation()
+        {
+            return RecoilForce;
         }
         #endregion
     }

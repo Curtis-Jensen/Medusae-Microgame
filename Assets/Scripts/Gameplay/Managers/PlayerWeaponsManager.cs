@@ -157,20 +157,19 @@ namespace Unity.FPS.Gameplay
             {
                 IsAiming = inputHandler.GetAimInputHeld(); // 20
 
-                bool hasFired = activeWeapon.HandleAttackInputs( // 30
+                bool hasAttacked = activeWeapon.HandleAttackInputs( // 30
                     inputHandler.GetFireInputDown(),
                     inputHandler.GetFireInputHeld(),
                     inputHandler.GetFireInputReleased());
 
-                if (hasFired) // 40
+                if (hasAttacked) // 40
                 {
-                    accumulatedRecoil += Vector3.back * activeWeapon.RecoilForce;
+                    accumulatedRecoil += Vector3.back * activeWeapon.AttackAnimation();
                     accumulatedRecoil = Vector3.ClampMagnitude(accumulatedRecoil, MaxRecoilDistance);// 45
                 }
             }
 
             // 50
-
             bool weaponResting = weaponSwitchState == WeaponSwitchState.Up || weaponSwitchState == WeaponSwitchState.Down;
 
             bool weaponPreOccupied = IsAiming || activeWeapon.IsCharging || !weaponResting;
@@ -279,17 +278,13 @@ namespace Unity.FPS.Gameplay
                     weaponSwitchState = WeaponSwitchState.PutUpNew;
                     ActiveWeaponIndex = weaponSwitchNewWeaponIndex;
 
-                    GunController newWeapon = GetWeaponAtSlotIndex(weaponSwitchNewWeaponIndex);
+                    WeaponController newWeapon = GetWeaponAtSlotIndex(weaponSwitchNewWeaponIndex);
                     if (OnSwitchedToWeapon != null)
-                    {
                         OnSwitchedToWeapon.Invoke(newWeapon);
-                    }
                 }
                 // otherwise, remember we are putting down our current weapon for switching to the next one
                 else
-                {
                     weaponSwitchState = WeaponSwitchState.PutDownPrevious;
-                }
             }
         }
 
@@ -426,21 +421,17 @@ namespace Unity.FPS.Gameplay
                 if (weaponSwitchState == WeaponSwitchState.PutDownPrevious)
                 {
                     // Deactivate old weapon
-                    GunController oldWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
+                    var oldWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
                     if (oldWeapon != null)
-                    {
                         oldWeapon.ShowWeapon(false);
-                    }
 
                     ActiveWeaponIndex = weaponSwitchNewWeaponIndex;
                     switchingTimeFactor = 0f;
 
                     // Activate new weapon
-                    GunController newWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
+                    var newWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
                     if (OnSwitchedToWeapon != null)
-                    {
                         OnSwitchedToWeapon.Invoke(newWeapon);
-                    }
 
                     if (newWeapon)
                     {
@@ -448,15 +439,11 @@ namespace Unity.FPS.Gameplay
                         weaponSwitchState = WeaponSwitchState.PutUpNew;
                     }
                     else
-                    {
                         // if new weapon is null, don't follow through with putting weapon back up
                         weaponSwitchState = WeaponSwitchState.Down;
-                    }
                 }
                 else if (weaponSwitchState == WeaponSwitchState.PutUpNew)
-                {
                     weaponSwitchState = WeaponSwitchState.Up;
-                }
             }
 
             // Handle moving the weapon socket position for the animated weapon switching

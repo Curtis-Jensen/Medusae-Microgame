@@ -60,7 +60,7 @@ namespace Unity.FPS.UI
                 Time.deltaTime * CrosshairUpdateshrpness) * Vector2.one;
         }
 
-        void OnWeaponChanged(GunController newWeapon)
+        void OnWeaponChanged(WeaponController newWeapon)
         {
             if (newWeapon)
             {
@@ -74,13 +74,9 @@ namespace Unity.FPS.UI
             else
             {
                 if (NullCrosshairSprite)
-                {
                     CrosshairImage.sprite = NullCrosshairSprite;
-                }
                 else
-                {
                     CrosshairImage.enabled = false;
-                }
             }
 
             UpdateCrosshairPointingAtEnemy(true);
