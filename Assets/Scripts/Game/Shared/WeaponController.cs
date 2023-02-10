@@ -4,6 +4,7 @@ namespace Unity.FPS.Game
 {
     public class WeaponController : MonoBehaviour
     {
+        #region🌎Variables
         [Header("Internal References")]
         [Tooltip("The root object for the weapon, this is what will be deactivated when the weapon isn't active")]
         public GameObject WeaponRoot;
@@ -19,6 +20,7 @@ namespace Unity.FPS.Game
         public bool IsWeaponActive { get; private set; }
 
         protected AudioSource weaponAudioSource;
+        #endregion
 
         public void ShowWeapon(bool show)
         {
@@ -30,6 +32,11 @@ namespace Unity.FPS.Game
             }
 
             IsWeaponActive = show;
+        }
+
+        public void Reloading()
+        {
+            // Nothing goes in here for the sword, only the gun, at least for now
         }
     }
 }

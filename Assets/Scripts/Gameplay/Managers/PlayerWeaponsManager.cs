@@ -131,6 +131,8 @@ namespace Unity.FPS.Gameplay
 
         /* 10 shoot handling
          * 
+         * 15 If the weapon is null (As in the player has no weapon) or the weapon is currently reloading, don't try to actively do anything with the weapon.
+         * 
          * 20 handle aiming down sights
          * 
          * 30 handle shooting
@@ -139,14 +141,15 @@ namespace Unity.FPS.Gameplay
          * 
          * 45 If the accumulated recoil is too much it will be clamped
          * 
-         * 50 weapon switch handling
+         * 50 Weapon switch handling
          * 
-         * 60 Pointing at enemy handling
+         * 60 Pointing at enemy handling for the crosshair
          */
         void Update()
         {
             WeaponController activeWeapon = GetActiveWeapon(); // 10
 
+            // 15
             if (activeWeapon == null || activeWeapon.IsReloading)
                 return;
 
@@ -621,7 +624,7 @@ namespace Unity.FPS.Gameplay
             return distanceBetweenSlots;
         }
 
-        void OnWeaponSwitched(GunController newWeapon)
+        void OnWeaponSwitched(WeaponController newWeapon)
         {
             if (newWeapon == null) return;
 

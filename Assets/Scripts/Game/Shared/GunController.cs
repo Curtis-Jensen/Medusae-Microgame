@@ -207,6 +207,7 @@ namespace Unity.FPS.Game
         }
         #endregion
 
+        #region Other Methods
         public void AddCarriablePhysicalBullets(int count) => carriedPhysicalBullets = Mathf.Max(carriedPhysicalBullets + count, MaxAmmo);
 
         void ShootShell()
@@ -221,32 +222,6 @@ namespace Unity.FPS.Game
             nextShell.AddForce(nextShell.transform.up * ShellCasingEjectionForce, ForceMode.Impulse);
 
             physicalAmmoPool.Enqueue(nextShell);
-        }
-
-        /// <summary>
-        /// Unused, consider deleting
-        /// </summary>
-        /// <param name="sfx"></param>
-        void PlaySFX(AudioClip sfx) => AudioUtility.CreateSFX(sfx, transform.position, AudioUtility.AudioGroups.WeaponShoot, 0.0f);
-
-        /// <summary>
-        /// Unused, consider deleting
-        /// </summary>
-        void Reload()
-        {
-            if (carriedPhysicalBullets > 0)
-                currentAmmo = Mathf.Min(carriedPhysicalBullets, ClipSize);
-
-            IsReloading = false;
-        }
-
-        public void StartReloadAnimation()
-        {
-            if (currentAmmo < carriedPhysicalBullets)
-            {
-                GetComponent<Animator>().SetTrigger("Reload");
-                IsReloading = true;
-            }
         }
 
         void UpdateAmmo()
@@ -488,5 +463,6 @@ namespace Unity.FPS.Game
 
             return spreadWorldDirection;
         }
+        #endregion
     }
 }
