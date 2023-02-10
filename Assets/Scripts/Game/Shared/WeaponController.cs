@@ -2,7 +2,7 @@
 
 namespace Unity.FPS.Game
 {
-    public class WeaponController : MonoBehaviour
+    public abstract class WeaponController : MonoBehaviour
     {
         #region🌎Variables
         [Header("Internal References")]
@@ -34,9 +34,6 @@ namespace Unity.FPS.Game
             IsWeaponActive = show;
         }
 
-        public void Reloading()
-        {
-            // Nothing goes in here for the sword, only the gun, at least for now
-        }
+        public abstract bool HandleAttackInputs(bool inputDown, bool inputHeld, bool inputUp);
     }
 }

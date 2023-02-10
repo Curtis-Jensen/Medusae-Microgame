@@ -74,8 +74,6 @@ namespace Unity.FPS.Game
         public Vector3 AimOffset;
 
         [Header("Ammo Parameters")]
-        [Tooltip("Should the player manually reload")]
-        public bool AutomaticReload = true;
         [Tooltip("Has physical clip on the weapon and ammo shells are ejected when firing")]
         public bool HasPhysicalBullets = false;
         [Tooltip("Number of bullets in a clip")]
@@ -152,8 +150,6 @@ namespace Unity.FPS.Game
         public int GetCarriedPhysicalBullets() => carriedPhysicalBullets;
         public int GetCurrentAmmo() => Mathf.FloorToInt(currentAmmo);
 
-        public bool IsReloading { get; private set; }
-
         const string animAttackParameter = "Attack";
 
         private Queue<Rigidbody> physicalAmmoPool;
@@ -226,7 +222,7 @@ namespace Unity.FPS.Game
 
         void UpdateAmmo()
         {
-            if (AutomaticReload && lastTimeShot + AmmoReloadDelay < Time.time && currentAmmo < MaxAmmo && !IsCharging)
+            if (lastTimeShot + AmmoReloadDelay < Time.time && currentAmmo < MaxAmmo && !IsCharging)
             {
                 // reloads weapon over time
                 currentAmmo += AmmoReloadRate * Time.deltaTime;
@@ -318,7 +314,7 @@ namespace Unity.FPS.Game
         /// <param name="inputHeld"></param>
         /// <param name="inputUp"></param>
         /// <returns></returns>
-        public bool HandleShootInputs(bool inputDown, bool inputHeld, bool inputUp)
+        public override bool HandleAttackInputs(bool inputDown, bool inputHeld, bool inputUp)
         {
             wantsToShoot = inputDown || inputHeld;
             switch (ShootType)

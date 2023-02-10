@@ -9,4 +9,12 @@ public class MeleeWeapon : WeaponController
     {
         meleeWeapon = true;
     }
+
+    public override bool HandleAttackInputs(bool inputDown, bool inputHeld, bool inputUp)
+    {
+        if (inputDown)
+            return TryShoot();
+
+        return false;
+    }
 }

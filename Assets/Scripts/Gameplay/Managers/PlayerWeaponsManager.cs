@@ -150,20 +150,14 @@ namespace Unity.FPS.Gameplay
             WeaponController activeWeapon = GetActiveWeapon(); // 10
 
             // 15
-            if (activeWeapon == null || activeWeapon.IsReloading)
+            if (activeWeapon == null)
                 return;
 
             if (weaponSwitchState == WeaponSwitchState.Up)
             {
-                if (!activeWeapon.AutomaticReload && inputHandler.GetReloadButtonDown() && activeWeapon.CurrentAmmoRatio < 1.0f)
-                {
-                    IsAiming = false;
-                    activeWeapon.StartReloadAnimation();
-                    return;
-                }
                 IsAiming = inputHandler.GetAimInputHeld(); // 20
 
-                bool hasFired = activeWeapon.HandleShootInputs( // 30
+                bool hasFired = activeWeapon.HandleAttackInputs( // 30
                     inputHandler.GetFireInputDown(),
                     inputHandler.GetFireInputHeld(),
                     inputHandler.GetFireInputReleased());
@@ -176,9 +170,12 @@ namespace Unity.FPS.Gameplay
             }
 
             // 50
-            if (!IsAiming &&
-                !activeWeapon.IsCharging &&
-                (weaponSwitchState == WeaponSwitchState.Up || weaponSwitchState == WeaponSwitchState.Down))
+
+            bool weaponResting = weaponSwitchState == WeaponSwitchState.Up || weaponSwitchState == WeaponSwitchState.Down;
+
+            bool weaponPreOccupied = IsAiming || activeWeapon.IsCharging || !weaponResting;
+
+            if (!weaponPreOccupied)
             {
                 int switchWeaponInput = inputHandler.GetSwitchWeaponInput();
                 if (switchWeaponInput != 0)
