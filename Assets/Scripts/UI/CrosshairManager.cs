@@ -74,13 +74,9 @@ namespace Unity.FPS.UI
             else
             {
                 if (NullCrosshairSprite)
-                {
                     CrosshairImage.sprite = NullCrosshairSprite;
-                }
                 else
-                {
                     CrosshairImage.enabled = false;
-                }
             }
 
             UpdateCrosshairPointingAtEnemy(true);

@@ -15,9 +15,9 @@ namespace Unity.FPS.Game
         public UnityAction onShoot;
 
         //This is called after onShoot
-        public void Shoot(WeaponController controller)
+        public void Shoot(GunController controller)
         {
-            Owner = controller.Owner;
+            Owner = controller.owner;
             InitialPosition = transform.position;
             InitialDirection = transform.forward;
             InheritedMuzzleVelocity = controller.MuzzleWorldVelocity;

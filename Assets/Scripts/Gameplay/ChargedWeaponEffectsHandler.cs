@@ -54,7 +54,7 @@ namespace Unity.FPS.Gameplay
         public GameObject ParticleInstance { get; set; }
 
         ParticleSystem diskOrbitParticle;
-        WeaponController weaponController;
+        GunController weaponController;
         ParticleSystem.VelocityOverLifetimeModule velocityOverTimeModule;
 
         AudioSource audioSource;
@@ -101,8 +101,8 @@ namespace Unity.FPS.Gameplay
             DebugUtility.HandleErrorIfNullGetComponent<ParticleSystem, ChargedWeaponEffectsHandler>(diskOrbitParticle,
                 this, ParticleInstance.gameObject);
 
-            weaponController = GetComponent<WeaponController>();
-            DebugUtility.HandleErrorIfNullGetComponent<WeaponController, ChargedWeaponEffectsHandler>(
+            weaponController = GetComponent<GunController>();
+            DebugUtility.HandleErrorIfNullGetComponent<GunController, ChargedWeaponEffectsHandler>(
                 weaponController, this, gameObject);
 
             velocityOverTimeModule = diskOrbitParticle.velocityOverLifetime;
