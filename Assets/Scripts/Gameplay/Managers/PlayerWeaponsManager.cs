@@ -311,7 +311,7 @@ namespace Unity.FPS.Gameplay
             Transform weaponLocation;
             float fov;
 
-            GunController activeWeapon = (GunController)GetActiveWeapon();
+            WeaponController activeWeapon = GetActiveWeapon();
 
             fov = DefaultFov; // Settting the default FOV; may be changed if aiming, but otherwise it will stay the same
 

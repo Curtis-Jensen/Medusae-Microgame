@@ -32,15 +32,10 @@ namespace Unity.FPS.Game
     {
         #region 🌎 Variables
         [Header("Information")]
-        [Tooltip("The image that will be displayed in the UI for this weapon")]
-        public Sprite WeaponIcon;
-
         [Tooltip("Tip of the weapon, where the projectiles are shot")]
         public Transform WeaponMuzzle;
 
         [Header("Shoot Parameters")]
-        [Tooltip("The type of weapon wil affect how it shoots")]
-        public WeaponShootType ShootType;
 
         [Tooltip("The projectile prefab")] public ProjectileBase ProjectilePrefab;
 
@@ -50,25 +45,11 @@ namespace Unity.FPS.Game
         [Tooltip("Angle for the cone in which the bullets will be shot randomly (0 means no spread at all)")]
         public float BulletSpreadAngle = 0f;
 
-        [Tooltip("Amount of bullets per shot")]
-        public int BulletsPerShot = 1;
-
         [Tooltip("Force that will push back the weapon after each shot")]
         [Range(0f, 2f)]
         public float RecoilForce = 1;
 
-        [Tooltip("Ratio of the default FOV that this weapon applies while aiming")]
-        [Range(0f, 1f)]
-        public float AimZoomRatio = 1f;
-
-        [Tooltip("Translation to apply to weapon arm when aiming with this weapon")]
-        public Vector3 AimOffset;
-
         [Header("Ammo Parameters")]
-        [Tooltip("Has physical clip on the weapon and ammo shells are ejected when firing")]
-        public bool HasPhysicalBullets = false;
-        [Tooltip("Number of bullets in a clip")]
-        public int ClipSize = 30;
         [Tooltip("Bullet Shell Casing")]
         public GameObject ShellCasing;
         [Tooltip("Weapon Ejection Port for physical ammo")]
@@ -83,18 +64,12 @@ namespace Unity.FPS.Game
         [Tooltip("Delay after the last shot before starting to reload")]
         public float AmmoReloadDelay = 2f;
 
-        [Tooltip("Maximum amount of ammo in the gun")]
-        public int MaxAmmo = 8;
-
         [Header("Charging parameters (charging weapons only)")]
         [Tooltip("Trigger a shot when maximum charge is reached")]
         public bool AutomaticReleaseOnCharged;
 
         [Tooltip("Duration to reach maximum charge")]
         public float MaxChargeDuration = 2f;
-
-        [Tooltip("Initial ammo used when starting to charge")]
-        public float AmmoUsedOnStartCharge = 1f;
 
         [Tooltip("Additional ammo used when charge reaches its maximum")]
         public float AmmoUsageRateWhileCharging = 1f;
@@ -122,23 +97,13 @@ namespace Unity.FPS.Game
         public UnityAction OnShoot;
         public event Action OnShootProcessed;
 
-        int carriedPhysicalBullets;
-        float currentAmmo;
         float lastTimeShot = Mathf.NegativeInfinity;
         public float LastChargeTriggerTimestamp { get; private set; }
         Vector3 lastMuzzlePosition;
 
-        public float CurrentAmmoRatio { get; private set; }
         public bool IsCooling { get; private set; }
         public float CurrentCharge { get; private set; }
         public Vector3 MuzzleWorldVelocity { get; private set; }
-
-        public float GetAmmoNeededToShoot() =>
-            (ShootType != WeaponShootType.Charge ? 1f : Mathf.Max(1f, AmmoUsedOnStartCharge)) /
-            (MaxAmmo * BulletsPerShot);
-
-        public int GetCarriedPhysicalBullets() => carriedPhysicalBullets;
-        public int GetCurrentAmmo() => Mathf.FloorToInt(currentAmmo);
 
         const string animAttackParameter = "Attack";
 
@@ -148,8 +113,6 @@ namespace Unity.FPS.Game
         #region Monobehavior Methods
         void Awake()
         {
-            currentAmmo = MaxAmmo;
-            carriedPhysicalBullets = HasPhysicalBullets ? ClipSize : 0;
             lastMuzzlePosition = WeaponMuzzle.position;
 
             weaponAudioSource = GetComponent<AudioSource>();
@@ -166,7 +129,7 @@ namespace Unity.FPS.Game
                 continuousShootAudioSource.loop = true;
             }
 
-            if (HasPhysicalBullets)
+            if (hasPhysicalBullets)
             {
                 physicalAmmoPool = new Queue<Rigidbody>(ShellPoolSize);
 
@@ -217,24 +180,15 @@ namespace Unity.FPS.Game
                 // reloads weapon over time
                 currentAmmo += AmmoReloadRate * Time.deltaTime;
 
-                // limits ammo to max value
-                currentAmmo = Mathf.Clamp(currentAmmo, 0, MaxAmmo);
-
                 IsCooling = true;
             }
             else
-            {
                 IsCooling = false;
-            }
 
             if (MaxAmmo == Mathf.Infinity)
-            {
                 CurrentAmmoRatio = 1f;
-            }
             else
-            {
                 CurrentAmmoRatio = currentAmmo / MaxAmmo;
-            }
         }
 
         void UpdateCharge()
@@ -416,7 +370,7 @@ namespace Unity.FPS.Game
                 Destroy(muzzleFlashInstance, 2f);
             }
 
-            if (HasPhysicalBullets)
+            if (hasPhysicalBullets)
             {
                 ShootShell();
                 carriedPhysicalBullets--;

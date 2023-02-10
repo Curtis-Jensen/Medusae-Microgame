@@ -85,8 +85,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 684531149953512367}
-  m_LocalRotation: {x: 0.8962008, y: -0.102847435, z: 0.28257102, w: 0.32619038}
-  m_LocalPosition: {x: 0.2, y: -0.3, z: 0.6}
+  m_LocalRotation: {x: 0.995026, y: 0.0043293107, z: -0.027092047, w: 0.095763505}
+  m_LocalPosition: {x: 0.53, y: -0.3, z: 0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3361326784658045617}
@@ -586,14 +586,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingWeapons:
-  - {fileID: 3560875662679413515, guid: 5acadaa2a4c4d9b47a63172642d349bb, type: 3}
-  - {fileID: 8323776800172828795, guid: b318fabc73446b746a1005cede0c4ceb, type: 3}
-  - {fileID: 8323776800172828795, guid: ff5a8c20084bd444a86f5f83e1e30ff7, type: 3}
-  - {fileID: 8323776800172828795, guid: 3439b4874b7b44e4eb2216314c46b85c, type: 3}
+  - {fileID: 5316586329565923321, guid: 128f20fd9fec12b4e9587d7fd19322b7, type: 3}
+  - {fileID: -54237267440988613, guid: 0d8752141728a314cbd5eb9452effddb, type: 3}
+  - {fileID: -1153407307839777507, guid: 5acadaa2a4c4d9b47a63172642d349bb, type: 3}
+  - {fileID: -8749176418408654831, guid: e9116a08c423ab745963f24424945498, type: 3}
   WeaponCamera: {fileID: 2286125971047457827}
   WeaponParentSocket: {fileID: 3891163784698469781}
   DefaultWeaponPosition: {fileID: 4354021110288562838}
-  defaultMeleePosition: {fileID: 0}
+  defaultMeleePosition: {fileID: 4421461369601733184}
   AimingWeaponPosition: {fileID: 6033319682454824337}
   DownWeaponPosition: {fileID: 2050759424792167117}
   reverseWeaponPosition: {fileID: 1218346354276972616}

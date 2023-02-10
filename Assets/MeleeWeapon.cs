@@ -21,7 +21,7 @@ public class MeleeWeapon : WeaponController
 
     private bool TryAttack()
     {
-        throw new NotImplementedException();
+        return true;
     }
 
     public override float AttackAnimation()
