@@ -19,6 +19,8 @@ public class ProceduralGeneration : MonoBehaviour
     public int lengthMin = 15;
     [Tooltip("How far, multiplied by 10, the walls will go.")]
     public int lengthMax = 26;
+    [Tooltip("How far the walls will tilt")]
+    public float tiltAngle = 10;
     [Range(0, 1)]
     [Tooltip("What percentage of the map will be filled with walls")]
     public float wallChance;
@@ -59,7 +61,8 @@ public class ProceduralGeneration : MonoBehaviour
                 if (Random.value > wallChance) continue; // 30
 
                 var position = new Vector3(x * 10, 2, z * 10);
-                var rotation = new Vector3(Random.Range(-10, 10), Random.Range(0, 360), Random.Range(-10, 10)); // 40
+                var rotation = 
+                    new Vector3(Random.Range(-tiltAngle, tiltAngle), Random.Range(0, 360), Random.Range(-tiltAngle, tiltAngle)); // 40
                 var newPrefab = Instantiate(wallPrefab, position, Quaternion.Euler(rotation), gameObject.transform);
 
                 if(forest)
