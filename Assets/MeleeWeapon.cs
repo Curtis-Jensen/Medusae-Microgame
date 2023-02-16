@@ -27,6 +27,7 @@ public class MeleeWeapon : WeaponController
 
     private bool TryAttack()
     {
+
         //Not yet implemented
         return true;
     }
@@ -40,7 +41,6 @@ public class MeleeWeapon : WeaponController
     private void OnTriggerEnter(Collider collision)
     {
         var damagable = collision.gameObject.GetComponent<Damageable>();
-        if (damagable == null) return;
 
         damagable.InflictDamage(Damage, false, parent);
     }
