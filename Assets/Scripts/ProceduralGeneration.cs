@@ -8,6 +8,8 @@ public class ProceduralGeneration : MonoBehaviour
     public NavMeshSurface floor;
     [Tooltip("The wall, tree, or other object that will be sprinkled around")]
     public GameObject objectPrefab;
+    [Tooltip("The wall, tree, or other object that will be sprinkled around")]
+    public GameObject objectPrefab2;
     [Tooltip("If true: objects spawn on spawn points. if false: objects spawn within a region")]
     public bool spawnPointBased = false;
     [Range(0, 1)]
@@ -77,10 +79,14 @@ public class ProceduralGeneration : MonoBehaviour
             {
                 if (Random.value > currentObjectPrefabChance) continue; // 30
 
+                GameObject currentObject;
+                if (Random.value > .5f) currentObject = objectPrefab;
+                else                    currentObject = objectPrefab2;
+
                 var position = new Vector3(x * 10, 2, z * 10);
                 var rotation =
                     new Vector3(Random.Range(-tiltAngle, tiltAngle), Random.Range(0, 360), Random.Range(-tiltAngle, tiltAngle)); // 40
-                var newPrefab = Instantiate(objectPrefab, position, Quaternion.Euler(rotation), gameObject.transform);
+                var newPrefab = Instantiate(currentObject, position, Quaternion.Euler(rotation), gameObject.transform);
 
                 if (forest)
                     newPrefab.transform.localScale = new Vector3(Random.Range(1, stretchAmounts), Random.Range(1, stretchAmounts), Random.Range(1, stretchAmounts));
