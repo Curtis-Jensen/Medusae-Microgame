@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class TileDestroyer : MonoBehaviour
 {
+    [Tooltip("How hard the tile pops up when broken")]
+    public float popForce;
     public GameObject tileParent;
 
     Health health;
     float maxHealth;
-    int tileCount;
+    float tileCount;
     float initialTileCount;
 
     void Start()
@@ -27,15 +29,24 @@ public class TileDestroyer : MonoBehaviour
     void FixedUpdate()
     {
         float healthPercentage =  health.CurrentHealth / maxHealth;
-        float tilePercentage = (float)tileParent.transform.childCount / initialTileCount;
+        float tilePercentage = tileCount / initialTileCount;
 
         if (healthPercentage < tilePercentage) DestroyATile();
     }
 
     void DestroyATile()
     {
-        var children = tileParent.GetComponentsInChildren<Transform>();
+        var allTiles = tileParent.GetComponentsInChildren<Rigidbody>();
+        List<Rigidbody> stableTiles = new List<Rigidbody>();
 
-        DestroyImmediate(children[Random.Range(1, children.Length)].gameObject);
+        foreach (var tile in allTiles)
+            if (tile.useGravity == false) stableTiles.Add(tile);
+
+        var fallingTile = stableTiles[Random.Range(0, stableTiles.Count)];
+
+        fallingTile.isKinematic = false;
+        fallingTile.useGravity = true;
+        fallingTile.AddForce(new Vector3(0, popForce, 0), ForceMode.Impulse);
+        tileCount--;
     }
 }
