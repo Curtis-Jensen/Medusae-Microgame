@@ -496,6 +496,26 @@ PrefabInstance:
       propertyPath: musicChoices.Array.data[2]
       value: 
       objectReference: {fileID: 8300000, guid: a880cd3da946c9548b8fd546f5892302, type: 3}
+    - target: {fileID: 1153891124, guid: c996b53e9f849234393d1e90f68d1679, type: 3}
+      propertyPath: musicChoices.Array.data[0].music
+      value: 
+      objectReference: {fileID: 8300000, guid: d8003de4be5900347a2c96ef75315675, type: 3}
+    - target: {fileID: 1153891124, guid: c996b53e9f849234393d1e90f68d1679, type: 3}
+      propertyPath: musicChoices.Array.data[1].music
+      value: 
+      objectReference: {fileID: 8300000, guid: a880cd3da946c9548b8fd546f5892302, type: 3}
+    - target: {fileID: 1153891124, guid: c996b53e9f849234393d1e90f68d1679, type: 3}
+      propertyPath: musicChoices.Array.data[2].music
+      value: 
+      objectReference: {fileID: 8300000, guid: f89ace694b697b74caa7e5c1d731ad42, type: 3}
+    - target: {fileID: 1153891124, guid: c996b53e9f849234393d1e90f68d1679, type: 3}
+      propertyPath: musicChoices.Array.data[1].isCopyrighted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153891124, guid: c996b53e9f849234393d1e90f68d1679, type: 3}
+      propertyPath: musicChoices.Array.data[2].isCopyrighted
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 319410335075788178, guid: c996b53e9f849234393d1e90f68d1679,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -520,6 +540,11 @@ PrefabInstance:
         type: 3}
       propertyPath: WinSceneName
       value: Wave Defense
+      objectReference: {fileID: 0}
+    - target: {fileID: 1315839542190839936, guid: c996b53e9f849234393d1e90f68d1679,
+        type: 3}
+      propertyPath: WinGameMessage
+      value: Get ready to fight
       objectReference: {fileID: 0}
     - target: {fileID: 1315839542190839937, guid: c996b53e9f849234393d1e90f68d1679,
         type: 3}
@@ -5447,6 +5472,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 106964266}
     m_Modifications:
+    - target: {fileID: 2707800222142829376, guid: d401b602eddc4e449b385a053f012a4c,
+        type: 3}
+      propertyPath: Title
+      value: Enter the arena when ready
+      objectReference: {fileID: 0}
     - target: {fileID: 2707800222142829376, guid: d401b602eddc4e449b385a053f012a4c,
         type: 3}
       propertyPath: IsOptional
