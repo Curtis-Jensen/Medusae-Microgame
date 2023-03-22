@@ -6,18 +6,12 @@ public class SpawnManager : MonoBehaviour
 {
     #region Variables
     public int waveNumber;
-    [Range(0, 1)] [Tooltip("The percent chance the enemy will be a medusa")]
-    public float medusaChance;    
-    [Range(0, 1)] [Tooltip("The percent chance the enemy will be a turret")]
-    public float turretChance;
-    public GameObject medusaPrefab;
-    public GameObject hoverBotPrefab;
-    public GameObject turretPrefab;
     public Text waveHud;
     [Tooltip("Whether or not the map is regenerated with each new wave")]
     public bool generatingChaotically;
     public ProceduralGeneration mapGenerator;
     public float endWaveDelay = 3;
+    public GameObject[] possibleEnemies;
 
     string playerName;
     #endregion
@@ -57,7 +51,7 @@ public class SpawnManager : MonoBehaviour
 
         SpawnEnemies();
 
-        if(generatingChaotically) mapGenerator.CreateMap();
+        if (generatingChaotically) mapGenerator.CreateMap();
     }
 
     /* Spawns as many enemies as there are waves, and makes sure to leave active enemies alone.
@@ -67,16 +61,10 @@ public class SpawnManager : MonoBehaviour
      */
     void SpawnEnemies()
     {
-        GameObject chosenEnemy;
-
         for (int i = 0; i < waveNumber; i++)
         {
-            var randomValue = Random.value;
-
-            if (randomValue < medusaChance)
-                chosenEnemy = medusaPrefab;
-            else
-                chosenEnemy = hoverBotPrefab;
+            int randomIndex = Random.Range(0, possibleEnemies.Length);
+            GameObject chosenEnemy = possibleEnemies[randomIndex];
 
             var nextSpawn = transform.GetChild(Random.Range(0, transform.childCount));
 
