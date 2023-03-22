@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.FPS.Game;
 using UnityEngine;
+//using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
 namespace Unity.FPS.UI
@@ -19,8 +20,6 @@ namespace Unity.FPS.UI
         [Header("Static")]
         [Tooltip("The effect that covers the screen when looking at medusae")]
         public Image staticImage;
-        [Tooltip("Where the static sound effect comes from")]
-        public AudioSource effectNoise;
         [Tooltip("The volume that static that changes when looking at or not looking at medusae")]
         public float effectVolume;
         [Tooltip("The intensity of the static effect on screen")]
@@ -39,6 +38,7 @@ namespace Unity.FPS.UI
         int camHeight;
         Vector2 camCenter;
         Health health;
+        AudioSource effectNoise; //Where the static sound effect comes from
         #endregion
 
         void Awake()
@@ -52,6 +52,7 @@ namespace Unity.FPS.UI
             camWidth = cam.pixelWidth;
             camHeight = cam.pixelHeight;
             camCenter = new Vector2(camWidth / 2, camHeight / 2);
+            effectNoise = gameObject.GetComponent<AudioSource>();
 
             health = gameObject.GetComponentInParent<Health>();
         }
