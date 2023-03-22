@@ -8,11 +8,15 @@ public class ProceduralGeneration : MonoBehaviour
     public NavMeshSurface floor;
     [Tooltip("The wall, tree, or other object that will be sprinkled around")]
     public GameObject objectPrefab;
-    [Tooltip("If true: objects spawn on spawn points. if false: objects spawn within a region")]
-    public bool spawnPointBased = false;
     [Range(0, 1)]
     [Tooltip("The chance that the objects will spawn as much as possible, making a maze")]
     public float packedMazeChance;
+
+    [Header("Dimensions")]
+    [Tooltip("If true: objects spawn on spawn points. if false: objects spawn within a region")]
+    public bool spawnPointBased = false;
+    [Tooltip("If true: objects spawn on spawn points. if false: objects spawn within a region")]
+    public GameObject[] spawnPoints;
 
     [Header("Dimensions")]
     [Tooltip("How far, multiplied by 10, the walls will go.")]
@@ -41,6 +45,22 @@ public class ProceduralGeneration : MonoBehaviour
         CreateMap();
     }
 
+    /* 
+     * 
+     * 50 Bake navigation map
+     */
+    public void CreateMap()
+    {
+        float currentObjectPrefabChance;
+        if (Random.value < packedMazeChance) currentObjectPrefabChance = 1;
+        else currentObjectPrefabChance = objectPrefabChance;
+
+        if (spawnPointBased) PlaceObjectsByPoints(currentObjectPrefabChance);
+        else PlaceObjectsInRegion(currentObjectPrefabChance);
+
+        floor.BuildNavMesh(); // 50
+    }
+
     /* 10 Deletes old map if there is one just in case this is called multiple times
      * 
      * 20 Make an array of +100 walls.
@@ -49,21 +69,7 @@ public class ProceduralGeneration : MonoBehaviour
      * 30 Random chance that they don’t show up
      *     
      * 40 Random rotation
-     * 
-     * 50 Bake navigation map
      */
-    public void CreateMap()
-    {
-        float currentObjectPrefabChance;
-        if (Random.value < packedMazeChance) currentObjectPrefabChance = 1;
-        else                                 currentObjectPrefabChance = objectPrefabChance;
-
-        if (spawnPointBased) PlaceObjectsByPoints(currentObjectPrefabChance);
-        else                 PlaceObjectsInRegion(currentObjectPrefabChance);
-
-        floor.BuildNavMesh(); // 50
-    }
-
     /// <summary>
     /// Places objects based off the region that is specified
     /// </summary>
@@ -88,11 +94,22 @@ public class ProceduralGeneration : MonoBehaviour
             }
     }
 
+    /* 10 Deletes old map for when this is called multiple times
+     * 
+     * 20 Make an array of +100 walls.
+     * Currently hardcoded to make a grid of walls that fits the current square map
+     * 
+     * 30 Random chance that they don’t show up
+     *     
+     * 40 Random rotation
+     */
     /// <summary>
     /// Places the objects based off the spawn points that are laid out
     /// </summary>
     void PlaceObjectsByPoints(float currentObjectPrefabChance)
     {
-
+        var children = gameObject.GetComponentsInChildren<Transform>();
+        for (int i = 1; i < children.Length; i++) // 10
+            DestroyImmediate(children[i].GetChild(0));
     }
 }

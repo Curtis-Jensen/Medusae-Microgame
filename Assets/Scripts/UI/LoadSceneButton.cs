@@ -13,9 +13,7 @@ namespace Unity.FPS.UI
         {
             if (EventSystem.current.currentSelectedGameObject == gameObject
                 && Input.GetButtonDown(InputNames.buttonNameSubmit))
-            {
                 LoadTargetScene();
-            }
         }
 
         public void LoadTargetScene()

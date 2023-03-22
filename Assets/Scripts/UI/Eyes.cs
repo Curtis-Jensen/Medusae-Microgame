@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.FPS.Game;
 using UnityEngine;
+//using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
 namespace Unity.FPS.UI
@@ -19,8 +20,6 @@ namespace Unity.FPS.UI
         [Header("Static")]
         [Tooltip("The effect that covers the screen when looking at medusae")]
         public Image staticImage;
-        [Tooltip("Where the static sound effect comes from")]
-        public AudioSource effectNoise;
         [Tooltip("The volume that static that changes when looking at or not looking at medusae")]
         public float effectVolume;
         [Tooltip("The intensity of the static effect on screen")]
@@ -39,6 +38,7 @@ namespace Unity.FPS.UI
         int camHeight;
         Vector2 camCenter;
         Health health;
+        AudioSource effectNoise; //Where the static sound effect comes from
         #endregion
 
         void Awake()
@@ -52,6 +52,7 @@ namespace Unity.FPS.UI
             camWidth = cam.pixelWidth;
             camHeight = cam.pixelHeight;
             camCenter = new Vector2(camWidth / 2, camHeight / 2);
+            effectNoise = gameObject.GetComponent<AudioSource>();
 
             health = gameObject.GetComponentInParent<Health>();
         }
@@ -72,20 +73,27 @@ namespace Unity.FPS.UI
         }
 
         /* Step 1 👁
-         * 
-         * The update function calls everything
-         */
+             * 
+             * The update function calls everything
+             */
         void FixedUpdate()
         {
             if (Blinking()) return;
 
             eyesViewing = false;
-            ScanFrameForViewables();
+
+            var viewablesInRange = ScanFrameForViewables();
+            foreach (var viewable in viewablesInRange)
+            {
+                var hit = CheckForObstructions(viewable);
+                if (hit != null)
+                    AddLookTime(viewable.damageMultiplier);
+            }
 
             SetStaticIntensity();
             RenderStatic();
-            if (testing)
-                EyesTest();
+
+            if (testing) EyesTest();
         }
 
         /* Step 2 ⬜
@@ -95,8 +103,9 @@ namespace Unity.FPS.UI
          * If the enemy is on the screen
          * draw a ray from the camera's view
          */
-        void ScanFrameForViewables()
+        List<Viewable> ScanFrameForViewables()
         {
+            var viewablesInRange = new List<Viewable>();
             for (int i = 0; i < viewableList.Count; i++)
             {
                 if (viewableList[i] == null) continue;
@@ -110,12 +119,10 @@ namespace Unity.FPS.UI
 
                 if (withinHeight && withinWidth)
                 {
-                    var sightLine = cam.ScreenPointToRay(screenPos);
-
-                    Debug.DrawRay(sightLine.origin, colliderBullsEye - sightLine.origin, Color.magenta);
-                    CheckForObstructions(viewableList[i], sightLine);
+                    viewablesInRange.Add(viewableList[i]);
                 }
             }
+            return viewablesInRange;
         }
 
         /* Step 3 
@@ -123,23 +130,30 @@ namespace Unity.FPS.UI
          * 2 if the ray hits a different viewable with a tag it just keeps going
          * 3 If the ray hits the enemy it was looking for it gives the medusa effect.
          */
-        void CheckForObstructions(Viewable targetInFrame, Ray sightLine)
+        RaycastHit? CheckForObstructions(Viewable viewable)
         {
+            var colliderBullsEye = viewable.viewableTarget.transform.position;
+            colliderBullsEye = new Vector3(colliderBullsEye.x, colliderBullsEye.y + lookHeight, colliderBullsEye.z);
+            var screenPos = cam.WorldToScreenPoint(colliderBullsEye);
+
+            var sightLine = cam.ScreenPointToRay(screenPos);
+
             var hits = Physics.RaycastAll(sightLine);
             Array.Sort(hits, (a, b) => (a.distance.CompareTo(b.distance)));
 
             foreach (RaycastHit item in hits)
             {
-                if (item.transform.CompareTag("Untagged")) return;//1
+                if (item.transform.CompareTag("Untagged")) return null;//1
 
                 //2
 
-                if (item.collider.Equals(targetInFrame.viewableTarget.GetComponentInChildren<Collider>()))//3
+                if (item.collider.Equals(viewable.viewableTarget.GetComponentInChildren<Collider>()))//3
                 {
-                    AddLookTime(targetInFrame.damageMultiplier);
-                    return;
+                    return item;
                 }
             }
+
+            return null;
         }
 
         /* Step 4 ☣
@@ -221,6 +235,7 @@ namespace Unity.FPS.UI
             effectNoise.volume = medusaeVisualized * effectVolume;
             staticImage.color = new Color(staticImage.color.r, staticImage.color.g, staticImage.color.b,
                 staticVisualEffect);
+
             medusaeVisualized = 0;
             staticVisualEffect = 0;
         }

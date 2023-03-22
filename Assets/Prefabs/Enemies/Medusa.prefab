@@ -400,7 +400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e27364eefd6dd0341ba72a3bfc0d9727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 100
+  MaxHealth: 50
   CriticalHealthRatio: 0.3
 --- !u!114 &917805399
 MonoBehaviour:
@@ -428,7 +428,7 @@ MonoBehaviour:
     serializedVersion: 2
     key0: {r: 0.39215687, g: 0, b: 0.24313726, a: 1}
     key1: {r: 0.2871746, g: 0.2871746, b: 0.2871746, a: 1}
-    key2: {r: 1.0000434, g: 1.0000434, b: 1.0000434, a: 0}
+    key2: {r: 1.3351364, g: 0.39550263, b: 0.85406625, a: 0}
     key3: {r: 0.39215687, g: 0, b: 0.24313726, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
@@ -3351,7 +3351,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5226213690554643364}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
