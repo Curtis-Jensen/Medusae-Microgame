@@ -16,8 +16,12 @@ namespace Unity.FPS.UI
         public bool testing;
         [Tooltip("How high above the center of the collider the player will look.  An attempt at debugging the eyes glitch.")]
         public float lookHeight;
+        [Tooltip("The choral sound effect when looking at the healing cross")]
+        public AudioClip choralSound;
 
         [Header("Static")]
+        [Tooltip("The static sound effect when looking at medusae")]
+        public AudioClip staticSound;
         [Tooltip("The effect that covers the screen when looking at medusae")]
         public Image staticImage;
         [Tooltip("The volume that static that changes when looking at or not looking at medusae")]
@@ -30,7 +34,7 @@ namespace Unity.FPS.UI
         #region Private Variables
         bool eyesViewing;
         float lookTimer = 0; //However long the player has been looking at the enemy.
-        float medusaeVisualized;
+        float effectMagnitude;
         float staticVisualEffect;//Determines by how much the screen will be staticy
         internal List<Viewable> viewableList;
         Camera cam;
@@ -38,7 +42,7 @@ namespace Unity.FPS.UI
         int camHeight;
         Vector2 camCenter;
         Health health;
-        AudioSource effectNoise; //Where the static sound effect comes from
+        AudioSource effectSoundSource; //Where the static sound effect comes from
         #endregion
 
         void Awake()
@@ -52,7 +56,7 @@ namespace Unity.FPS.UI
             camWidth = cam.pixelWidth;
             camHeight = cam.pixelHeight;
             camCenter = new Vector2(camWidth / 2, camHeight / 2);
-            effectNoise = gameObject.GetComponent<AudioSource>();
+            effectSoundSource = gameObject.GetComponent<AudioSource>();
 
             health = gameObject.GetComponentInParent<Health>();
         }
@@ -164,7 +168,7 @@ namespace Unity.FPS.UI
         void AddLookTime(float effectMultiplier)
         {
             eyesViewing = true;
-            medusaeVisualized += effectMultiplier;
+            effectMagnitude += effectMultiplier;
 
             lookTimer += Time.deltaTime * effectMultiplier;
 
@@ -223,7 +227,7 @@ namespace Unity.FPS.UI
          */
         void SetStaticIntensity()
         {
-            staticVisualEffect = medusaeVisualized * staticIntensity;//To be sure that everything is still visible
+            staticVisualEffect = effectMagnitude * staticIntensity;//To be sure that everything is still visible
             if (staticVisualEffect > maxStaticIntensity) staticVisualEffect = maxStaticIntensity;
         }
 
@@ -232,11 +236,24 @@ namespace Unity.FPS.UI
          */
         void RenderStatic()
         {
-            effectNoise.volume = medusaeVisualized * effectVolume;
+            if (effectMagnitude >= 0 && effectSoundSource.clip != staticSound)
+            {
+                effectSoundSource.clip = staticSound;
+                effectSoundSource.Play();
+            }
+            else if (effectMagnitude < 0 && effectSoundSource.clip != choralSound)
+            {
+                effectSoundSource.clip = choralSound;
+                effectSoundSource.Play();
+            }
+
+            effectSoundSource.volume = Mathf.Abs(effectMagnitude) * effectVolume;
             staticImage.color = new Color(staticImage.color.r, staticImage.color.g, staticImage.color.b,
                 staticVisualEffect);
 
-            medusaeVisualized = 0;
+            Debug.Log($"effect magnitude is: {effectMagnitude}, effectSoundSource.clip is {effectSoundSource.clip.name}, and effectSoundSource.volume is {effectSoundSource.volume}");
+
+            effectMagnitude = 0;
             staticVisualEffect = 0;
         }
         #endregion
