@@ -339,24 +339,19 @@ namespace Unity.FPS.AI
 
         public void UpdatePathDestination(bool inverseOrder = false)
         {
-            if (IsPathValid())
-            {
-                // Check if reached the path destination
-                if ((transform.position - GetDestinationOnPath()).magnitude <= PathReachingRadius)
-                {
-                    // increment path destination index
-                    pathDestinationNodeIndex =
-                        inverseOrder ? (pathDestinationNodeIndex - 1) : (pathDestinationNodeIndex + 1);
-                    if (pathDestinationNodeIndex < 0)
-                    {
-                        pathDestinationNodeIndex += PatrolPath.pathNodes.Length;
-                    }
+            if (!IsPathValid()) return;
 
-                    if (pathDestinationNodeIndex >= PatrolPath.pathNodes.Length)
-                    {
-                        pathDestinationNodeIndex -= PatrolPath.pathNodes.Length;
-                    }
-                }
+            // Check if reached the path destination
+            if ((transform.position - GetDestinationOnPath()).magnitude <= PathReachingRadius)
+            {
+                // increment path destination index
+                pathDestinationNodeIndex =
+                    inverseOrder ? (pathDestinationNodeIndex - 1) : (pathDestinationNodeIndex + 1);
+                if (pathDestinationNodeIndex < 0)
+                    pathDestinationNodeIndex += PatrolPath.pathNodes.Length;
+
+                if (pathDestinationNodeIndex >= PatrolPath.pathNodes.Length)
+                    pathDestinationNodeIndex -= PatrolPath.pathNodes.Length;
             }
         }
 
@@ -399,6 +394,9 @@ namespace Unity.FPS.AI
             var level = GameObject.Find("Level").transform;
             if (TryDropItem())//3
                 Instantiate(LootPrefab, transform.position, Quaternion.identity, level);
+
+            var player = GameObject.Find("Player");
+            player.GetComponent<Health>().Heal(10);
 
             Destroy(gameObject, DeathDuration);//4
         }

@@ -38,9 +38,7 @@ namespace Unity.FPS.Game
             // call OnHeal action
             float trueHealAmount = CurrentHealth - healthBefore;
             if (trueHealAmount > 0f)
-            {
                 OnHealed?.Invoke(trueHealAmount);
-            }
         }
 
         /// <summary>
