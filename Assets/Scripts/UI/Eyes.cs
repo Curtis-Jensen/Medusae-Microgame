@@ -236,12 +236,12 @@ namespace Unity.FPS.UI
          */
         void RenderStatic()
         {
-            if (effectMagnitude >= 0 && effectSoundSource.clip != staticSound)
+            if (effectMagnitude > 0 && effectSoundSource.clip != staticSound)
             {
                 effectSoundSource.clip = staticSound;
                 effectSoundSource.Play();
             }
-            else if (effectMagnitude < 0 && effectSoundSource.clip != choralSound)
+            else if (effectMagnitude <= 0 && effectSoundSource.clip != choralSound)
             {
                 effectSoundSource.clip = choralSound;
                 effectSoundSource.Play();
