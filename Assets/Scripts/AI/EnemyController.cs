@@ -396,7 +396,7 @@ namespace Unity.FPS.AI
                 Instantiate(LootPrefab, transform.position, Quaternion.identity, level);
 
             var player = GameObject.Find("Player");
-            player.GetComponent<Health>().Heal(10);
+            player.GetComponent<Health>().Heal(1);
 
             Destroy(gameObject, DeathDuration);//4
         }
