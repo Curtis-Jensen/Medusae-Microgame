@@ -95,6 +95,9 @@ namespace Unity.FPS.AI
         [Tooltip("Color of the sphere gizmo representing the detection range")]
         public Color DetectionRangeColor = Color.blue;
 
+        [Tooltip("How much the enemies will heal the player when killed")]
+        public float vampirismHeal = 1f;
+
         //These UnityActions are a list of methods that get called at certain times.
         //They are not implemented for the medusa yet so there are null checks
         public UnityAction onAttack;
@@ -401,7 +404,7 @@ namespace Unity.FPS.AI
                 Instantiate(LootPrefab, transform.position, Quaternion.identity, level);
 
             var player = GameObject.Find("Player");
-            player.GetComponent<Health>().Heal(1);
+            player.GetComponent<Health>().Heal(vampirismHeal);
 
             Destroy(gameObject, DeathDuration);//4
         }
