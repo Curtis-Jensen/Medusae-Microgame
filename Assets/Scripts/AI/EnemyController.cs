@@ -400,6 +400,9 @@ namespace Unity.FPS.AI
             if (TryDropItem())//3
                 Instantiate(LootPrefab, transform.position, Quaternion.identity, level);
 
+            var player = GameObject.Find("Player");
+            player.GetComponent<Health>().Heal(1);
+
             Destroy(gameObject, DeathDuration);//4
         }
 
