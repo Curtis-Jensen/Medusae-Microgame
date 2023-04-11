@@ -251,8 +251,6 @@ namespace Unity.FPS.UI
             staticImage.color = new Color(staticImage.color.r, staticImage.color.g, staticImage.color.b,
                 staticVisualEffect);
 
-            Debug.Log($"effect magnitude is: {effectMagnitude}, effectSoundSource.clip is {effectSoundSource.clip.name}, and effectSoundSource.volume is {effectSoundSource.volume}");
-
             effectMagnitude = 0;
             staticVisualEffect = 0;
         }
