@@ -110,23 +110,10 @@ public class ProceduralGeneration : MonoBehaviour
         foreach (var spawnPoint in spawnPoints)
         {
             // Delete existing walls from previous spawns
-            var children = new List<Transform>();
             for (int i = spawnPoint.childCount - 1; i >= 0; i--)
             {
                 var child = spawnPoint.GetChild(i);
-                if (child != null)
-                {
-                    children.Add(child);
-                }
-            }
-
-            // Destroy the children
-            foreach (Transform child in children)
-            {
-                if (child != null)
-                {
-                    DestroyImmediate(child.gameObject);
-                }
+                DestroyImmediate(child.gameObject);
             }
 
             // Spawn new wall
