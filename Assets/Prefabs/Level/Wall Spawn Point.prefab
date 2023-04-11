@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8896913894129422810}
   - component: {fileID: 8896913894129422811}
+  - component: {fileID: 809473806860923179}
   m_Layer: 0
   m_Name: Wall Spawn Point
   m_TagString: SpawnPoint
@@ -45,3 +46,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gizmoColor: {r: 0, g: 1, b: 0, a: 1}
   gizmoSize: 1
+--- !u!65 &809473806860923179
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8896913894129422813}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
