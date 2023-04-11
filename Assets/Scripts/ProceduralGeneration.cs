@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,8 +16,6 @@ public class ProceduralGeneration : MonoBehaviour
     [Header("Dimensions")]
     [Tooltip("If true: objects spawn on spawn points. if false: objects spawn within a region")]
     public bool spawnPointBased = false;
-    [Tooltip("If true: objects spawn on spawn points. if false: objects spawn within a region")]
-    public GameObject[] spawnPoints;
 
     [Header("Dimensions")]
     [Tooltip("How far, multiplied by 10, the walls will go.")]
@@ -55,7 +54,7 @@ public class ProceduralGeneration : MonoBehaviour
         if (Random.value < packedMazeChance) currentObjectPrefabChance = 1;
         else currentObjectPrefabChance = objectPrefabChance;
 
-        if (spawnPointBased) PlaceObjectsByPoints(currentObjectPrefabChance);
+        if (spawnPointBased) PlaceObjectsBySpawnPoints(currentObjectPrefabChance);
         else PlaceObjectsInRegion(currentObjectPrefabChance);
 
         floor.BuildNavMesh(); // 50
@@ -94,22 +93,58 @@ public class ProceduralGeneration : MonoBehaviour
             }
     }
 
-    /* 10 Deletes old map for when this is called multiple times
-     * 
-     * 20 Make an array of +100 walls.
-     * Currently hardcoded to make a grid of walls that fits the current square map
-     * 
-     * 30 Random chance that they don’t show up
-     *     
-     * 40 Random rotation
-     */
     /// <summary>
     /// Places the objects based off the spawn points that are laid out
     /// </summary>
-    void PlaceObjectsByPoints(float currentObjectPrefabChance)
+    void PlaceObjectsBySpawnPoints(float currentObjectPrefabChance)
     {
-        var children = gameObject.GetComponentsInChildren<Transform>();
-        for (int i = 1; i < children.Length; i++) // 10
-            DestroyImmediate(children[i].GetChild(0));
+        var spawnPoints = new List<Transform>();
+        foreach (Transform child in transform)
+        {
+            if (child.CompareTag("SpawnPoint"))
+            {
+                spawnPoints.Add(child);
+            }
+        }
+
+        foreach (var spawnPoint in spawnPoints)
+        {
+            // Delete existing walls from previous spawns
+            var children = new List<Transform>();
+            for (int i = spawnPoint.childCount - 1; i >= 0; i--)
+            {
+                var child = spawnPoint.GetChild(i);
+                if (child != null)
+                {
+                    children.Add(child);
+                }
+            }
+
+            // Destroy the children
+            foreach (Transform child in children)
+            {
+                if (child != null)
+                {
+                    DestroyImmediate(child.gameObject);
+                }
+            }
+
+            // Spawn new wall
+            if (Random.value <= currentObjectPrefabChance)
+            {
+                var position = spawnPoint.position;
+                var rotation = Quaternion.Euler(Random.Range(-tiltAngle, tiltAngle),
+                                                Random.Range(0, 360),
+                                                Random.Range(-tiltAngle, tiltAngle));
+                var newWall = Instantiate(objectPrefab, position, rotation, spawnPoint);
+
+                if (stretchy)
+                {
+                    newWall.transform.localScale = new Vector3(Random.Range(1, stretchAmounts),
+                                                                Random.Range(1, stretchAmounts),
+                                                                Random.Range(1, stretchAmounts));
+                }
+            }
+        }
     }
 }
