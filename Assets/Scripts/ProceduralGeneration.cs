@@ -65,32 +65,31 @@ public class ProceduralGeneration : MonoBehaviour
     void SpawnObjects(float spawnChance)
     {
         var spawnPoints = new List<Transform>(); // 🌀
-        foreach (Transform child in transform)
+        void SpawnObjects(float spawnChance)
         {
-            if (child.CompareTag("SpawnPoint"))
-                spawnPoints.Add(child);
-        }
-
-        foreach (var spawnPoint in spawnPoints) // 🧨
-        {
-            for (int i = spawnPoint.childCount - 1; i >= 0; i--) // 💥
+            foreach (Transform spawnPoint in transform) // 🧨
             {
-                var child = spawnPoint.GetChild(i);
-                DestroyImmediate(child.gameObject);
-            }
+                if (!spawnPoint.CompareTag("SpawnPoint")) continue;
 
-            if (Random.value <= spawnChance)
-            {
-                var rotation = Quaternion.Euler(Random.Range(-tiltAngle, tiltAngle), // 🧱
-                                                Random.Range(0, 360),
-                                                Random.Range(-tiltAngle, tiltAngle));
+                for (int i = spawnPoint.childCount - 1; i >= 0; i--) // 💥
+                {
+                    var child = spawnPoint.GetChild(i);
+                    DestroyImmediate(child.gameObject);
+                }
 
-                var newWall = Instantiate(objectPrefab, spawnPoint.position, rotation, spawnPoint); // 🎉
+                if (Random.value <= spawnChance)
+                {
+                    var rotation = Quaternion.Euler(Random.Range(-tiltAngle, tiltAngle), // 🧱
+                                                    Random.Range(0, 360),
+                                                    Random.Range(-tiltAngle, tiltAngle));
 
-                if (stretchy)
-                    newWall.transform.localScale = new Vector3(Random.Range(1, stretchAmounts), // 🎨
-                                                               Random.Range(1, stretchAmounts),
-                                                               Random.Range(1, stretchAmounts));
+                    var newWall = Instantiate(objectPrefab, spawnPoint.position, rotation, spawnPoint); // 🎉
+
+                    if (stretchy)
+                        newWall.transform.localScale = new Vector3(Random.Range(1, stretchAmounts), // 🎨
+                                                                   Random.Range(1, stretchAmounts),
+                                                                   Random.Range(1, stretchAmounts));
+                }
             }
         }
     }
