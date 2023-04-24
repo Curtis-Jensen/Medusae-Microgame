@@ -16,7 +16,7 @@ public class ProceduralGeneration : MonoBehaviour
     [Header("Dimensions")]
     [Range(0, 1)]
     [Tooltip("What percentage of the map will be filled with walls")]
-    public float spawnChance;
+    public float objectPrefabChance;
     [Tooltip("How far the walls will tilt")]
     public float tiltAngle = 10;
 
@@ -38,9 +38,11 @@ public class ProceduralGeneration : MonoBehaviour
      */
     public void CreateMap()
     {
-        if (Random.value < packedMazeChance) spawnChance = 1;
+        float currentObjectPrefabChance;
+        if (Random.value < packedMazeChance) currentObjectPrefabChance = 1;
+        else currentObjectPrefabChance = objectPrefabChance;
 
-        SpawnObjects();
+        PlaceObjectsBySpawnPoints(currentObjectPrefabChance);
 
         floor.BuildNavMesh(); // 50
     }
@@ -61,8 +63,8 @@ public class ProceduralGeneration : MonoBehaviour
     /// <summary>
     /// Places the objects based off the spawn points that are laid out
     /// </summary>
-    /// <param name="spawnChance">The chance of spawning a new object on each spawn point</param>
-    void SpawnObjects()
+    /// <param name="currentObjectPrefabChance">The chance of spawning a new object on each spawn point</param>
+    void PlaceObjectsBySpawnPoints(float currentObjectPrefabChance)
     {
         var spawnPoints = new List<Transform>(); // 🌀
         foreach (Transform child in transform)
@@ -79,7 +81,7 @@ public class ProceduralGeneration : MonoBehaviour
                 DestroyImmediate(child.gameObject);
             }
 
-            if (Random.value <= spawnChance)
+            if (Random.value <= currentObjectPrefabChance)
             {
                 var rotation = Quaternion.Euler(Random.Range(-tiltAngle, tiltAngle), // 🧱
                                                 Random.Range(0, 360),
