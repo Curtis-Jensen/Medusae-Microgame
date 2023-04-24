@@ -64,27 +64,24 @@ public class ProceduralGeneration : MonoBehaviour
     {
         foreach (Transform spawnPoint in transform) // 🧨
         {
-            if (!spawnPoint.CompareTag("SpawnPoint")) continue;
-
             for (int i = spawnPoint.childCount - 1; i >= 0; i--) // 💥
             {
                 var child = spawnPoint.GetChild(i);
                 DestroyImmediate(child.gameObject);
             }
 
-            if (Random.value <= spawnChance)
-            {
-                var rotation = Quaternion.Euler(Random.Range(-tiltAngle, tiltAngle), // 🧱
-                                                Random.Range(0, 360),
-                                                Random.Range(-tiltAngle, tiltAngle));
+            if (Random.value >= spawnChance) continue;
 
-                var newWall = Instantiate(objectPrefab, spawnPoint.position, rotation, spawnPoint); // 🎉
+            var rotation = Quaternion.Euler(Random.Range(-tiltAngle, tiltAngle), // 🧱
+                                            Random.Range(0, 360),
+                                            Random.Range(-tiltAngle, tiltAngle));
 
-                if (stretchy)
-                    newWall.transform.localScale = new Vector3(Random.Range(1, stretchAmounts), // 🎨
-                                                                Random.Range(1, stretchAmounts),
-                                                                Random.Range(1, stretchAmounts));
-            }
+            var newWall = Instantiate(objectPrefab, spawnPoint.position, rotation, spawnPoint); // 🎉
+
+            if (stretchy)
+                newWall.transform.localScale = new Vector3(Random.Range(1, stretchAmounts), // 🎨
+                                                           Random.Range(1, stretchAmounts),
+                                                           Random.Range(1, stretchAmounts));
         }
     }
 }
