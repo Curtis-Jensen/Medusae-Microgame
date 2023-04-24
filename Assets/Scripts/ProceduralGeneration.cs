@@ -16,7 +16,7 @@ public class ProceduralGeneration : MonoBehaviour
     [Header("Dimensions")]
     [Range(0, 1)]
     [Tooltip("What percentage of the map will be filled with walls")]
-    public float objectPrefabChance;
+    public float spawnChance;
     [Tooltip("How far the walls will tilt")]
     public float tiltAngle = 10;
 
@@ -32,19 +32,18 @@ public class ProceduralGeneration : MonoBehaviour
         CreateMap();
     }
 
-    /* 
-     * 
-     * 50 Bake navigation map
+    /* These three lines of code may seem overly complex,
+     * but we need to be sure that the spawnChance goes back to what it was before being packed
      */
     public void CreateMap()
     {
-        float currentObjectPrefabChance;
-        if (Random.value < packedMazeChance) currentObjectPrefabChance = 1;
-        else currentObjectPrefabChance = objectPrefabChance;
+        float spawnChance; //
+        if (Random.value < packedMazeChance) spawnChance = 1;
+        else spawnChance = this.spawnChance;
 
-        PlaceObjectsBySpawnPoints(currentObjectPrefabChance);
+        SpawnObjects(spawnChance);
 
-        floor.BuildNavMesh(); // 50
+        floor.BuildNavMesh(); // Bake navigation map
     }
 
     /*
@@ -63,8 +62,8 @@ public class ProceduralGeneration : MonoBehaviour
     /// <summary>
     /// Places the objects based off the spawn points that are laid out
     /// </summary>
-    /// <param name="currentObjectPrefabChance">The chance of spawning a new object on each spawn point</param>
-    void PlaceObjectsBySpawnPoints(float currentObjectPrefabChance)
+    /// <param name="spawnChance">The chance of spawning a new object on each spawn point</param>
+    void SpawnObjects(float spawnChance)
     {
         var spawnPoints = new List<Transform>(); // 🌀
         foreach (Transform child in transform)
@@ -81,7 +80,7 @@ public class ProceduralGeneration : MonoBehaviour
                 DestroyImmediate(child.gameObject);
             }
 
-            if (Random.value <= currentObjectPrefabChance)
+            if (Random.value <= spawnChance)
             {
                 var rotation = Quaternion.Euler(Random.Range(-tiltAngle, tiltAngle), // 🧱
                                                 Random.Range(0, 360),
