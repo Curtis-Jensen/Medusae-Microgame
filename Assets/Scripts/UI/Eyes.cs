@@ -13,7 +13,7 @@ namespace Unity.FPS.UI
         [Tooltip("The black part of the screen when the player blinks")]
         public GameObject eyeLids;
         [Tooltip("Whether Debug.Logs() and errors should be logged when testing how the player looks at the enemy")]
-        public bool testing;
+        public bool deepTesting;
         [Tooltip("How high above the center of the collider the player will look.  An attempt at debugging the eyes glitch.")]
         public float lookHeight;
         [Tooltip("The choral sound effect when looking at the healing cross")]
@@ -96,8 +96,7 @@ namespace Unity.FPS.UI
 
             SetStaticIntensity();
             RenderStatic();
-
-            if (testing) EyesTest();
+            EyesTest();
         }
 
         /* Step 2 ⬜
@@ -213,12 +212,16 @@ namespace Unity.FPS.UI
 
             if (redundantEyesViewing && !eyesViewing)
                 throw new UnityException(item.name + " should be visible, but it is not.");
-            else if (redundantEyesViewing && eyesViewing)
-                Debug.Log(item.name + " is VISIBLE");
-            else if (!redundantEyesViewing && !eyesViewing)
-                Debug.Log("Nothing to view");
-            else if (!redundantEyesViewing && eyesViewing)
-                Debug.Log(item.name + " is VISIBLE, but not in center frame");
+
+            if (deepTesting) 
+            {
+                if (redundantEyesViewing && eyesViewing)
+                    Debug.Log(item.name + " is VISIBLE");
+                else if (!redundantEyesViewing && !eyesViewing)
+                    Debug.Log("Nothing to view");
+                else if (!redundantEyesViewing && eyesViewing)
+                    Debug.Log(item.name + " is VISIBLE, but not in center frame");
+            }
         }
 
         #region📺Static

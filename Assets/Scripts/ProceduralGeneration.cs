@@ -32,12 +32,12 @@ public class ProceduralGeneration : MonoBehaviour
         CreateMap();
     }
 
-    /* These three lines of code may seem overly complex,
+    /* 🤔 These three lines of code may seem overly complex,
      * but we need to be sure that the spawnChance goes back to what it was before being packed
      */
     public void CreateMap()
     {
-        float spawnChance; //
+        float spawnChance; // 🤔
         if (Random.value < packedMazeChance) spawnChance = 1;
         else spawnChance = this.spawnChance;
 
@@ -46,8 +46,7 @@ public class ProceduralGeneration : MonoBehaviour
         floor.BuildNavMesh(); // Bake navigation map
     }
 
-    /*
-        🌀 Get a list of all spawn points, defined as children of this game object
+    /*  🌀 Get a list of all spawn points, defined as children of this game object
 
         🧨 For each spawn point, delete any existing walls and spawn a new object if the random value is below the prefab chance
 
