@@ -46,9 +46,7 @@ public class ProceduralGeneration : MonoBehaviour
         floor.BuildNavMesh(); // Bake navigation map
     }
 
-    /*  🌀 Get a list of all spawn points, defined as children of this game object
-
-        🧨 For each spawn point, delete any existing walls and spawn a new object if the random value is below the prefab chance
+    /*  🧨 For each spawn point, delete any existing walls and spawn a new object if the random value is below the prefab chance
 
         💥 Delete existing walls from spawn points immediately so it can be used in the inspector
 
@@ -64,32 +62,28 @@ public class ProceduralGeneration : MonoBehaviour
     /// <param name="spawnChance">The chance of spawning a new object on each spawn point</param>
     void SpawnObjects(float spawnChance)
     {
-        var spawnPoints = new List<Transform>(); // 🌀
-        void SpawnObjects(float spawnChance)
+        foreach (Transform spawnPoint in transform) // 🧨
         {
-            foreach (Transform spawnPoint in transform) // 🧨
+            if (!spawnPoint.CompareTag("SpawnPoint")) continue;
+
+            for (int i = spawnPoint.childCount - 1; i >= 0; i--) // 💥
             {
-                if (!spawnPoint.CompareTag("SpawnPoint")) continue;
+                var child = spawnPoint.GetChild(i);
+                DestroyImmediate(child.gameObject);
+            }
 
-                for (int i = spawnPoint.childCount - 1; i >= 0; i--) // 💥
-                {
-                    var child = spawnPoint.GetChild(i);
-                    DestroyImmediate(child.gameObject);
-                }
+            if (Random.value <= spawnChance)
+            {
+                var rotation = Quaternion.Euler(Random.Range(-tiltAngle, tiltAngle), // 🧱
+                                                Random.Range(0, 360),
+                                                Random.Range(-tiltAngle, tiltAngle));
 
-                if (Random.value <= spawnChance)
-                {
-                    var rotation = Quaternion.Euler(Random.Range(-tiltAngle, tiltAngle), // 🧱
-                                                    Random.Range(0, 360),
-                                                    Random.Range(-tiltAngle, tiltAngle));
+                var newWall = Instantiate(objectPrefab, spawnPoint.position, rotation, spawnPoint); // 🎉
 
-                    var newWall = Instantiate(objectPrefab, spawnPoint.position, rotation, spawnPoint); // 🎉
-
-                    if (stretchy)
-                        newWall.transform.localScale = new Vector3(Random.Range(1, stretchAmounts), // 🎨
-                                                                   Random.Range(1, stretchAmounts),
-                                                                   Random.Range(1, stretchAmounts));
-                }
+                if (stretchy)
+                    newWall.transform.localScale = new Vector3(Random.Range(1, stretchAmounts), // 🎨
+                                                                Random.Range(1, stretchAmounts),
+                                                                Random.Range(1, stretchAmounts));
             }
         }
     }
