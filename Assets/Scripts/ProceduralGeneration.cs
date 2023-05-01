@@ -76,10 +76,10 @@ public class ProceduralGeneration : MonoBehaviour
                                             Random.Range(0, 360),
                                             Random.Range(-tiltAngle, tiltAngle));
 
-            var newWall = Instantiate(objectPrefab, spawnPoint.position, rotation, spawnPoint); // 🎉
+            var newObject = Instantiate(objectPrefab, spawnPoint.position, rotation, spawnPoint); // 🎉
 
             if (stretchy)
-                newWall.transform.localScale = new Vector3(Random.Range(1, stretchAmounts), // 🎨
+                newObject.transform.localScale = new Vector3(Random.Range(1, stretchAmounts), // 🎨
                                                            Random.Range(1, stretchAmounts),
                                                            Random.Range(1, stretchAmounts));
         }
