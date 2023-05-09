@@ -7,8 +7,8 @@ public class ProceduralGeneration : MonoBehaviour
     [Header("General")]
     [Tooltip("The floor needs to be kept in mind so the nav meshes can be baked.")]
     public NavMeshSurface floor;
-    [Tooltip("The wall, tree, or other object that will be sprinkled around")]
-    public GameObject objectPrefab;
+    [Tooltip("The walls, trees, or other objects that will be sprinkled around")]
+    public GameObject[] objectPrefabs;
     [Range(0, 1)]
     [Tooltip("The chance that the objects will spawn as much as possible, making a maze")]
     public float packedMazeChance;
@@ -72,11 +72,14 @@ public class ProceduralGeneration : MonoBehaviour
 
             if (Random.value >= spawnChance) continue;
 
+            int randomIndex = Random.Range(0, objectPrefabs.Length);
+            GameObject chosenObject = objectPrefabs[randomIndex];
+
             var rotation = Quaternion.Euler(Random.Range(-tiltAngle, tiltAngle), // 🧱
                                             Random.Range(0, 360),
                                             Random.Range(-tiltAngle, tiltAngle));
 
-            var newObject = Instantiate(objectPrefab, spawnPoint.position, rotation, spawnPoint); // 🎉
+            var newObject = Instantiate(chosenObject, spawnPoint.position, rotation, spawnPoint); // 🎉
 
             if (stretchy)
                 newObject.transform.localScale = new Vector3(Random.Range(1, stretchAmounts), // 🎨
