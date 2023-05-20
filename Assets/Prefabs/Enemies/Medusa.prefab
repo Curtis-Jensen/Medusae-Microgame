@@ -291,7 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionRadius: 100
   gazeHeight: 7
-  isMedusa: 1
+  aimToFront: 0
 --- !u!82 &5581391596774759321
 AudioSource:
   m_ObjectHideFlags: 0
@@ -463,6 +463,7 @@ MonoBehaviour:
   PathReachingRangeColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   AttackRangeColor: {r: 1, g: 0, b: 0, a: 1}
   DetectionRangeColor: {r: 0, g: 0, b: 1, a: 1}
+  vampirismHeal: 1
 --- !u!114 &917805400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,7 +477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Affiliation: 0
-  AimPoint: {fileID: 0}
+  AimPoint: {fileID: 4191353904921438}
 --- !u!114 &7471935179276344570
 MonoBehaviour:
   m_ObjectHideFlags: 0
