@@ -1,10 +1,10 @@
-﻿using Unity.FPS.Game;
+using Unity.FPS.Game;
 using UnityEngine;
 
 namespace Unity.FPS.AI
 {
     [RequireComponent(typeof(EnemyController))]
-    public class EnemyTurret : MonoBehaviour
+    public class FriendlyTurret : MonoBehaviour
     {
         public enum AIState
         {
@@ -81,7 +81,6 @@ namespace Unity.FPS.AI
                 case AIState.Attack:
                     bool mustShoot = Time.time > timeStartedDetection + DetectionFireDelay;
                     // Calculate the desired rotation of our turret (aim at target)
-                    //So far it looks like DetectedModule is where the KnownDetectedTarget variable comes from
                     Vector3 directionToTarget =
                         (enemyController.KnownDetectedTarget.transform.position - TurretAimPoint.position).normalized;
                     Quaternion offsettedTargetRotation =

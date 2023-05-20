@@ -12,7 +12,7 @@ namespace Unity.FPS.Game
         [Tooltip("Used to determine how high the player can look before they are determined to be looking above the medusae")]
         public float gazeHeight;
         [Tooltip("If the enemy will aim toward the player front and look at the player or just navigate toward the player.")]
-        public bool isMedusa;
+        public bool aimToFront;
 
         NavMeshAgent agent;
         Transform target; // Whatever is the intended destination of the enemy at the moment
@@ -44,7 +44,7 @@ namespace Unity.FPS.Game
 
         void PathFind()
         {
-            if (playerFront.position.y < gazeHeight && isMedusa) target = playerFront;
+            if (playerFront.position.y < gazeHeight && aimToFront) target = playerFront;
             else target = player;
 
             float distance = Vector3.Distance(target.position, transform.position);
@@ -53,7 +53,7 @@ namespace Unity.FPS.Game
 
             agent.SetDestination(target.position);
 
-            if(isMedusa)
+            if(aimToFront)
                 LookAtPlayer(distance);
         }
 
