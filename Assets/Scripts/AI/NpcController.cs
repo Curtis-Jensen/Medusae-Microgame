@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,7 +8,7 @@ using UnityEngine.Events;
 namespace Unity.FPS.AI
 {
     [RequireComponent(typeof(Health), typeof(Actor), typeof(NavMeshAgent))]
-    public class EnemyController : MonoBehaviour
+    public class NpcController : MonoBehaviour
     {
         [System.Serializable]
         public struct RendererIndexData
@@ -121,7 +122,6 @@ namespace Unity.FPS.AI
         public DetectionModule DetectionModule { get; private set; }
 
         int pathDestinationNodeIndex;
-        EnemyManager enemyManager;
         ActorsManager actorsManager;
         Health health;
         Actor actor;
@@ -136,25 +136,20 @@ namespace Unity.FPS.AI
 
         void Start()
         {
-            enemyManager = FindObjectOfType<EnemyManager>();
-            DebugUtility.HandleErrorIfNullFindObject<EnemyManager, EnemyController>(enemyManager, this);
-
             actorsManager = FindObjectOfType<ActorsManager>();
-            DebugUtility.HandleErrorIfNullFindObject<ActorsManager, EnemyController>(actorsManager, this);
-
-            enemyManager.RegisterEnemy(this);
+            DebugUtility.HandleErrorIfNullFindObject<ActorsManager, NpcController>(actorsManager, this);
 
             health = GetComponent<Health>();
-            DebugUtility.HandleErrorIfNullGetComponent<Health, EnemyController>(health, this, gameObject);
+            DebugUtility.HandleErrorIfNullGetComponent<Health, NpcController>(health, this, gameObject);
 
             actor = GetComponent<Actor>();
-            DebugUtility.HandleErrorIfNullGetComponent<Actor, EnemyController>(actor, this, gameObject);
+            DebugUtility.HandleErrorIfNullGetComponent<Actor, NpcController>(actor, this, gameObject);
 
             NavMeshAgent = GetComponent<NavMeshAgent>();
             selfColliders = GetComponentsInChildren<Collider>();
 
             gameFlowManager = FindObjectOfType<GameFlowManager>();
-            DebugUtility.HandleErrorIfNullFindObject<GameFlowManager, EnemyController>(gameFlowManager, this);
+            DebugUtility.HandleErrorIfNullFindObject<GameFlowManager, NpcController>(gameFlowManager, this);
 
             // Subscribe to damage & death actions
             health.OnDie += OnDie;
@@ -166,9 +161,9 @@ namespace Unity.FPS.AI
             weapon.ShowWeapon(true);
 
             var detectionModules = GetComponentsInChildren<DetectionModule>();
-            DebugUtility.HandleErrorIfNoComponentFound<DetectionModule, EnemyController>(detectionModules.Length, this,
+            DebugUtility.HandleErrorIfNoComponentFound<DetectionModule, NpcController>(detectionModules.Length, this,
                 gameObject);
-            DebugUtility.HandleWarningIfDuplicateObjects<DetectionModule, EnemyController>(detectionModules.Length,
+            DebugUtility.HandleWarningIfDuplicateObjects<DetectionModule, NpcController>(detectionModules.Length,
                 this, gameObject);
             // Initialize detection module
             DetectionModule = detectionModules[0];
@@ -177,7 +172,7 @@ namespace Unity.FPS.AI
             onAttack += DetectionModule.OnAttack;
 
             var navigationModules = GetComponentsInChildren<NavigationModule>();
-            DebugUtility.HandleWarningIfDuplicateObjects<DetectionModule, EnemyController>(detectionModules.Length,
+            DebugUtility.HandleWarningIfDuplicateObjects<DetectionModule, NpcController>(detectionModules.Length,
                 this, gameObject);
             // Override navmesh agent data
             if (navigationModules.Length > 0)
@@ -219,7 +214,16 @@ namespace Unity.FPS.AI
         void Update()
         {
             EnsureIsWithinLevelBounds();
-            DetectionModule.HandleTargetDetection(actor, selfColliders);
+            try
+            {
+                DetectionModule.HandleTargetDetection(actor, selfColliders);
+            }
+            catch(Exception error)
+            {
+                Debug.Log("selfColliders: " + selfColliders.ToString());
+                Debug.Log("DetectionModule: " + DetectionModule.ToString());
+                Debug.Log("actor: " + actor.ToString());
+            }
 
             Color currentColor = OnHitBodyGradient.Evaluate((Time.time - lastTimeDamaged) / FlashOnHitDuration);
             bodyFlashMaterialPropertyBlock.SetColor("_EmissionColor", currentColor);
@@ -366,7 +370,7 @@ namespace Unity.FPS.AI
         void OnDamaged(float damage, GameObject damageSource)
         {
             // test if the damage source is the player
-            if (damageSource && !damageSource.GetComponent<EnemyController>())
+            if (damageSource && !damageSource.GetComponent<NpcController>())
             {
                 // pursue the player
                 DetectionModule.OnDamaged(damageSource);
@@ -384,27 +388,20 @@ namespace Unity.FPS.AI
 
         /* 1 spawn a particle system when dying inside the particle container
          * 
-         * 2 tells the game flow manager to handle the enemy destuction
-         * 
          * 3 loot an object
          * 
          * 4 this will call the OnDestroy function
          */
-        void OnDie()
+        protected void OnDie()
         {
             var particleContainter = GameObject.Find("Particle Container").transform;
             var vfx = Instantiate
                 (DeathVfx, DeathVfxSpawnPoint.position, Quaternion.identity, particleContainter);//1
             Destroy(vfx, 5f);
 
-            enemyManager.UnregisterEnemy(this);//2
-
             var level = GameObject.Find("Level").transform;
             if (TryDropItem())//3
                 Instantiate(LootPrefab, transform.position, Quaternion.identity, level);
-
-            var player = GameObject.Find("Player");
-            player.GetComponent<Health>().Heal(vampirismHeal);
 
             Destroy(gameObject, DeathDuration);//4
         }
@@ -415,16 +412,14 @@ namespace Unity.FPS.AI
             Gizmos.color = PathReachingRangeColor;
             Gizmos.DrawWireSphere(transform.position, PathReachingRadius);
 
-            if (DetectionModule != null)
-            {
-                // Detection range
-                Gizmos.color = DetectionRangeColor;
-                Gizmos.DrawWireSphere(transform.position, DetectionModule.DetectionRange);
+            if (DetectionModule == null) return;
+            // Detection range
+            Gizmos.color = DetectionRangeColor;
+            Gizmos.DrawWireSphere(transform.position, DetectionModule.DetectionRange);
 
-                // Attack range
-                Gizmos.color = AttackRangeColor;
-                Gizmos.DrawWireSphere(transform.position, DetectionModule.AttackRange);
-            }
+            // Attack range
+            Gizmos.color = AttackRangeColor;
+            Gizmos.DrawWireSphere(transform.position, DetectionModule.AttackRange);
         }
 
         public void OrientWeaponsTowards(Vector3 lookPosition)
@@ -471,7 +466,7 @@ namespace Unity.FPS.AI
             else if (DropRate == 1)
                 return true;
             else
-                return (Random.value <= DropRate);
+                return (UnityEngine.Random.value <= DropRate);
         }
 
         void FindAndInitializeAllWeapons()
@@ -480,7 +475,7 @@ namespace Unity.FPS.AI
             if (weapons == null)
             {
                 weapons = GetComponentsInChildren<GunController>();
-                DebugUtility.HandleErrorIfNoComponentFound<GunController, EnemyController>(weapons.Length, this,
+                DebugUtility.HandleErrorIfNoComponentFound<GunController, NpcController>(weapons.Length, this,
                     gameObject);
 
                 for (int i = 0; i < weapons.Length; i++)
@@ -498,7 +493,7 @@ namespace Unity.FPS.AI
                 // Set the first weapon of the weapons list as the current weapon
                 SetCurrentWeapon(0);
 
-            DebugUtility.HandleErrorIfNullGetComponent<GunController, EnemyController>(currentWeapon, this,
+            DebugUtility.HandleErrorIfNullGetComponent<GunController, NpcController>(currentWeapon, this,
                 gameObject);
 
             return currentWeapon;

@@ -241,7 +241,7 @@ namespace Unity.FPS.EditorExt
                 if (!willBeCombined)
                 {
                     if (!(mf.GetComponentInParent<PlayerCharacterController>() ||
-                          mf.GetComponentInParent<EnemyController>() ||
+                          mf.GetComponentInParent<NpcController>() ||
                           mf.GetComponentInParent<Pickup>() ||
                           mf.GetComponentInParent<Objective>()))
                     {
@@ -265,7 +265,7 @@ namespace Unity.FPS.EditorExt
             }
 
             int lightsCount = GameObject.FindObjectsOfType<Light>().Length;
-            int enemyCount = GameObject.FindObjectsOfType<EnemyController>().Length;
+            int enemyCount = GameObject.FindObjectsOfType<NpcController>().Length;
 
             // Level analysis 
             levelAnalysisString += "- Meshes count: " + meshCount;

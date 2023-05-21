@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Unity.FPS.AI
 {
-    [RequireComponent(typeof(EnemyController))]
+    [RequireComponent(typeof(NpcController))]
     public class EnemyMobile : MonoBehaviour
     {
         public enum AIState
@@ -29,7 +29,7 @@ namespace Unity.FPS.AI
         public MinMaxFloat PitchDistortionMovementSpeed;
 
         public AIState AiState { get; private set; }
-        EnemyController enemyController;
+        NpcController enemyController;
         AudioSource audioSource;
 
         const string animMoveSpeedParameter = "MoveSpeed";
@@ -39,8 +39,8 @@ namespace Unity.FPS.AI
 
         void Start()
         {
-            enemyController = GetComponent<EnemyController>();
-            DebugUtility.HandleErrorIfNullGetComponent<EnemyController, EnemyMobile>(enemyController, this,
+            enemyController = GetComponent<NpcController>();
+            DebugUtility.HandleErrorIfNullGetComponent<NpcController, EnemyMobile>(enemyController, this,
                 gameObject);
 
             enemyController.onAttack += OnAttack;

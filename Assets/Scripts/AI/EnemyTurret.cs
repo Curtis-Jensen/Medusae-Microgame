@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Unity.FPS.AI
 {
-    [RequireComponent(typeof(EnemyController))]
+    [RequireComponent(typeof(NpcController))]
     public class EnemyTurret : MonoBehaviour
     {
         public enum AIState
@@ -28,7 +28,7 @@ namespace Unity.FPS.AI
 
         public AIState AiState { get; private set; }
 
-        EnemyController enemyController;
+        NpcController enemyController;
         Health health;
         Quaternion rotationWeaponForwardToPivot;
         float timeStartedDetection;
@@ -45,8 +45,8 @@ namespace Unity.FPS.AI
             DebugUtility.HandleErrorIfNullGetComponent<Health, EnemyTurret>(health, this, gameObject);
             health.OnDamaged += OnDamaged;
 
-            enemyController = GetComponent<EnemyController>();
-            DebugUtility.HandleErrorIfNullGetComponent<EnemyController, EnemyTurret>(enemyController, this,
+            enemyController = GetComponent<NpcController>();
+            DebugUtility.HandleErrorIfNullGetComponent<NpcController, EnemyTurret>(enemyController, this,
                 gameObject);
 
             enemyController.onDetectedTarget += OnDetectedTarget;
