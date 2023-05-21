@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.FPS.AI;
 using Unity.FPS.Game;
 
 public class EnemyController : NpcController
 {
+    [Tooltip("How much the enemies will heal the player when killed")]
+    public float vampirismHeal = 1f;
+
     EnemyManager enemyManager;
 
     void Start()
@@ -14,8 +15,9 @@ public class EnemyController : NpcController
 
         enemyManager = FindObjectOfType<EnemyManager>();
         DebugUtility.HandleErrorIfNullFindObject<EnemyManager, NpcController>(enemyManager, this);
-
         enemyManager.RegisterEnemy(this);
+
+        health.OnDie += OnDie;
     }
 
     void OnDie()

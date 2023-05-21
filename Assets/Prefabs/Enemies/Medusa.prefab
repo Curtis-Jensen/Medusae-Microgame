@@ -577,7 +577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelfDestructYHeight: -20
-  PathReachingRadius: 2
+  PathReachingRadius: 0
   OrientationSpeed: 10
   DeathDuration: 0
   SwapToNextWeapon: 0
@@ -585,21 +585,21 @@ MonoBehaviour:
   EyeColorMaterial: {fileID: 0}
   DefaultEyeColor: {r: 0, g: 0, b: 0, a: 0}
   AttackEyeColor: {r: 0, g: 0, b: 0, a: 0}
-  BodyMaterial: {fileID: 0}
+  BodyMaterial: {fileID: 2100000, guid: 9b032c7a4397c5645970223107681db9, type: 2}
   OnHitBodyGradient:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
+    key0: {r: 0.39215687, g: 0, b: 0.24313726, a: 1}
+    key1: {r: 0.2871746, g: 0.2871746, b: 0.2871746, a: 1}
+    key2: {r: 1.3351364, g: 0.39550263, b: 0.85406625, a: 0}
+    key3: {r: 0.39215687, g: 0, b: 0.24313726, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
+    ctime1: 13878
+    ctime2: 54356
+    ctime3: 65535
     ctime4: 0
     ctime5: 0
     ctime6: 0
@@ -613,12 +613,13 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 2
+    m_NumColorKeys: 4
     m_NumAlphaKeys: 2
-  FlashOnHitDuration: 0.5
-  DamageTick: {fileID: 0}
-  DeathVfx: {fileID: 0}
-  DeathVfxSpawnPoint: {fileID: 0}
+  FlashOnHitDuration: 0.125
+  DamageTick: {fileID: 8300000, guid: a7fae22399a6e1d448dc0dd2210f1dac, type: 3}
+  DeathVfx: {fileID: 8950624839484268180, guid: 45ce85b82008be84287f2c7e5bf07647,
+    type: 3}
+  DeathVfxSpawnPoint: {fileID: 1151108681316136913}
   LootPrefab: {fileID: 0}
   DropRate: 0
   PathReachingRangeColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}

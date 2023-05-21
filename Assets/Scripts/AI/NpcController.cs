@@ -96,9 +96,6 @@ namespace Unity.FPS.AI
         [Tooltip("Color of the sphere gizmo representing the detection range")]
         public Color DetectionRangeColor = Color.blue;
 
-        [Tooltip("How much the enemies will heal the player when killed")]
-        public float vampirismHeal = 1f;
-
         //These UnityActions are a list of methods that get called at certain times.
         //They are not implemented for the medusa yet so there are null checks
         public UnityAction onAttack;
@@ -123,7 +120,7 @@ namespace Unity.FPS.AI
 
         int pathDestinationNodeIndex;
         ActorsManager actorsManager;
-        Health health;
+        protected Health health;
         Actor actor;
         Collider[] selfColliders;
         GameFlowManager gameFlowManager;
@@ -214,16 +211,7 @@ namespace Unity.FPS.AI
         void Update()
         {
             EnsureIsWithinLevelBounds();
-            try
-            {
-                DetectionModule.HandleTargetDetection(actor, selfColliders);
-            }
-            catch(Exception error)
-            {
-                Debug.Log("selfColliders: " + selfColliders.ToString());
-                Debug.Log("DetectionModule: " + DetectionModule.ToString());
-                Debug.Log("actor: " + actor.ToString());
-            }
+            DetectionModule.HandleTargetDetection(actor, selfColliders);
 
             Color currentColor = OnHitBodyGradient.Evaluate((Time.time - lastTimeDamaged) / FlashOnHitDuration);
             bodyFlashMaterialPropertyBlock.SetColor("_EmissionColor", currentColor);
