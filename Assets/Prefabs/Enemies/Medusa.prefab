@@ -477,7 +477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Affiliation: 0
-  AimPoint: {fileID: 4191353904921438}
+  AimPoint: {fileID: 4263194749552796}
 --- !u!114 &7471935179276344570
 MonoBehaviour:
   m_ObjectHideFlags: 0

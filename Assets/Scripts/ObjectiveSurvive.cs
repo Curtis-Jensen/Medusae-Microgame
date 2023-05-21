@@ -15,12 +15,8 @@ public class ObjectiveSurvive : Objective
 
     void OnEnemyKilled(EnemyKillEvent evt)
     {
+        // When there are no enemies left, end the wave
         if (evt.RemainingEnemyCount == 0)
             StartCoroutine(spawnManager.EndWave());
-    }
-
-    void OnDestroy()
-    {
-        EventManager.RemoveListener<EnemyKillEvent>(OnEnemyKilled);
     }
 }
