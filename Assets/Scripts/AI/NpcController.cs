@@ -134,7 +134,7 @@ namespace Unity.FPS.AI
         GunController[] weapons;
         NavigationModule navigationModule;
 
-        void Start()
+        protected void Start()
         {
             actorsManager = FindObjectOfType<ActorsManager>();
             DebugUtility.HandleErrorIfNullFindObject<ActorsManager, NpcController>(actorsManager, this);

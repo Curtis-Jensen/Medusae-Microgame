@@ -10,6 +10,8 @@ public class EnemyController : NpcController
 
     void Start()
     {
+        base.Start();
+
         enemyManager = FindObjectOfType<EnemyManager>();
         DebugUtility.HandleErrorIfNullFindObject<EnemyManager, NpcController>(enemyManager, this);
 
