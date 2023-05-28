@@ -151,9 +151,7 @@ namespace Unity.FPS.UI
                 //2
 
                 if (item.collider.Equals(viewable.viewableTarget.GetComponentInChildren<Collider>()))//3
-                {
                     return item;
-                }
             }
 
             return null;
