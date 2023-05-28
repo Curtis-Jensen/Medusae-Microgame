@@ -45,13 +45,19 @@ namespace Unity.FPS.AI
             DebugUtility.HandleErrorIfNullFindObject<ActorsManager, DetectionModule>(actorsManager, this);
         }
 
+        /// <summary>
+        /// The HandleTargetDetection method handles the detection of a target
+        /// by checking for visibility and obstructions,
+        /// updating the state of the NPC's knowledge about the target,
+        /// and triggering events based on the detection status.
+        /// </summary>
+        /// <param name="actor"></param>
+        /// <param name="selfColliders"></param>
         public virtual void HandleTargetDetection(Actor actor, Collider[] selfColliders)
         {
             // Handle known target detection timeout
             if (KnownDetectedTarget && !IsSeeingTarget && (Time.time - TimeLastSeenTarget) > KnownTargetTimeout)
-            {
                 KnownDetectedTarget = null;
-            }
 
             // Find the closest visible hostile actor
             float sqrDetectionRange = DetectionRange * DetectionRange;
@@ -72,12 +78,10 @@ namespace Unity.FPS.AI
                     closestValidHit.distance = Mathf.Infinity;
                     bool foundValidHit = false;
                     foreach (var hit in hits)
+                    if (!selfColliders.Contains(hit.collider) && hit.distance < closestValidHit.distance)
                     {
-                        if (!selfColliders.Contains(hit.collider) && hit.distance < closestValidHit.distance)
-                        {
-                            closestValidHit = hit;
-                            foundValidHit = true;
-                        }
+                        closestValidHit = hit;
+                        foundValidHit = true;
                     }
 
                     if (!foundValidHit) continue;

@@ -216,13 +216,12 @@ namespace Unity.FPS.AI
             Color currentColor = OnHitBodyGradient.Evaluate((Time.time - lastTimeDamaged) / FlashOnHitDuration);
             bodyFlashMaterialPropertyBlock.SetColor("_EmissionColor", currentColor);
             foreach (var data in bodyRenderers)
-            {
                 data.Renderer.SetPropertyBlock(bodyFlashMaterialPropertyBlock, data.MaterialIndex);
-            }
 
             wasDamagedThisFrame = false;
         }
 
+        #region🌎Navigation
         void EnsureIsWithinLevelBounds()
         {
             // at every frame, this tests for conditions to kill the enemy
@@ -255,7 +254,7 @@ namespace Unity.FPS.AI
         {
             if (onDetectedTarget == null)
             {
-                Debug.LogWarning("EnemyController.onDetectedTarget is not set.  This is likely because EnemyController has not been fully implemented.");
+                Debug.LogWarning("NpcController.onDetectedTarget is not set.  This is likely because EnemyController has not been fully implemented.");
                 return;
             }
             onDetectedTarget.Invoke();
@@ -299,29 +298,21 @@ namespace Unity.FPS.AI
                 {
                     float distanceToPathNode = PatrolPath.GetDistanceToNode(transform.position, i);
                     if (distanceToPathNode < PatrolPath.GetDistanceToNode(transform.position, closestPathNodeIndex))
-                    {
                         closestPathNodeIndex = i;
-                    }
                 }
 
                 pathDestinationNodeIndex = closestPathNodeIndex;
             }
             else
-            {
                 pathDestinationNodeIndex = 0;
-            }
         }
 
         public Vector3 GetDestinationOnPath()
         {
             if (IsPathValid())
-            {
                 return PatrolPath.GetPositionOfPathNode(pathDestinationNodeIndex);
-            }
             else
-            {
                 return transform.position;
-            }
         }
 
         public void SetNavDestination(Vector3 destination)
@@ -355,6 +346,18 @@ namespace Unity.FPS.AI
             }
         }
 
+        public void OrientWeaponsTowards(Vector3 lookPosition)
+        {
+            for (int i = 0; i < weapons.Length; i++)
+            {
+                // orient weapon towards player
+                Vector3 weaponForward = (lookPosition - weapons[i].WeaponRoot.transform.position).normalized;
+                weapons[i].transform.forward = weaponForward;
+            }
+        }
+        #endregion
+
+        #region🔫Combat
         void OnDamaged(float damage, GameObject damageSource)
         {
             // test if the damage source is the player
@@ -408,16 +411,6 @@ namespace Unity.FPS.AI
             // Attack range
             Gizmos.color = AttackRangeColor;
             Gizmos.DrawWireSphere(transform.position, DetectionModule.AttackRange);
-        }
-
-        public void OrientWeaponsTowards(Vector3 lookPosition)
-        {
-            for (int i = 0; i < weapons.Length; i++)
-            {
-                // orient weapon towards player
-                Vector3 weaponForward = (lookPosition - weapons[i].WeaponRoot.transform.position).normalized;
-                weapons[i].transform.forward = weaponForward;
-            }
         }
 
         public bool TryAtack(Vector3 enemyPosition)
@@ -500,5 +493,6 @@ namespace Unity.FPS.AI
                 lastTimeWeaponSwapped = Mathf.NegativeInfinity;
             }
         }
+        #endregion
     }
 }
