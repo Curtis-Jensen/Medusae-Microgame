@@ -146,7 +146,7 @@ namespace Unity.FPS.UI
 
             foreach (RaycastHit item in hits)
             {
-                if (item.transform.CompareTag("Untagged")) return null;//1
+                if (item.transform.CompareTag("Wall")) return null;//1
 
                 //2
 
