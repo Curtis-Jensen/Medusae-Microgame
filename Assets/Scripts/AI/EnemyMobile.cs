@@ -63,7 +63,6 @@ namespace Unity.FPS.AI
         {
             UpdateAiStateTransitions();
             UpdateCurrentAiState();
-            Debug.Log(npcController.NavMeshAgent);
             float moveSpeed = npcController.NavMeshAgent.velocity.magnitude;
 
             // Update animator speed parameter
