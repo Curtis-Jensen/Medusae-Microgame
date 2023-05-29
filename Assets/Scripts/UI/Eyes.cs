@@ -130,7 +130,6 @@ namespace Unity.FPS.UI
 
         /* Step 3 
          * 1 if the ray hits a non viewable, it stops looking for stuff
-         * 2 if the ray hits a different viewable with a tag it just keeps going
          * 3 If the ray hits the enemy it was looking for it gives the medusa effect.
          */
         RaycastHit? CheckForObstructions(Viewable viewable)
@@ -146,14 +145,10 @@ namespace Unity.FPS.UI
 
             foreach (RaycastHit item in hits)
             {
-                if (item.transform.CompareTag("Untagged")) return null;//1
-
-                //2
+                if (item.transform.CompareTag("Wall")) return null;//1
 
                 if (item.collider.Equals(viewable.viewableTarget.GetComponentInChildren<Collider>()))//3
-                {
                     return item;
-                }
             }
 
             return null;

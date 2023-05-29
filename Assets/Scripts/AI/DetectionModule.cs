@@ -23,6 +23,9 @@ namespace Unity.FPS.AI
         [Tooltip("Optional animator for OnShoot animations")]
         public Animator Animator;
 
+        [Tooltip("Whether the NPC should always have knowledge of the target's location.")]
+        public bool alwaysKnowTargetLocation;
+
         public UnityAction onDetectedTarget;
         public UnityAction onLostTarget;
 
@@ -30,7 +33,6 @@ namespace Unity.FPS.AI
         public bool IsTargetInAttackRange { get; private set; }
         public bool IsSeeingTarget { get; private set; }
         public bool HadKnownTarget { get; private set; }
-
         protected float TimeLastSeenTarget = Mathf.NegativeInfinity;
 
         ActorsManager actorsManager;
@@ -43,15 +45,27 @@ namespace Unity.FPS.AI
         {
             actorsManager = FindObjectOfType<ActorsManager>();
             DebugUtility.HandleErrorIfNullFindObject<ActorsManager, DetectionModule>(actorsManager, this);
+
+            //if (alwaysKnowTargetLocation)
+            //{
+            //    KnownDetectedTarget = player.AimPoint.gameObject;
+            //    OnDetect();
+            //}
         }
 
+        /// <summary>
+        /// The HandleTargetDetection method handles the detection of a target
+        /// by checking for visibility and obstructions,
+        /// updating the state of the NPC's knowledge about the target,
+        /// and triggering events based on the detection status.
+        /// </summary>
+        /// <param name="actor"></param>
+        /// <param name="selfColliders"></param>
         public virtual void HandleTargetDetection(Actor actor, Collider[] selfColliders)
         {
             // Handle known target detection timeout
             if (KnownDetectedTarget && !IsSeeingTarget && (Time.time - TimeLastSeenTarget) > KnownTargetTimeout)
-            {
                 KnownDetectedTarget = null;
-            }
 
             // Find the closest visible hostile actor
             float sqrDetectionRange = DetectionRange * DetectionRange;

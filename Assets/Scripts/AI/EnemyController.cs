@@ -188,19 +188,16 @@ namespace Unity.FPS.AI
                 NavMeshAgent.acceleration = navigationModule.Acceleration;
             }
 
+            // Update Textures
             foreach (var renderer in GetComponentsInChildren<Renderer>(true))
             {
                 for (int i = 0; i < renderer.sharedMaterials.Length; i++)
                 {
                     if (renderer.sharedMaterials[i] == EyeColorMaterial)
-                    {
                         eyeRendererData = new RendererIndexData(renderer, i);
-                    }
 
                     if (renderer.sharedMaterials[i] == BodyMaterial)
-                    {
                         bodyRenderers.Add(new RendererIndexData(renderer, i));
-                    }
                 }
             }
 
@@ -224,9 +221,7 @@ namespace Unity.FPS.AI
             Color currentColor = OnHitBodyGradient.Evaluate((Time.time - lastTimeDamaged) / FlashOnHitDuration);
             bodyFlashMaterialPropertyBlock.SetColor("_EmissionColor", currentColor);
             foreach (var data in bodyRenderers)
-            {
                 data.Renderer.SetPropertyBlock(bodyFlashMaterialPropertyBlock, data.MaterialIndex);
-            }
 
             wasDamagedThisFrame = false;
         }
