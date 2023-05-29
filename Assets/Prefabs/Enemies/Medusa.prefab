@@ -291,7 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionRadius: 100
   gazeHeight: 7
-  aimToFront: 0
+  aimToFront: 1
 --- !u!82 &5581391596774759321
 AudioSource:
   m_ObjectHideFlags: 0
