@@ -59,7 +59,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2015434656898269656}
-  - component: {fileID: 9087143436424816424}
   - component: {fileID: 4752156053906186385}
   - component: {fileID: 6370966072896210225}
   - component: {fileID: 3464315327790461765}
@@ -96,68 +95,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9087143436424816424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2015434656898269652}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3de939d976a5bb0419ccd8dbd0b6836b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SelfDestructYHeight: -20
-  PathReachingRadius: 2
-  OrientationSpeed: 10
-  DeathDuration: 0
-  SwapToNextWeapon: 0
-  DelayAfterWeaponSwap: 0
-  EyeColorMaterial: {fileID: 2100000, guid: e6fdfd4e017234d43ac116abee8fa90a, type: 2}
-  DefaultEyeColor: {r: 23.849056, g: 7.292185, b: 0, a: 1}
-  AttackEyeColor: {r: 32, g: 1.4610044, b: 0, a: 1}
-  BodyMaterial: {fileID: 2100000, guid: c3dc5a90c49c99142999f85d6b419d80, type: 2}
-  OnHitBodyGradient:
-    serializedVersion: 2
-    key0: {r: 0.0007314645, g: 0, b: 0, a: 1}
-    key1: {r: 0.43527526, g: 0.43527526, b: 0.43527526, a: 1}
-    key2: {r: 0.26794338, g: 0.26794338, b: 0.26794338, a: 0}
-    key3: {r: 0, g: 0.000030637257, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 15035
-    ctime2: 52621
-    ctime3: 65535
-    ctime4: 65535
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_NumColorKeys: 4
-    m_NumAlphaKeys: 2
-  FlashOnHitDuration: 0.2
-  DamageTick: {fileID: 8300000, guid: a7fae22399a6e1d448dc0dd2210f1dac, type: 3}
-  DeathVfx: {fileID: 8950624839484268180, guid: 2a8f5052fe50f7b41b17149abb0f7414,
-    type: 3}
-  DeathVfxSpawnPoint: {fileID: 381893446485871685}
-  LootPrefab: {fileID: 2620131183356007192, guid: d40ae884302b6684a8b3b6f3d55a71ba,
-    type: 3}
-  DropRate: 0
-  PathReachingRangeColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  AttackRangeColor: {r: 1, g: 0, b: 0, a: 1}
-  DetectionRangeColor: {r: 0, g: 0, b: 1, a: 1}
 --- !u!114 &4752156053906186385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,7 +308,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2015434656898269652}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97a4b52f2daf2364ab30db187cbfb533, type: 3}
   m_Name: 
@@ -550,7 +487,6 @@ MonoBehaviour:
   AttackRange: 50
   KnownTargetTimeout: 1
   Animator: {fileID: 0}
-  TriggerEventOnDetect: 0
 --- !u!1 &6421371450313891992
 GameObject:
   m_ObjectHideFlags: 0

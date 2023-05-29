@@ -133,19 +133,13 @@ namespace Unity.FPS.AI
         void OnDetectedTarget()
         {
             if (AiState == AIState.Idle)
-            {
                 AiState = AIState.Attack;
-            }
 
             for (int i = 0; i < OnDetectVfx.Length; i++)
-            {
                 OnDetectVfx[i].Play();
-            }
 
             if (OnDetectSfx)
-            {
                 AudioUtility.CreateSFX(OnDetectSfx, transform.position, AudioUtility.AudioGroups.EnemyDetection, 1f);
-            }
 
             Animator.SetBool(animIsActiveParameter, true);
             timeStartedDetection = Time.time;
@@ -154,14 +148,10 @@ namespace Unity.FPS.AI
         void OnLostTarget()
         {
             if (AiState == AIState.Attack)
-            {
                 AiState = AIState.Idle;
-            }
 
             for (int i = 0; i < OnDetectVfx.Length; i++)
-            {
                 OnDetectVfx[i].Stop();
-            }
 
             Animator.SetBool(animIsActiveParameter, false);
             timeLostDetection = Time.time;
