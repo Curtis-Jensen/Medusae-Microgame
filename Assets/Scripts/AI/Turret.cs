@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Unity.FPS.AI
 {
-    [RequireComponent(typeof(EnemyController))]
-    public class EnemyTurret : MonoBehaviour
+    [RequireComponent(typeof(NpcController))]
+    public class Turret : MonoBehaviour
     {
         public enum AIState
         {
@@ -28,7 +28,7 @@ namespace Unity.FPS.AI
 
         public AIState AiState { get; private set; }
 
-        EnemyController enemyController;
+        NpcController npcController;
         Health health;
         Quaternion rotationWeaponForwardToPivot;
         float timeStartedDetection;
@@ -42,19 +42,19 @@ namespace Unity.FPS.AI
         void Start()
         {
             health = GetComponent<Health>();
-            DebugUtility.HandleErrorIfNullGetComponent<Health, EnemyTurret>(health, this, gameObject);
+            DebugUtility.HandleErrorIfNullGetComponent<Health, Turret>(health, this, gameObject);
             health.OnDamaged += OnDamaged;
 
-            enemyController = GetComponent<EnemyController>();
-            DebugUtility.HandleErrorIfNullGetComponent<EnemyController, EnemyTurret>(enemyController, this,
+            npcController = GetComponent<NpcController>();
+            DebugUtility.HandleErrorIfNullGetComponent<NpcController, Turret>(npcController, this,
                 gameObject);
 
-            enemyController.onDetectedTarget += OnDetectedTarget;
-            enemyController.onLostTarget += OnLostTarget;
+            npcController.onDetectedTarget += OnDetectedTarget;
+            npcController.onLostTarget += OnLostTarget;
 
             // Remember the rotation offset between the pivot's forward and the weapon's forward
             rotationWeaponForwardToPivot =
-                Quaternion.Inverse(enemyController.GetCurrentWeapon().WeaponMuzzle.rotation) * TurretPivot.rotation;
+                Quaternion.Inverse(npcController.GetCurrentWeapon().WeaponMuzzle.rotation) * TurretPivot.rotation;
 
             // Start with idle
             AiState = AIState.Idle;
@@ -80,9 +80,16 @@ namespace Unity.FPS.AI
             {
                 case AIState.Attack:
                     bool mustShoot = Time.time > timeStartedDetection + DetectionFireDelay;
+
+                    if(npcController.KnownDetectedTarget == null)
+                    {
+                        AiState = AIState.Idle;
+                        break;
+                    }
+
                     // Calculate the desired rotation of our turret (aim at target)
                     Vector3 directionToTarget =
-                        (enemyController.KnownDetectedTarget.transform.position - TurretAimPoint.position).normalized;
+                        (npcController.KnownDetectedTarget.transform.position - TurretAimPoint.position).normalized;
                     Quaternion offsettedTargetRotation =
                         Quaternion.LookRotation(directionToTarget) * rotationWeaponForwardToPivot;
                     pivotAimingRotation = Quaternion.Slerp(previousPivotAimingRotation, offsettedTargetRotation,
@@ -95,7 +102,7 @@ namespace Unity.FPS.AI
                             (pivotAimingRotation * Quaternion.Inverse(rotationWeaponForwardToPivot)) *
                             Vector3.forward;
 
-                        enemyController.TryAtack(TurretAimPoint.position + correctedDirectionToTarget);
+                        npcController.TryAtack(TurretAimPoint.position + correctedDirectionToTarget);
                     }
 
                     break;
@@ -133,19 +140,13 @@ namespace Unity.FPS.AI
         void OnDetectedTarget()
         {
             if (AiState == AIState.Idle)
-            {
                 AiState = AIState.Attack;
-            }
 
             for (int i = 0; i < OnDetectVfx.Length; i++)
-            {
                 OnDetectVfx[i].Play();
-            }
 
             if (OnDetectSfx)
-            {
                 AudioUtility.CreateSFX(OnDetectSfx, transform.position, AudioUtility.AudioGroups.EnemyDetection, 1f);
-            }
 
             Animator.SetBool(animIsActiveParameter, true);
             timeStartedDetection = Time.time;
@@ -154,14 +155,10 @@ namespace Unity.FPS.AI
         void OnLostTarget()
         {
             if (AiState == AIState.Attack)
-            {
                 AiState = AIState.Idle;
-            }
 
             for (int i = 0; i < OnDetectVfx.Length; i++)
-            {
                 OnDetectVfx[i].Stop();
-            }
 
             Animator.SetBool(animIsActiveParameter, false);
             timeLostDetection = Time.time;

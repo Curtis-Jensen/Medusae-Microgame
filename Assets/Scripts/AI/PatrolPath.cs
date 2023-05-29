@@ -12,7 +12,7 @@ namespace Unity.FPS.AI
         void Start()
         {
             var assignedEnemies =
-                assignedEnemiesParent.GetComponentsInChildren<EnemyController>();
+                assignedEnemiesParent.GetComponentsInChildren<NpcController>();
 
             foreach (var enemy in assignedEnemies)
                 enemy.PatrolPath = this;

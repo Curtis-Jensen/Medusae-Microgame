@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,7 +8,7 @@ using UnityEngine.Events;
 namespace Unity.FPS.AI
 {
     [RequireComponent(typeof(Health), typeof(Actor), typeof(NavMeshAgent))]
-    public class EnemyController : MonoBehaviour
+    public class NpcController : MonoBehaviour
     {
         [System.Serializable]
         public struct RendererIndexData
@@ -95,9 +96,6 @@ namespace Unity.FPS.AI
         [Tooltip("Color of the sphere gizmo representing the detection range")]
         public Color DetectionRangeColor = Color.blue;
 
-        [Tooltip("How much the enemies will heal the player when killed")]
-        public float vampirismHeal = 1f;
-
         //These UnityActions are a list of methods that get called at certain times.
         //They are not implemented for the medusa yet so there are null checks
         public UnityAction onAttack;
@@ -121,9 +119,8 @@ namespace Unity.FPS.AI
         public DetectionModule DetectionModule { get; private set; }
 
         int pathDestinationNodeIndex;
-        EnemyManager enemyManager;
         ActorsManager actorsManager;
-        Health health;
+        protected Health health;
         Actor actor;
         Collider[] selfColliders;
         GameFlowManager gameFlowManager;
@@ -134,27 +131,22 @@ namespace Unity.FPS.AI
         GunController[] weapons;
         NavigationModule navigationModule;
 
-        void Start()
+        protected void Start()
         {
-            enemyManager = FindObjectOfType<EnemyManager>();
-            DebugUtility.HandleErrorIfNullFindObject<EnemyManager, EnemyController>(enemyManager, this);
-
             actorsManager = FindObjectOfType<ActorsManager>();
-            DebugUtility.HandleErrorIfNullFindObject<ActorsManager, EnemyController>(actorsManager, this);
-
-            enemyManager.RegisterEnemy(this);
+            DebugUtility.HandleErrorIfNullFindObject<ActorsManager, NpcController>(actorsManager, this);
 
             health = GetComponent<Health>();
-            DebugUtility.HandleErrorIfNullGetComponent<Health, EnemyController>(health, this, gameObject);
+            DebugUtility.HandleErrorIfNullGetComponent<Health, NpcController>(health, this, gameObject);
 
             actor = GetComponent<Actor>();
-            DebugUtility.HandleErrorIfNullGetComponent<Actor, EnemyController>(actor, this, gameObject);
+            DebugUtility.HandleErrorIfNullGetComponent<Actor, NpcController>(actor, this, gameObject);
 
             NavMeshAgent = GetComponent<NavMeshAgent>();
             selfColliders = GetComponentsInChildren<Collider>();
 
             gameFlowManager = FindObjectOfType<GameFlowManager>();
-            DebugUtility.HandleErrorIfNullFindObject<GameFlowManager, EnemyController>(gameFlowManager, this);
+            DebugUtility.HandleErrorIfNullFindObject<GameFlowManager, NpcController>(gameFlowManager, this);
 
             // Subscribe to damage & death actions
             health.OnDie += OnDie;
@@ -166,9 +158,9 @@ namespace Unity.FPS.AI
             weapon.ShowWeapon(true);
 
             var detectionModules = GetComponentsInChildren<DetectionModule>();
-            DebugUtility.HandleErrorIfNoComponentFound<DetectionModule, EnemyController>(detectionModules.Length, this,
+            DebugUtility.HandleErrorIfNoComponentFound<DetectionModule, NpcController>(detectionModules.Length, this,
                 gameObject);
-            DebugUtility.HandleWarningIfDuplicateObjects<DetectionModule, EnemyController>(detectionModules.Length,
+            DebugUtility.HandleWarningIfDuplicateObjects<DetectionModule, NpcController>(detectionModules.Length,
                 this, gameObject);
             // Initialize detection module
             DetectionModule = detectionModules[0];
@@ -177,7 +169,7 @@ namespace Unity.FPS.AI
             onAttack += DetectionModule.OnAttack;
 
             var navigationModules = GetComponentsInChildren<NavigationModule>();
-            DebugUtility.HandleWarningIfDuplicateObjects<DetectionModule, EnemyController>(detectionModules.Length,
+            DebugUtility.HandleWarningIfDuplicateObjects<DetectionModule, NpcController>(detectionModules.Length,
                 this, gameObject);
             // Override navmesh agent data
             if (navigationModules.Length > 0)
@@ -224,13 +216,12 @@ namespace Unity.FPS.AI
             Color currentColor = OnHitBodyGradient.Evaluate((Time.time - lastTimeDamaged) / FlashOnHitDuration);
             bodyFlashMaterialPropertyBlock.SetColor("_EmissionColor", currentColor);
             foreach (var data in bodyRenderers)
-            {
                 data.Renderer.SetPropertyBlock(bodyFlashMaterialPropertyBlock, data.MaterialIndex);
-            }
 
             wasDamagedThisFrame = false;
         }
 
+        #region🌎Navigation
         void EnsureIsWithinLevelBounds()
         {
             // at every frame, this tests for conditions to kill the enemy
@@ -245,7 +236,7 @@ namespace Unity.FPS.AI
         {
             if (onLostTarget == null)
             {
-                Debug.LogWarning("EnemyController.onLostTarget is not set.  This is likely because EnemyController has not been fully implemented.");
+                Debug.LogWarning("npcController.onLostTarget is not set.  This is likely because npcController has not been fully implemented.");
                 return;
             }
             onLostTarget.Invoke();
@@ -263,7 +254,7 @@ namespace Unity.FPS.AI
         {
             if (onDetectedTarget == null)
             {
-                Debug.LogWarning("EnemyController.onDetectedTarget is not set.  This is likely because EnemyController has not been fully implemented.");
+                Debug.LogWarning("NpcController.onDetectedTarget is not set.  This is likely because npcController has not been fully implemented.");
                 return;
             }
             onDetectedTarget.Invoke();
@@ -307,29 +298,21 @@ namespace Unity.FPS.AI
                 {
                     float distanceToPathNode = PatrolPath.GetDistanceToNode(transform.position, i);
                     if (distanceToPathNode < PatrolPath.GetDistanceToNode(transform.position, closestPathNodeIndex))
-                    {
                         closestPathNodeIndex = i;
-                    }
                 }
 
                 pathDestinationNodeIndex = closestPathNodeIndex;
             }
             else
-            {
                 pathDestinationNodeIndex = 0;
-            }
         }
 
         public Vector3 GetDestinationOnPath()
         {
             if (IsPathValid())
-            {
                 return PatrolPath.GetPositionOfPathNode(pathDestinationNodeIndex);
-            }
             else
-            {
                 return transform.position;
-            }
         }
 
         public void SetNavDestination(Vector3 destination)
@@ -363,10 +346,22 @@ namespace Unity.FPS.AI
             }
         }
 
+        public void OrientWeaponsTowards(Vector3 lookPosition)
+        {
+            for (int i = 0; i < weapons.Length; i++)
+            {
+                // orient weapon towards player
+                Vector3 weaponForward = (lookPosition - weapons[i].WeaponRoot.transform.position).normalized;
+                weapons[i].transform.forward = weaponForward;
+            }
+        }
+        #endregion
+
+        #region🔫Combat
         void OnDamaged(float damage, GameObject damageSource)
         {
             // test if the damage source is the player
-            if (damageSource && !damageSource.GetComponent<EnemyController>())
+            if (damageSource && !damageSource.GetComponent<NpcController>())
             {
                 // pursue the player
                 DetectionModule.OnDamaged(damageSource);
@@ -384,27 +379,20 @@ namespace Unity.FPS.AI
 
         /* 1 spawn a particle system when dying inside the particle container
          * 
-         * 2 tells the game flow manager to handle the enemy destuction
-         * 
          * 3 loot an object
          * 
          * 4 this will call the OnDestroy function
          */
-        void OnDie()
+        protected void OnDie()
         {
             var particleContainter = GameObject.Find("Particle Container").transform;
             var vfx = Instantiate
                 (DeathVfx, DeathVfxSpawnPoint.position, Quaternion.identity, particleContainter);//1
             Destroy(vfx, 5f);
 
-            enemyManager.UnregisterEnemy(this);//2
-
             var level = GameObject.Find("Level").transform;
             if (TryDropItem())//3
                 Instantiate(LootPrefab, transform.position, Quaternion.identity, level);
-
-            var player = GameObject.Find("Player");
-            player.GetComponent<Health>().Heal(vampirismHeal);
 
             Destroy(gameObject, DeathDuration);//4
         }
@@ -415,26 +403,14 @@ namespace Unity.FPS.AI
             Gizmos.color = PathReachingRangeColor;
             Gizmos.DrawWireSphere(transform.position, PathReachingRadius);
 
-            if (DetectionModule != null)
-            {
-                // Detection range
-                Gizmos.color = DetectionRangeColor;
-                Gizmos.DrawWireSphere(transform.position, DetectionModule.DetectionRange);
+            if (DetectionModule == null) return;
+            // Detection range
+            Gizmos.color = DetectionRangeColor;
+            Gizmos.DrawWireSphere(transform.position, DetectionModule.DetectionRange);
 
-                // Attack range
-                Gizmos.color = AttackRangeColor;
-                Gizmos.DrawWireSphere(transform.position, DetectionModule.AttackRange);
-            }
-        }
-
-        public void OrientWeaponsTowards(Vector3 lookPosition)
-        {
-            for (int i = 0; i < weapons.Length; i++)
-            {
-                // orient weapon towards player
-                Vector3 weaponForward = (lookPosition - weapons[i].WeaponRoot.transform.position).normalized;
-                weapons[i].transform.forward = weaponForward;
-            }
+            // Attack range
+            Gizmos.color = AttackRangeColor;
+            Gizmos.DrawWireSphere(transform.position, DetectionModule.AttackRange);
         }
 
         public bool TryAtack(Vector3 enemyPosition)
@@ -471,7 +447,7 @@ namespace Unity.FPS.AI
             else if (DropRate == 1)
                 return true;
             else
-                return (Random.value <= DropRate);
+                return (UnityEngine.Random.value <= DropRate);
         }
 
         void FindAndInitializeAllWeapons()
@@ -480,7 +456,7 @@ namespace Unity.FPS.AI
             if (weapons == null)
             {
                 weapons = GetComponentsInChildren<GunController>();
-                DebugUtility.HandleErrorIfNoComponentFound<GunController, EnemyController>(weapons.Length, this,
+                DebugUtility.HandleErrorIfNoComponentFound<GunController, NpcController>(weapons.Length, this,
                     gameObject);
 
                 for (int i = 0; i < weapons.Length; i++)
@@ -498,7 +474,7 @@ namespace Unity.FPS.AI
                 // Set the first weapon of the weapons list as the current weapon
                 SetCurrentWeapon(0);
 
-            DebugUtility.HandleErrorIfNullGetComponent<GunController, EnemyController>(currentWeapon, this,
+            DebugUtility.HandleErrorIfNullGetComponent<GunController, NpcController>(currentWeapon, this,
                 gameObject);
 
             return currentWeapon;
@@ -517,5 +493,6 @@ namespace Unity.FPS.AI
                 lastTimeWeaponSwapped = Mathf.NegativeInfinity;
             }
         }
+        #endregion
     }
 }

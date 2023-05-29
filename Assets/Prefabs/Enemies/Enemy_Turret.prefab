@@ -673,8 +673,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad90ba0b1477764da373f5ec01a8cb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponName: mg
   WeaponIcon: {fileID: 0}
+  WeaponRoot: {fileID: 8815063736924141185}
+  ChangeWeaponSfx: {fileID: 0}
   CrosshairDataDefault:
     CrosshairSprite: {fileID: 0}
     CrosshairSize: 0
@@ -683,36 +684,34 @@ MonoBehaviour:
     CrosshairSprite: {fileID: 0}
     CrosshairSize: 0
     CrosshairColor: {r: 0, g: 0, b: 0, a: 0}
-  WeaponRoot: {fileID: 8815063736924141185}
-  WeaponMuzzle: {fileID: 2096565386399891227}
   ShootType: 1
+  AimZoomRatio: 1
+  AimOffset: {x: 0, y: 0, z: 0}
+  hasPhysicalBullets: 0
+  MaxAmmo: 15
+  ClipSize: 30
+  AmmoUsedOnStartCharge: 1
+  BulletsPerShot: 1
+  meleeWeapon: 0
+  WeaponMuzzle: {fileID: 2096565386399891227}
   ProjectilePrefab: {fileID: 8924682559891268397, guid: 154bfb4989fe16d439e8f3fb7c20b72b,
     type: 3}
   DelayBetweenShots: 0.06
   BulletSpreadAngle: 0
-  BulletsPerShot: 1
   RecoilForce: 1
-  AimZoomRatio: 1
-  AimOffset: {x: 0, y: 0, z: 0}
-  AutomaticReload: 1
-  HasPhysicalBullets: 0
-  ClipSize: 30
   ShellCasing: {fileID: 0}
   EjectionPort: {fileID: 0}
   ShellCasingEjectionForce: 2
   ShellPoolSize: 1
   AmmoReloadRate: Infinity
   AmmoReloadDelay: 0.6
-  MaxAmmo: 15
   AutomaticReleaseOnCharged: 0
   MaxChargeDuration: 2
-  AmmoUsedOnStartCharge: 1
   AmmoUsageRateWhileCharging: 2
   WeaponAnimator: {fileID: 0}
   MuzzleFlashPrefab: {fileID: 638502610521960261}
   UnparentMuzzleFlash: 0
   ShootSfx: {fileID: 8300000, guid: 0d44f0cb2e91f5f4ca09aded9a1bd9ab, type: 3}
-  ChangeWeaponSfx: {fileID: 0}
   UseContinuousShootSound: 0
   ContinuousShootStartSfx: {fileID: 0}
   ContinuousShootLoopSfx: {fileID: 0}

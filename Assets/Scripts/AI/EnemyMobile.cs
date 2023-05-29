@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Unity.FPS.AI
 {
-    [RequireComponent(typeof(EnemyController))]
+    [RequireComponent(typeof(NpcController))]
     public class EnemyMobile : MonoBehaviour
     {
         public enum AIState
@@ -29,7 +29,7 @@ namespace Unity.FPS.AI
         public MinMaxFloat PitchDistortionMovementSpeed;
 
         public AIState AiState { get; private set; }
-        EnemyController enemyController;
+        NpcController npcController;
         AudioSource audioSource;
 
         const string animMoveSpeedParameter = "MoveSpeed";
@@ -39,15 +39,15 @@ namespace Unity.FPS.AI
 
         void Start()
         {
-            enemyController = GetComponent<EnemyController>();
-            DebugUtility.HandleErrorIfNullGetComponent<EnemyController, EnemyMobile>(enemyController, this,
+            npcController = GetComponent<NpcController>();
+            DebugUtility.HandleErrorIfNullGetComponent<NpcController, EnemyMobile>(npcController, this,
                 gameObject);
 
-            enemyController.onAttack += OnAttack;
-            enemyController.onDetectedTarget += OnDetectedTarget;
-            enemyController.onLostTarget += OnLostTarget;
-            enemyController.SetPathDestinationToClosestNode();
-            enemyController.onDamaged += OnDamaged;
+            npcController.onAttack += OnAttack;
+            npcController.onDetectedTarget += OnDetectedTarget;
+            npcController.onLostTarget += OnLostTarget;
+            npcController.SetPathDestinationToClosestNode();
+            npcController.onDamaged += OnDamaged;
 
             // Start patrolling
             AiState = AIState.Patrol;
@@ -63,17 +63,20 @@ namespace Unity.FPS.AI
         {
             UpdateAiStateTransitions();
             UpdateCurrentAiState();
-
-            float moveSpeed = enemyController.NavMeshAgent.velocity.magnitude;
+            float moveSpeed = npcController.NavMeshAgent.velocity.magnitude;
 
             // Update animator speed parameter
             Animator.SetFloat(animMoveSpeedParameter, moveSpeed);
 
-            // changing the pitch of the movement sound depending on the movement speed
+            // Changing the pitch of the movement sound depending on the movement speed
             audioSource.pitch = Mathf.Lerp(PitchDistortionMovementSpeed.Min, PitchDistortionMovementSpeed.Max,
-                moveSpeed / enemyController.NavMeshAgent.speed);
+                moveSpeed / npcController.NavMeshAgent.speed);
         }
 
+        /// <summary>
+        /// Handles state transitions for an AI system, 
+        /// transitioning between "Follow" and "Attack" states based on target visibility and range.
+        /// </summary>
         void UpdateAiStateTransitions()
         {
             // Handle transitions 
@@ -81,55 +84,70 @@ namespace Unity.FPS.AI
             {
                 case AIState.Follow:
                     // Transition to attack when there is a line of sight to the target
-                    if (enemyController.IsSeeingTarget && enemyController.IsTargetInAttackRange)
+                    if (npcController.IsSeeingTarget && npcController.IsTargetInAttackRange)
                     {
                         AiState = AIState.Attack;
-                        enemyController.SetNavDestination(transform.position);
+                        npcController.SetNavDestination(transform.position);
                     }
 
                     break;
                 case AIState.Attack:
                     // Transition to follow when no longer a target in attack range
-                    if (!enemyController.IsTargetInAttackRange)
+                    if (!npcController.IsTargetInAttackRange)
                         AiState = AIState.Follow;
 
                     break;
             }
         }
 
+        /// <summary>
+        /// Updates the current state of an AI system, 
+        /// executing specific logic based on the current state such as patrol movement, 
+        /// following a detected target while orienting towards it, 
+        /// and attacking the target while maintaining a certain distance.
+        /// </summary>
         void UpdateCurrentAiState()
         {
             // Handle logic 
             switch (AiState)
             {
                 case AIState.Patrol:
-                    enemyController.UpdatePathDestination();
-                    enemyController.SetNavDestination(enemyController.GetDestinationOnPath());
+                    npcController.UpdatePathDestination();
+                    npcController.SetNavDestination(npcController.GetDestinationOnPath());
                     break;
                 case AIState.Follow:
-                    enemyController.SetNavDestination(enemyController.KnownDetectedTarget.transform.position);
-                    enemyController.OrientTowards(enemyController.KnownDetectedTarget.transform.position);
-                    enemyController.OrientWeaponsTowards(enemyController.KnownDetectedTarget.transform.position);
+                    npcController.SetNavDestination(npcController.KnownDetectedTarget.transform.position);
+                    npcController.OrientTowards(npcController.KnownDetectedTarget.transform.position);
+                    npcController.OrientWeaponsTowards(npcController.KnownDetectedTarget.transform.position);
                     break;
                 case AIState.Attack:
-                    if (Vector3.Distance(enemyController.KnownDetectedTarget.transform.position,
-                            enemyController.DetectionModule.DetectionSourcePoint.position)
-                        >= (AttackStopDistanceRatio * enemyController.DetectionModule.AttackRange))
-                        enemyController.SetNavDestination(enemyController.KnownDetectedTarget.transform.position);
+                    if (Vector3.Distance(npcController.KnownDetectedTarget.transform.position,
+                            npcController.DetectionModule.DetectionSourcePoint.position)
+                        >= (AttackStopDistanceRatio * npcController.DetectionModule.AttackRange))
+                        npcController.SetNavDestination(npcController.KnownDetectedTarget.transform.position);
                     else
-                        enemyController.SetNavDestination(transform.position);
+                        npcController.SetNavDestination(transform.position);
 
-                    enemyController.OrientTowards(enemyController.KnownDetectedTarget.transform.position);
-                    enemyController.TryAtack(enemyController.KnownDetectedTarget.transform.position);
+                    npcController.OrientTowards(npcController.KnownDetectedTarget.transform.position);
+                    npcController.TryAtack(npcController.KnownDetectedTarget.transform.position);
                     break;
             }
         }
 
+        /// <summary>
+        /// Triggers the attack animation within the associated Animator component.
+        /// </summary>
         void OnAttack()
         {
             Animator.SetTrigger(animAttackParameter);
         }
 
+        /// <summary>
+        /// Handles actions when a target is detected by the AI.
+        /// It changes the AI state from "Patrol" to "Follow",
+        /// plays visual effects, triggers sound effects,
+        /// and sets an alerted parameter in the associated Animator component.
+        /// </summary>
         void OnDetectedTarget()
         {
             if (AiState == AIState.Patrol)
@@ -144,6 +162,13 @@ namespace Unity.FPS.AI
             Animator.SetBool(animAlertedParameter, true);
         }
 
+        /// <summary>
+        /// Handles actions when the AI loses its target.
+        /// If the AI state is either "Follow" or "Attack",
+        /// it transitions the AI state to "Patrol".
+        /// It stops any ongoing visual effects,
+        /// sets the alerted parameter in the associated Animator component to false.
+        /// </summary>
         void OnLostTarget()
         {
             if (AiState == AIState.Follow || AiState == AIState.Attack)
@@ -155,6 +180,11 @@ namespace Unity.FPS.AI
             Animator.SetBool(animAlertedParameter, false);
         }
 
+        /// <summary>
+        /// Performs actions when the AI is damaged.
+        /// It plays a random hit spark visual effect from an array,
+        /// and triggers the "OnDamaged" animation within the associated Animator component.
+        /// </summary>
         void OnDamaged()
         {
             if (RandomHitSparks.Length > 0)

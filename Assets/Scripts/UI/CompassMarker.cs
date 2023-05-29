@@ -25,7 +25,7 @@ namespace Unity.FPS.UI
         [Tooltip("Text content for the direction")]
         public TMPro.TextMeshProUGUI TextContent;
 
-        EnemyController enemyController;
+        NpcController npcController;
 
         public void Initialize(CompassElement compassElement, string textDirection)
         {
@@ -33,12 +33,12 @@ namespace Unity.FPS.UI
                 TextContent.text = textDirection;
             else
             {
-                enemyController = compassElement.transform.GetComponent<EnemyController>();
+                npcController = compassElement.transform.GetComponent<NpcController>();
 
-                if (enemyController)
+                if (npcController)
                 {
-                    enemyController.onDetectedTarget += DetectTarget;
-                    enemyController.onLostTarget += LostTarget;
+                    npcController.onDetectedTarget += DetectTarget;
+                    npcController.onLostTarget += LostTarget;
 
                     LostTarget();
                 }
