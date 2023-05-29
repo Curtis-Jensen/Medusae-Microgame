@@ -28,7 +28,7 @@ namespace Unity.FPS.AI
 
         public AIState AiState { get; private set; }
 
-        NpcController enemyController;
+        NpcController npcController;
         Health health;
         Quaternion rotationWeaponForwardToPivot;
         float timeStartedDetection;
@@ -45,16 +45,16 @@ namespace Unity.FPS.AI
             DebugUtility.HandleErrorIfNullGetComponent<Health, Turret>(health, this, gameObject);
             health.OnDamaged += OnDamaged;
 
-            enemyController = GetComponent<NpcController>();
-            DebugUtility.HandleErrorIfNullGetComponent<NpcController, Turret>(enemyController, this,
+            npcController = GetComponent<NpcController>();
+            DebugUtility.HandleErrorIfNullGetComponent<NpcController, Turret>(npcController, this,
                 gameObject);
 
-            enemyController.onDetectedTarget += OnDetectedTarget;
-            enemyController.onLostTarget += OnLostTarget;
+            npcController.onDetectedTarget += OnDetectedTarget;
+            npcController.onLostTarget += OnLostTarget;
 
             // Remember the rotation offset between the pivot's forward and the weapon's forward
             rotationWeaponForwardToPivot =
-                Quaternion.Inverse(enemyController.GetCurrentWeapon().WeaponMuzzle.rotation) * TurretPivot.rotation;
+                Quaternion.Inverse(npcController.GetCurrentWeapon().WeaponMuzzle.rotation) * TurretPivot.rotation;
 
             // Start with idle
             AiState = AIState.Idle;
@@ -81,7 +81,7 @@ namespace Unity.FPS.AI
                 case AIState.Attack:
                     bool mustShoot = Time.time > timeStartedDetection + DetectionFireDelay;
 
-                    if(enemyController.KnownDetectedTarget == null)
+                    if(npcController.KnownDetectedTarget == null)
                     {
                         AiState = AIState.Idle;
                         break;
@@ -89,7 +89,7 @@ namespace Unity.FPS.AI
 
                     // Calculate the desired rotation of our turret (aim at target)
                     Vector3 directionToTarget =
-                        (enemyController.KnownDetectedTarget.transform.position - TurretAimPoint.position).normalized;
+                        (npcController.KnownDetectedTarget.transform.position - TurretAimPoint.position).normalized;
                     Quaternion offsettedTargetRotation =
                         Quaternion.LookRotation(directionToTarget) * rotationWeaponForwardToPivot;
                     pivotAimingRotation = Quaternion.Slerp(previousPivotAimingRotation, offsettedTargetRotation,
@@ -102,7 +102,7 @@ namespace Unity.FPS.AI
                             (pivotAimingRotation * Quaternion.Inverse(rotationWeaponForwardToPivot)) *
                             Vector3.forward;
 
-                        enemyController.TryAtack(TurretAimPoint.position + correctedDirectionToTarget);
+                        npcController.TryAtack(TurretAimPoint.position + correctedDirectionToTarget);
                     }
 
                     break;

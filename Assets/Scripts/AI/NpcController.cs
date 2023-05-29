@@ -236,7 +236,7 @@ namespace Unity.FPS.AI
         {
             if (onLostTarget == null)
             {
-                Debug.LogWarning("EnemyController.onLostTarget is not set.  This is likely because EnemyController has not been fully implemented.");
+                Debug.LogWarning("npcController.onLostTarget is not set.  This is likely because npcController has not been fully implemented.");
                 return;
             }
             onLostTarget.Invoke();
@@ -254,7 +254,7 @@ namespace Unity.FPS.AI
         {
             if (onDetectedTarget == null)
             {
-                Debug.LogWarning("NpcController.onDetectedTarget is not set.  This is likely because EnemyController has not been fully implemented.");
+                Debug.LogWarning("NpcController.onDetectedTarget is not set.  This is likely because npcController has not been fully implemented.");
                 return;
             }
             onDetectedTarget.Invoke();
