@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Unity.FPS.Game;
 using UnityEngine;
-//using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
 namespace Unity.FPS.UI
