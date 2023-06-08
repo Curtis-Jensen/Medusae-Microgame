@@ -83,14 +83,15 @@ namespace Unity.FPS.UI
 
             Pause();
 
-            if (Input.GetAxisRaw(InputNames.axisNameVertical) != 0)
-            {
-                if (EventSystem.current.currentSelectedGameObject == null)
-                {
-                    EventSystem.current.SetSelectedGameObject(null);
-                    LookSensitivitySlider.Select();
-                }
-            }
+            //I have little idea as to what this does so I'll just remove it
+            //if (Input.GetAxisRaw(InputNames.axisNameVertical) != 0)
+            //{
+            //    if (EventSystem.current.currentSelectedGameObject == null)
+            //    {
+            //        EventSystem.current.SetSelectedGameObject(null);
+            //        LookSensitivitySlider.Select();
+            //    }
+            //}
         }
 
         public void Pause()
@@ -128,7 +129,7 @@ namespace Unity.FPS.UI
                 Time.timeScale = 0f;
                 AudioUtility.SetMasterVolume(VolumeWhenMenuOpen);
 
-                EventSystem.current.SetSelectedGameObject(null);
+                //EventSystem.current.SetSelectedGameObject(null);
             }
             else
             {
