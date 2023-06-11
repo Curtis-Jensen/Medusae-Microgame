@@ -17,6 +17,15 @@ public class ObjectiveSurvive : Objective
     {
         // When there are no enemies left, end the wave
         if (evt.RemainingEnemyCount == 0)
-            StartCoroutine(spawnManager.EndWave());
+        {
+            try
+            {
+                StartCoroutine(spawnManager.EndWave());
+            }
+            catch
+            {
+                Debug.Log("For some reason spawnManager (for enemies) was probably set to null after respawning the player.");
+            }
+        }
     }
 }
