@@ -10,6 +10,7 @@ namespace Unity.FPS.AI
     [RequireComponent(typeof(Health), typeof(Actor), typeof(NavMeshAgent))]
     public class NpcController : MonoBehaviour
     {
+        #region Variables
         [System.Serializable]
         public struct RendererIndexData
         {
@@ -130,6 +131,7 @@ namespace Unity.FPS.AI
         GunController currentWeapon;
         GunController[] weapons;
         NavigationModule navigationModule;
+        #endregion
 
         protected void Start()
         {
