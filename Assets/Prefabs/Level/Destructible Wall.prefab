@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8394858586091143482}
   - component: {fileID: 526195645939938361}
   - component: {fileID: 5016790809719387645}
+  - component: {fileID: 4132620032060486363}
   m_Layer: 0
   m_Name: Destructible Wall
   m_TagString: Wall
@@ -109,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e27364eefd6dd0341ba72a3bfc0d9727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 10
+  MaxHealth: 500
   CriticalHealthRatio: 0.3
 --- !u!114 &5016790809719387645
 MonoBehaviour:
@@ -125,3 +126,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DamageMultiplier: 1
   SensibilityToSelfdamage: 0.5
+--- !u!114 &4132620032060486363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8394858586091143364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0914267284bd7468f8ac89253e1557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
