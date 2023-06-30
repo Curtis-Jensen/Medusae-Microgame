@@ -14634,8 +14634,9 @@ GameObject:
   - component: {fileID: 8950624839484268202}
   - component: {fileID: 8950624839484268203}
   - component: {fileID: 1973306088303927834}
+  - component: {fileID: -4124366911699206617}
   m_Layer: 0
-  m_Name: VFX_Explosion
+  m_Name: VFX_Explosion_Medusa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14847,8 +14848,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 1, g: 0.9498463, b: 0.8066038, a: 1}
-      maxColor: {r: 1, g: 0.6211709, b: 0, a: 1}
+      minColor: {r: 0.97126925, g: 0.80784315, b: 1, a: 1}
+      maxColor: {r: 1, g: 0, b: 0.6095958, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -19607,3 +19608,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-4124366911699206617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8950624839484268180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2a6b6a402a24384783c79d9aaaeee26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClips:
+  - {fileID: 8300000, guid: 01db871b25a483b46aeb1d6184dc8d48, type: 3}
+  - {fileID: 8300000, guid: 87c9d454d3be93f4aa49532fcb665ace, type: 3}
+  - {fileID: 8300000, guid: 576871c2eac0b494db0ba13caa49c97b, type: 3}
+  - {fileID: 8300000, guid: a69913238a7e70448813660380845866, type: 3}
+  - {fileID: 8300000, guid: fa791d04d2acf0a458f599ebfefb5669, type: 3}
+  - {fileID: 8300000, guid: 832dd56e5200a31439623209467397d1, type: 3}
+  - {fileID: 8300000, guid: 57fdac43215e49340979b3cbdbaf55dc, type: 3}
+  - {fileID: 8300000, guid: eaeb162c8ed598b4bb9e5972ff47feda, type: 3}
+  - {fileID: 8300000, guid: 3e41f2fc71435ad4aac6062aa6e89e14, type: 3}
+  - {fileID: 8300000, guid: 35d00993a0ef6e54083b6f292307449b, type: 3}
+  - {fileID: 8300000, guid: bc54a69f59a112e468f14201cbac4e7e, type: 3}
+  - {fileID: 8300000, guid: 1b2c91ca8c7204044b4d51f6132c2431, type: 3}
+  - {fileID: 8300000, guid: 2643ac89564b58544acf54766e0b0020, type: 3}
