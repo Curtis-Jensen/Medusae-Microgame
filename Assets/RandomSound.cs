@@ -7,8 +7,10 @@ public class RandomSound : MonoBehaviour
     [Tooltip("What audio clips could possibly be attached to the audio source")]
     public AudioClip[] audioClips;
 
-    void Start()
+    void Awake()
     {
-        gameObject.GetComponent<AudioSource>().clip = audioClips[Random.Range(0, audioClips.Length)];
+        var audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = audioClips[Random.Range(0, audioClips.Length)];
+        audioSource.Play();
     }
 }
