@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 3734559669033131567}
   - component: {fileID: 8383975673311994880}
   m_Layer: 0
-  m_Name: Medusa
+  m_Name: Medusae with light
   m_TagString: Enemy
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1973,7 +1973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c61fce6019fd93e449a58fdca9acd412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 5
+  damageMultiplier: 11
 --- !u!54 &7291931427603741635
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3352,7 +3352,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5226213690554643364}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
