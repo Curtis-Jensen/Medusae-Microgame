@@ -17,6 +17,10 @@ namespace Unity.FPS.Gameplay
             PutUpNew,
         }
 
+        public bool randomizeWeapons;
+
+        public int startingArsenalSize;
+
         [Tooltip("List of weapon the player will start with")]
         public List<WeaponController> StartingWeapons = new List<WeaponController>();
 
@@ -122,11 +126,31 @@ namespace Unity.FPS.Gameplay
 
             OnSwitchedToWeapon += OnWeaponSwitched;
 
-            // Add starting weapons
-            foreach (var weapon in StartingWeapons)
-                AddWeapon(weapon);
+            PickFirstWeapons();
 
             SwitchWeapon(true);
+        }
+
+        void PickFirstWeapons()
+        {
+            for (int i = totalWeapons - 1; i > 0; i--)
+            {
+                int randomIndex = Random.Range(0, i + 1);
+                var temp = randomizedWeapons[i];
+                randomizedWeapons[i] = randomizedWeapons[randomIndex];
+                randomizedWeapons[randomIndex] = temp;
+            }
+
+            if (randomizeWeapons)
+                for (int i = 0; i < startingArsenalSize; i++)
+                {
+                    int randomIndex = Random.Range(0, StartingWeapons.Count);
+                    var randomWeapon = StartingWeapons[randomIndex];
+                    AddWeapon(randomWeapon);
+                }
+            else
+                foreach (var weapon in StartingWeapons)
+                    AddWeapon(weapon);
         }
 
         /* 10 shoot handling
