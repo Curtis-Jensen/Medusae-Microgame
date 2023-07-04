@@ -139,7 +139,7 @@ namespace Unity.FPS.Gameplay
 
                 for (int i = 0; i < arsenalSize; i++)
                 {
-                    int randomIndex = UnityEngine.Random.Range(0, availableWeapons.Count);
+                    int randomIndex = Random.Range(0, availableWeapons.Count);
                     WeaponController selectedWeapon = availableWeapons[randomIndex];
                     availableWeapons.RemoveAt(randomIndex);
 
