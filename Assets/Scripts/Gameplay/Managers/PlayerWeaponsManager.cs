@@ -19,7 +19,7 @@ namespace Unity.FPS.Gameplay
 
         public bool randomizeWeapons;
 
-        public int startingArsenalSize;
+        public int arsenalSize;
 
         [Tooltip("List of weapon the player will start with")]
         public List<WeaponController> StartingWeapons = new List<WeaponController>();
