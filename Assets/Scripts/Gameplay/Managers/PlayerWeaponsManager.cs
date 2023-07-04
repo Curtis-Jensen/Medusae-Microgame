@@ -133,24 +133,26 @@ namespace Unity.FPS.Gameplay
 
         void PickFirstWeapons()
         {
-            for (int i = totalWeapons - 1; i > 0; i--)
-            {
-                int randomIndex = Random.Range(0, i + 1);
-                var temp = randomizedWeapons[i];
-                randomizedWeapons[i] = randomizedWeapons[randomIndex];
-                randomizedWeapons[randomIndex] = temp;
-            }
-
             if (randomizeWeapons)
-                for (int i = 0; i < startingArsenalSize; i++)
+            {
+                List<Weapon> availableWeapons = new List<Weapon>(AllWeapons); // Assuming AllWeapons is a list of all available weapons
+
+                for (int i = 0; i < arsenalSize; i++)
                 {
-                    int randomIndex = Random.Range(0, StartingWeapons.Count);
-                    var randomWeapon = StartingWeapons[randomIndex];
-                    AddWeapon(randomWeapon);
+                    int randomIndex = UnityEngine.Random.Range(0, availableWeapons.Count);
+                    Weapon selectedWeapon = availableWeapons[randomIndex];
+                    availableWeapons.RemoveAt(randomIndex);
+
+                    AddWeapon(selectedWeapon);
                 }
+            }
             else
+            {
                 foreach (var weapon in StartingWeapons)
+                {
                     AddWeapon(weapon);
+                }
+            }
         }
 
         /* 10 shoot handling
