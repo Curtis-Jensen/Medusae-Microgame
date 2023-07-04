@@ -60,12 +60,12 @@ MonoBehaviour:
     CrosshairSprite: {fileID: 21300000, guid: 14aa1febcf423c84997aa10d7ff64d17, type: 3}
     CrosshairSize: 100
     CrosshairColor: {r: 0, g: 1, b: 0.4226508, a: 1}
-  ShootType: 2
+  ShootType: 0
   AimZoomRatio: 0.8
   AimOffset: {x: 0, y: 0, z: 0}
   hasPhysicalBullets: 0
   MaxAmmo: 8
-  ClipSize: 30
+  ClipSize: 0
   AmmoUsedOnStartCharge: 1
   BulletsPerShot: 1
   meleeWeapon: 0
