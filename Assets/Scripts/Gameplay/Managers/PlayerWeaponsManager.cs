@@ -22,7 +22,7 @@ namespace Unity.FPS.Gameplay
         public int arsenalSize;
 
         [Tooltip("List of weapon the player will start with")]
-        public List<WeaponController> StartingWeapons = new List<WeaponController>();
+        public List<WeaponController> weapons = new List<WeaponController>();
 
         [Header("References")]
         [Tooltip("Secondary camera used to avoid seeing weapon go throw geometries")]
@@ -135,12 +135,12 @@ namespace Unity.FPS.Gameplay
         {
             if (randomizeWeapons)
             {
-                List<Weapon> availableWeapons = new List<Weapon>(AllWeapons); // Assuming AllWeapons is a list of all available weapons
+                List<WeaponController> availableWeapons = new List<WeaponController>(weapons); // Assuming AllWeapons is a list of all available weapons
 
                 for (int i = 0; i < arsenalSize; i++)
                 {
                     int randomIndex = UnityEngine.Random.Range(0, availableWeapons.Count);
-                    Weapon selectedWeapon = availableWeapons[randomIndex];
+                    WeaponController selectedWeapon = availableWeapons[randomIndex];
                     availableWeapons.RemoveAt(randomIndex);
 
                     AddWeapon(selectedWeapon);
@@ -148,7 +148,7 @@ namespace Unity.FPS.Gameplay
             }
             else
             {
-                foreach (var weapon in StartingWeapons)
+                foreach (var weapon in weapons)
                 {
                     AddWeapon(weapon);
                 }
