@@ -151,7 +151,7 @@ namespace Unity.FPS.Gameplay
                 }
                 else
                 {
-                    Debug.Log($"There are more weapons expected via arsenal size ({arsenalSize}) than what are loaded via weapons ({weapons.Count})");            
+                    Debug.LogError($"There are more weapons expected via arsenal size ({arsenalSize}) than what are loaded via weapons ({weapons.Count})");            
                     break; // Break the loop if there are no more available weapons to add
                 }
             }

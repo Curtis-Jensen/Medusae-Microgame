@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 8090847488450120274}
   - component: {fileID: -1790594576709658118}
   m_Layer: 10
-  m_Name: Bulldog Shotgun
+  m_Name: Drake Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -158,7 +158,7 @@ MonoBehaviour:
   AimZoomRatio: 0.7
   AimOffset: {x: 0, y: 0.13, z: 0}
   hasPhysicalBullets: 0
-  MaxAmmo: 7
+  MaxAmmo: 4
   ClipSize: 30
   AmmoUsedOnStartCharge: 0
   BulletsPerShot: 14
