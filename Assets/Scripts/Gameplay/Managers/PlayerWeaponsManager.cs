@@ -135,7 +135,7 @@ namespace Unity.FPS.Gameplay
         {
             if (randomizeWeapons)
             {
-                List<WeaponController> availableWeapons = new List<WeaponController>(weapons); // Assuming AllWeapons is a list of all available weapons
+                List<WeaponController> availableWeapons = new List<WeaponController>(weapons);
 
                 for (int i = 0; i < arsenalSize; i++)
                 {
