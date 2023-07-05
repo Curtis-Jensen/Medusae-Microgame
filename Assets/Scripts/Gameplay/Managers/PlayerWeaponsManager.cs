@@ -137,13 +137,11 @@ namespace Unity.FPS.Gameplay
             {
                 if (randomizeWeapons)
                 {
-                    List<WeaponController> availableWeapons = new List<WeaponController>(weapons);
-
-                    int randomIndex = Random.Range(0, availableWeapons.Count);
-                    WeaponController selectedWeapon = availableWeapons[randomIndex];
-                    availableWeapons.RemoveAt(randomIndex);
+                    int randomIndex = Random.Range(0, weapons.Count);
+                    var selectedWeapon = weapons[randomIndex];
 
                     AddWeapon(selectedWeapon);
+                    weapons.RemoveAt(randomIndex);
                 }
                 else if (i < weapons.Count)
                 {

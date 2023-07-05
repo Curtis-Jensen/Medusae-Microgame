@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0244d6b9e98532469c7be0732490a61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AreaOfEffectDistance: 2.5
+  AreaOfEffectDistance: 4
   DamageRatioOverDistance:
     serializedVersion: 2
     m_Curve:
