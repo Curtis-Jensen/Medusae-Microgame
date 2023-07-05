@@ -17,8 +17,12 @@ namespace Unity.FPS.Gameplay
             PutUpNew,
         }
 
+        public bool randomizeWeapons;
+
+        public int arsenalSize;
+
         [Tooltip("List of weapon the player will start with")]
-        public List<WeaponController> StartingWeapons = new List<WeaponController>();
+        public List<WeaponController> weapons = new List<WeaponController>();
 
         [Header("References")]
         [Tooltip("Secondary camera used to avoid seeing weapon go throw geometries")]
@@ -122,11 +126,33 @@ namespace Unity.FPS.Gameplay
 
             OnSwitchedToWeapon += OnWeaponSwitched;
 
-            // Add starting weapons
-            foreach (var weapon in StartingWeapons)
-                AddWeapon(weapon);
+            PickFirstWeapons();
 
             SwitchWeapon(true);
+        }
+
+        void PickFirstWeapons()
+        {
+            for (int i = 0; i < arsenalSize; i++)
+            {
+                if (randomizeWeapons)
+                {
+                    int randomIndex = Random.Range(0, weapons.Count);
+                    var selectedWeapon = weapons[randomIndex];
+
+                    AddWeapon(selectedWeapon);
+                    weapons.RemoveAt(randomIndex);
+                }
+                else if (i < weapons.Count)
+                {
+                    AddWeapon(weapons[i]);
+                }
+                else
+                {
+                    Debug.LogError($"There are more weapons expected via arsenal size ({arsenalSize}) than what are loaded via weapons ({weapons.Count})");            
+                    break; // Break the loop if there are no more available weapons to add
+                }
+            }
         }
 
         /* 10 shoot handling

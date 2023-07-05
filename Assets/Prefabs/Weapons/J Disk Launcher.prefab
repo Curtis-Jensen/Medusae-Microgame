@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3471509760121373335}
   - component: {fileID: 7583640433812654122}
   m_Layer: 10
-  m_Name: Disk Launcher
+  m_Name: J Disk Launcher
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ MonoBehaviour:
   AimZoomRatio: 0.8
   AimOffset: {x: 0, y: 0, z: 0}
   hasPhysicalBullets: 0
-  MaxAmmo: 6
+  MaxAmmo: 8
   ClipSize: 0
   AmmoUsedOnStartCharge: 1
   BulletsPerShot: 1
@@ -79,7 +79,7 @@ MonoBehaviour:
   EjectionPort: {fileID: 0}
   ShellCasingEjectionForce: 2
   ShellPoolSize: 1
-  AmmoReloadRate: 3
+  AmmoReloadRate: 1
   AmmoReloadDelay: 2
   AutomaticReleaseOnCharged: 0
   MaxChargeDuration: 1.46

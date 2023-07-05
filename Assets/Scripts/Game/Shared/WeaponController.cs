@@ -74,9 +74,7 @@ namespace Unity.FPS.Game
             WeaponRoot.SetActive(show);
 
             if (show && ChangeWeaponSfx)
-            {
                 weaponAudioSource.PlayOneShot(ChangeWeaponSfx);
-            }
 
             IsWeaponActive = show;
         }
