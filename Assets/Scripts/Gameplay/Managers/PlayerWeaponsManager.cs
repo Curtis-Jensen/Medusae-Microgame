@@ -133,24 +133,26 @@ namespace Unity.FPS.Gameplay
 
         void PickFirstWeapons()
         {
-            if (randomizeWeapons)
+            for (int i = 0; i < arsenalSize; i++)
             {
-                List<WeaponController> availableWeapons = new List<WeaponController>(weapons);
-
-                for (int i = 0; i < arsenalSize; i++)
+                if (randomizeWeapons)
                 {
+                    List<WeaponController> availableWeapons = new List<WeaponController>(weapons);
+
                     int randomIndex = Random.Range(0, availableWeapons.Count);
                     WeaponController selectedWeapon = availableWeapons[randomIndex];
                     availableWeapons.RemoveAt(randomIndex);
 
                     AddWeapon(selectedWeapon);
                 }
-            }
-            else
-            {
-                foreach (var weapon in weapons)
+                else if (i < weapons.Count)
                 {
-                    AddWeapon(weapon);
+                    AddWeapon(weapons[i]);
+                }
+                else
+                {
+                    Debug.Log($"There are more weapons expected via arsenal size ({arsenalSize}) than what are loaded via weapons ({weapons.Count})");            
+                    break; // Break the loop if there are no more available weapons to add
                 }
             }
         }
