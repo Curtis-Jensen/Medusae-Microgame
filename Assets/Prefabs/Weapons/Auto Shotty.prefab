@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 8090847488450120274}
   - component: {fileID: -1790594576709658118}
   m_Layer: 10
-  m_Name: Drake Shotgun
+  m_Name: Auto Shotty
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -154,12 +154,12 @@ MonoBehaviour:
     CrosshairSprite: {fileID: 21300000, guid: 2962952d6e5ae7342a298d45a3945069, type: 3}
     CrosshairSize: 30
     CrosshairColor: {r: 1, g: 0.009685771, b: 0, a: 1}
-  ShootType: 0
+  ShootType: 1
   AimZoomRatio: 0.7
   AimOffset: {x: 0, y: 0.13, z: 0}
   hasPhysicalBullets: 0
-  MaxAmmo: 4
-  ClipSize: 30
+  MaxAmmo: 8
+  ClipSize: 0
   AmmoUsedOnStartCharge: 0
   BulletsPerShot: 14
   meleeWeapon: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
   EjectionPort: {fileID: 0}
   ShellCasingEjectionForce: 2
   ShellPoolSize: 1
-  AmmoReloadRate: 1.1
+  AmmoReloadRate: 2
   AmmoReloadDelay: 1
   AutomaticReleaseOnCharged: 0
   MaxChargeDuration: 1
@@ -320,8 +320,8 @@ MonoBehaviour:
   SteamVfxEmissionRateMax: 8
   OverheatGradient:
     serializedVersion: 2
-    key0: {r: 0, g: 3.1312592, b: 3.482202, a: 1}
-    key1: {r: 5.2164755, g: 1.5567491, b: 0, a: 1}
+    key0: {r: 0.10770922, g: 3.482202, b: 0, a: 1}
+    key1: {r: 5.2164745, g: 0.14850661, b: 0, a: 1}
     key2: {r: 8, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}

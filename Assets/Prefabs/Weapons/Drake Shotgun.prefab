@@ -321,7 +321,7 @@ MonoBehaviour:
   OverheatGradient:
     serializedVersion: 2
     key0: {r: 0, g: 3.1312592, b: 3.482202, a: 1}
-    key1: {r: 5.2164755, g: 1.5567491, b: 0, a: 1}
+    key1: {r: 6.964403, g: 0.30318657, b: 0, a: 1}
     key2: {r: 8, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
