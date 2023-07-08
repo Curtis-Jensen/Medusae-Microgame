@@ -160,6 +160,8 @@ namespace Unity.FPS.AI
                 AudioUtility.CreateSFX(OnDetectSfx, transform.position, AudioUtility.AudioGroups.EnemyDetection, 1f);
 
             Animator.SetBool(animAlertedParameter, true);
+
+            GetComponentInParent<Health>().TakeDamage(10000, gameObject);
         }
 
         /// <summary>
