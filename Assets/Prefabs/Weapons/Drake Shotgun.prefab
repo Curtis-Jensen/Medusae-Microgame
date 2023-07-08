@@ -322,8 +322,8 @@ MonoBehaviour:
     serializedVersion: 2
     key0: {r: 0, g: 3.1312592, b: 3.482202, a: 1}
     key1: {r: 6.964403, g: 0.30318657, b: 0, a: 1}
-    key2: {r: 8, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
+    key2: {r: 0.26794338, g: 0.26794338, b: 0.26794338, a: 0}
+    key3: {r: 0, g: 0.000030637257, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
@@ -331,7 +331,7 @@ MonoBehaviour:
     ctime0: 0
     ctime1: 65535
     ctime2: 65535
-    ctime3: 0
+    ctime3: 65535
     ctime4: 0
     ctime5: 0
     ctime6: 0
