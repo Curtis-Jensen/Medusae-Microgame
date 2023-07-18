@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc94179cece5b4e41ae9298ddbf83fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SimultaneousFuelCellsUsage: 1
+  SimultaneousFuelCellsUsage: 0
   FuelCells:
   - {fileID: 2990922162098100105}
   - {fileID: 2990922162098100107}
