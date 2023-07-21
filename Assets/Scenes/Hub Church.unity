@@ -1554,7 +1554,7 @@ GameObject:
   - component: {fileID: 269436824}
   - component: {fileID: 269436823}
   m_Layer: 0
-  m_Name: Anti Adultery Scripture (1)
+  m_Name: Cross scripture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1568,7 +1568,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 269436821}
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0.14015901}
+  m_LocalPosition: {x: 0, y: 0, z: 0.09792055}
   m_LocalScale: {x: 1.3967627, y: 0.85470176, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1318057786}
@@ -1576,7 +1576,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -7.05, y: -0.06999988}
+  m_AnchoredPosition: {x: -7.05, y: -0.06999989}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &269436823
@@ -1599,19 +1599,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'O my brethren, if ye could be healed by merely casting about your eyes
-    that ye might be healed, would ye not behold quickly, or would ye rather harden
-    your hearts in unbelief, and be slothful, that ye would not cast about your eyes,
-    that ye might perish?
+  m_text: 'Behold, Christ was spoken of by Moses; yea, and behold a  type was raised
+    up in the wilderness, that whosoever would look upon it might live. And many
+    did look and live.
 
-    
 
-    If so, wo shall come upon you; but if not
-    so, then cast about your eyes and begin to believe in the Son of God, that he
-    will come to redeem his people, and that he shall suffer and die to atone for
-    their sins; and that he shall rise again from the dead, which shall bring to
-    pass the resurrection, that all men shall stand before him, to be judged at the
-    last and judgment day, according to their works.'
+    O my brethren, if ye could be healed by merely casting
+    about your eyes that ye might be healed, would ye not behold quickly, or would
+    ye rather harden your hearts in unbelief, and be slothful, that ye would not
+    cast about your eyes, that ye might perish?
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
