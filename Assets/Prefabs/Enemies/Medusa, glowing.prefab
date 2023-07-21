@@ -204,10 +204,9 @@ GameObject:
   - component: {fileID: 917805400}
   - component: {fileID: 7471935179276344570}
   - component: {fileID: 1574949304789150505}
-  - component: {fileID: 3734559669033131567}
   - component: {fileID: 8383975673311994880}
   m_Layer: 0
-  m_Name: Medusae with light
+  m_Name: Medusa, glowing
   m_TagString: Enemy
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -400,7 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e27364eefd6dd0341ba72a3bfc0d9727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 50
+  MaxHealth: 150
   CriticalHealthRatio: 0.3
 --- !u!114 &917805400
 MonoBehaviour:
@@ -487,20 +486,6 @@ MonoBehaviour:
   AttackRange: 10
   KnownTargetTimeout: 4
   Animator: {fileID: 0}
---- !u!114 &3734559669033131567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003328744321094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e27364eefd6dd0341ba72a3bfc0d9727, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxHealth: 100
-  CriticalHealthRatio: 0.3
 --- !u!114 &8383975673311994880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3356,8 +3341,8 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.2, g: 0.011764706, b: 0.18431373, a: 0.92156863}
-  m_Intensity: 1
+  m_Color: {r: 1, g: 0, b: 0.916667, a: 0.92156863}
+  m_Intensity: 2
   m_Range: 456.42
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

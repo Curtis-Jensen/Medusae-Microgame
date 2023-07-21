@@ -189,7 +189,7 @@ MonoBehaviour:
   AimZoomRatio: 0.5
   AimOffset: {x: 0, y: 0.075, z: 0}
   hasPhysicalBullets: 0
-  MaxAmmo: 16
+  MaxAmmo: 32
   ClipSize: 0
   AmmoUsedOnStartCharge: 1
   BulletsPerShot: 1
