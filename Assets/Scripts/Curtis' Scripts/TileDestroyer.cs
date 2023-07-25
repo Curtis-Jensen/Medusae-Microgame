@@ -17,7 +17,7 @@ public class TileDestroyer : MonoBehaviour
     void Start()
     {
         health = GetComponent<Health>();
-        maxHealth = health.MaxHealth;
+        maxHealth = health.maxHealth;
         tileCount = tileParent.transform.childCount;
         initialTileCount = tileCount;
     }
@@ -28,7 +28,7 @@ public class TileDestroyer : MonoBehaviour
      */
     void FixedUpdate()
     {
-        float healthPercentage =  health.CurrentHealth / maxHealth;
+        float healthPercentage =  health.currentHealth / maxHealth;
         float tilePercentage = tileCount / initialTileCount;
 
         if (healthPercentage < tilePercentage) DestroyATile();

@@ -5,7 +5,7 @@ namespace Unity.FPS.Game
 {
     public class Health : MonoBehaviour
     {
-        [Tooltip("Maximum amount of health")] public float MaxHealth = 10f;
+        [Tooltip("Maximum amount of health")] public float maxHealth = 100f;
 
         [Tooltip("Health ratio at which the critical health vignette starts appearing")]
         [Range(0, 1)]
@@ -15,28 +15,24 @@ namespace Unity.FPS.Game
         public UnityAction<float> OnHealed;
         public UnityAction OnDie;
 
-        public float CurrentHealth { get; set; }
+        [Tooltip("What amount of health the player starts with")]
+        public float currentHealth = 100f;
         public bool Invincible { get; set; }
-        public bool CanPickup() => CurrentHealth < MaxHealth;
+        public bool CanPickup() => currentHealth < maxHealth;
 
-        public float GetRatio() => CurrentHealth / MaxHealth;
+        public float GetRatio() => currentHealth / maxHealth;
         public bool IsCritical() => GetRatio() <= CriticalHealthRatio;
 
         bool isDead;
 
-        void Start()
-        {
-            CurrentHealth = MaxHealth;
-        }
-
         public void Heal(float healAmount)
         {
-            float healthBefore = CurrentHealth;
-            CurrentHealth += healAmount;
-            CurrentHealth = Mathf.Clamp(CurrentHealth, 0f, MaxHealth);
+            float healthBefore = currentHealth;
+            currentHealth += healAmount;
+            currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
 
             // call OnHeal action
-            float trueHealAmount = CurrentHealth - healthBefore;
+            float trueHealAmount = currentHealth - healthBefore;
             if (trueHealAmount > 0f)
             {
                 OnHealed?.Invoke(trueHealAmount);
@@ -53,12 +49,12 @@ namespace Unity.FPS.Game
             if (Invincible)
                 return;
 
-            float healthBefore = CurrentHealth;
-            CurrentHealth -= damage;
-            CurrentHealth = Mathf.Clamp(CurrentHealth, 0f, MaxHealth);
+            float healthBefore = currentHealth;
+            currentHealth -= damage;
+            currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
 
             // call OnDamage action
-            float trueDamageAmount = healthBefore - CurrentHealth;
+            float trueDamageAmount = healthBefore - currentHealth;
             if (trueDamageAmount > 0f)
                 OnDamaged?.Invoke(trueDamageAmount, damageSource);
 
@@ -67,10 +63,10 @@ namespace Unity.FPS.Game
 
         public void Kill()
         {
-            CurrentHealth = 0f;
+            currentHealth = 0f;
 
             // call OnDamage action
-            OnDamaged?.Invoke(MaxHealth, null);
+            OnDamaged?.Invoke(maxHealth, null);
 
             HandleDeath();
         }
@@ -81,7 +77,7 @@ namespace Unity.FPS.Game
                 return;
 
             // call OnDie action
-            if (CurrentHealth <= 0f)
+            if (currentHealth <= 0f)
             {
                 isDead = true;
                 OnDie?.Invoke();

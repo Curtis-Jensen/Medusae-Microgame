@@ -20,7 +20,7 @@ namespace Unity.FPS.UI
         void Update()
         {
             // update health bar value
-            HealthBarImage.fillAmount = Health.CurrentHealth / Health.MaxHealth;
+            HealthBarImage.fillAmount = Health.currentHealth / Health.maxHealth;
 
             // rotate health bar to face the camera/player
             HealthBarPivot.LookAt(Camera.main.transform.position);
