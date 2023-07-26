@@ -40,17 +40,17 @@ PrefabInstance:
     - target: {fileID: 2015434656898269656, guid: e29d43f43cc5d82499dd9926e01847d3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.9
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 2015434656898269656, guid: e29d43f43cc5d82499dd9926e01847d3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.5531168
       objectReference: {fileID: 0}
     - target: {fileID: 2015434656898269656, guid: e29d43f43cc5d82499dd9926e01847d3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 205.5
+      value: 238.41254
       objectReference: {fileID: 0}
     - target: {fileID: 2015434656898269656, guid: e29d43f43cc5d82499dd9926e01847d3,
         type: 3}
@@ -90,12 +90,27 @@ PrefabInstance:
     - target: {fileID: 2104015986810675393, guid: e29d43f43cc5d82499dd9926e01847d3,
         type: 3}
       propertyPath: BulletSpreadAngle
-      value: 7
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2104015986810675393, guid: e29d43f43cc5d82499dd9926e01847d3,
+        type: 3}
+      propertyPath: DelayBetweenShots
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 2231955200838058728, guid: e29d43f43cc5d82499dd9926e01847d3,
         type: 3}
       propertyPath: m_Pitch
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774235613882044843, guid: e29d43f43cc5d82499dd9926e01847d3,
+        type: 3}
+      propertyPath: AttackRange
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774235613882044843, guid: e29d43f43cc5d82499dd9926e01847d3,
+        type: 3}
+      propertyPath: DetectionRange
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3464315327790461765, guid: e29d43f43cc5d82499dd9926e01847d3,
         type: 3}
@@ -127,6 +142,16 @@ PrefabInstance:
       propertyPath: MaxHealth
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 6370966072896210225, guid: e29d43f43cc5d82499dd9926e01847d3,
+        type: 3}
+      propertyPath: maxHealth
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6370966072896210225, guid: e29d43f43cc5d82499dd9926e01847d3,
+        type: 3}
+      propertyPath: currentHealth
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 7845811686799571066, guid: e29d43f43cc5d82499dd9926e01847d3,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -141,6 +166,26 @@ PrefabInstance:
         type: 3}
       propertyPath: dropRate
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087143436424816424, guid: e29d43f43cc5d82499dd9926e01847d3,
+        type: 3}
+      propertyPath: AttackEyeColor.g
+      value: 31.840364
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087143436424816424, guid: e29d43f43cc5d82499dd9926e01847d3,
+        type: 3}
+      propertyPath: AttackEyeColor.r
+      value: 5.5200768
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087143436424816424, guid: e29d43f43cc5d82499dd9926e01847d3,
+        type: 3}
+      propertyPath: DefaultEyeColor.g
+      value: 31.840364
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087143436424816424, guid: e29d43f43cc5d82499dd9926e01847d3,
+        type: 3}
+      propertyPath: DefaultEyeColor.r
+      value: 5.5200768
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e29d43f43cc5d82499dd9926e01847d3, type: 3}
