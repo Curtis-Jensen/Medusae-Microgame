@@ -486,18 +486,18 @@ PrefabInstance:
     - target: {fileID: 1153891124, guid: c996b53e9f849234393d1e90f68d1679, type: 3}
       propertyPath: musicChoices.Array.data[1].music
       value: 
-      objectReference: {fileID: 8300000, guid: a880cd3da946c9548b8fd546f5892302, type: 3}
+      objectReference: {fileID: 8300000, guid: 6fe01c582fc95354e99707f055532db8, type: 3}
     - target: {fileID: 1153891124, guid: c996b53e9f849234393d1e90f68d1679, type: 3}
       propertyPath: musicChoices.Array.data[2].music
       value: 
-      objectReference: {fileID: 8300000, guid: f89ace694b697b74caa7e5c1d731ad42, type: 3}
+      objectReference: {fileID: 8300000, guid: a880cd3da946c9548b8fd546f5892302, type: 3}
     - target: {fileID: 1153891124, guid: c996b53e9f849234393d1e90f68d1679, type: 3}
       propertyPath: musicChoices.Array.data[3].music
       value: 
-      objectReference: {fileID: 8300000, guid: 6fe01c582fc95354e99707f055532db8, type: 3}
+      objectReference: {fileID: 8300000, guid: f89ace694b697b74caa7e5c1d731ad42, type: 3}
     - target: {fileID: 1153891124, guid: c996b53e9f849234393d1e90f68d1679, type: 3}
       propertyPath: musicChoices.Array.data[1].isCopyrighted
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1153891124, guid: c996b53e9f849234393d1e90f68d1679, type: 3}
       propertyPath: musicChoices.Array.data[2].isCopyrighted
@@ -505,7 +505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1153891124, guid: c996b53e9f849234393d1e90f68d1679, type: 3}
       propertyPath: musicChoices.Array.data[3].isCopyrighted
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 319410335075788178, guid: c996b53e9f849234393d1e90f68d1679,
         type: 3}
