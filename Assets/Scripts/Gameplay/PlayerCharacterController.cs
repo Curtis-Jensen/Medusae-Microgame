@@ -321,7 +321,7 @@ namespace Unity.FPS.Gameplay
                     // jumping
                     if (IsGrounded && inputHandler.GetJumpInputDown())
                     {
-                        // force the crouch state to false
+                        // if the player can at least stand up
                         if (SetCrouchingState(false, false))
                         {
                             // start by canceling out the vertical component of our velocity
