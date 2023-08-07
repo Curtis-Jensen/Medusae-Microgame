@@ -32,8 +32,8 @@ namespace Unity.FPS.UI
         #endregion
         #region Private Variables
         bool eyesViewing;
-        float lookTimer = 0; //However long the player has been looking at the enemy.
-        float effectMagnitude;
+        float damageLookingTimer = 0; //However long the player has been looking at the enemy.
+        float damageMagnitude;
         float staticVisualEffect;//Determines by how much the screen will be staticy
         internal List<Viewable> viewableList;
         Camera cam;
@@ -42,6 +42,7 @@ namespace Unity.FPS.UI
         Vector2 camCenter;
         Health health;
         AudioSource effectSoundSource; //Where the static sound effect comes from
+        private float pullMagnitude;
         #endregion
 
         void Awake()
@@ -90,7 +91,7 @@ namespace Unity.FPS.UI
             {
                 var hit = CheckForObstructions(viewable);
                 if (hit != null)
-                    AddLookTime(viewable.damageMultiplier);
+                    AddLookTime(viewable);
             }
 
             SetStaticIntensity();
@@ -161,19 +162,38 @@ namespace Unity.FPS.UI
          * 
          * Gives damage and healing through the look timer since that is already going up and down
          */
-        void AddLookTime(float effectMultiplier)
+        void AddLookTime(Viewable viewable)
         {
+            var damageMultiplier = viewable.damageMultiplier;
+            var pullMultiplier = viewable.pullMultiplier;
+
             eyesViewing = true;
-            effectMagnitude += effectMultiplier;
+            damageMagnitude += damageMultiplier;
+            pullMagnitude += pullMultiplier;
 
-            lookTimer += Time.deltaTime * effectMultiplier;
+            damageLookingTimer += Time.deltaTime * damageMultiplier;
+            pullMagnitude += Time.deltaTime * pullMultiplier;
 
-            if (lookTimer > 0)
-                health.TakeDamage(lookTimer, gameObject);
-            else if (lookTimer < 0)
-                health.Heal(-lookTimer);
+            if (damageLookingTimer > 0)
+                health.TakeDamage(damageLookingTimer, gameObject);
+            else if (damageLookingTimer < 0)
+                health.Heal(-damageLookingTimer);
 
-            lookTimer = 0;
+            if(pullMagnitude > 0)
+            {
+                Vector3 playerPosition = transform.position;
+                Vector3 viewablePosition = viewable.transform.position;
+
+                // Calculate the direction from the player to the viewable
+                Vector3 pullDirection = (viewablePosition - playerPosition).normalized;
+
+                // Apply the pull force to the CharacterController
+                CharacterController characterController = GetComponentInParent<CharacterController>();
+                characterController.Move(pullDirection * pullMagnitude * Time.deltaTime);
+            }
+
+            pullMagnitude = 0;
+            damageLookingTimer = 0;
         }
         #endregion
 
@@ -227,7 +247,7 @@ namespace Unity.FPS.UI
          */
         void SetStaticIntensity()
         {
-            staticVisualEffect = effectMagnitude * staticIntensity;//To be sure that everything is still visible
+            staticVisualEffect = damageMagnitude * staticIntensity;//To be sure that everything is still visible
             if (staticVisualEffect > maxStaticIntensity) staticVisualEffect = maxStaticIntensity;
         }
 
@@ -236,22 +256,22 @@ namespace Unity.FPS.UI
          */
         void RenderStatic()
         {
-            if (effectMagnitude > 0 && effectSoundSource.clip != staticSound)
+            if (damageMagnitude > 0 && effectSoundSource.clip != staticSound)
             {
                 effectSoundSource.clip = staticSound;
                 effectSoundSource.Play();
             }
-            else if (effectMagnitude <= 0 && effectSoundSource.clip != choralSound)
+            else if (damageMagnitude <= 0 && effectSoundSource.clip != choralSound)
             {
                 effectSoundSource.clip = choralSound;
                 effectSoundSource.Play();
             }
 
-            effectSoundSource.volume = Mathf.Abs(effectMagnitude) * effectVolume;
+            effectSoundSource.volume = Mathf.Abs(damageMagnitude) * effectVolume;
             staticImage.color = new Color(staticImage.color.r, staticImage.color.g, staticImage.color.b,
                 staticVisualEffect);
 
-            effectMagnitude = 0;
+            damageMagnitude = 0;
             staticVisualEffect = 0;
         }
         #endregion

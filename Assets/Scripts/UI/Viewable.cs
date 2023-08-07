@@ -6,6 +6,8 @@ namespace Unity.FPS.UI
     {
         [Tooltip("By how much this object will increase or decrease effects (such as giving damage or healing)")]
         public float damageMultiplier;
+        [Tooltip("By how much this object will pull the player")]
+        public float pullMultiplier;
 
         internal GameObject viewableTarget;//The object itself that is being looked
 
