@@ -145,11 +145,11 @@ namespace Unity.FPS.UI
 
             foreach (RaycastHit item in hits)
             {
-                if (item.transform.CompareTag("Wall")) return null;//1
+                if (item.transform.CompareTag("Wall")) return null; // 1
 
                 //2
 
-                if (item.collider.Equals(viewable.viewableTarget.GetComponentInChildren<Collider>()))//3
+                if (item.collider.Equals(viewable.viewableTarget.GetComponentInChildren<Collider>())) // 3
                     return item;
             }
 
