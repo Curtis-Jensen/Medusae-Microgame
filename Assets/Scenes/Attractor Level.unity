@@ -1340,7 +1340,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1153891123, guid: c996b53e9f849234393d1e90f68d1679, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1153891124, guid: c996b53e9f849234393d1e90f68d1679, type: 3}
       propertyPath: musicChoices.Array.size
