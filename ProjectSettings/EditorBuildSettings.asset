@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Hub Church.unity
     guid: 08cfbde502ee8824b8a3d658610819a9
   - enabled: 1
-    path: Assets/Scenes/Wave Defense.unity
+    path: Assets/Scenes/PS2 Intro.unity
     guid: 34971add3b319224484ee17c3cb6bf99
   m_configObjects: {}
