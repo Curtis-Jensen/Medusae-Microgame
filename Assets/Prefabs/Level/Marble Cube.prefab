@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 501299026063306739}
   - component: {fileID: 779544410732218622}
   m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
+  m_Name: Marble Cube
+  m_TagString: Procedural
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
