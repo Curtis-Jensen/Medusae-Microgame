@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(ProceduralGeneration))]
+[CanEditMultipleObjects]
 public class ProceduralGenerationEditor : Editor
 {
     /* 10 When the inspector renders it's GUI:

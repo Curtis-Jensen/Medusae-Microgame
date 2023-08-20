@@ -85,8 +85,8 @@ public class ProceduralGeneration : MonoBehaviour
 
             if (stretchy)
                 newObject.transform.localScale = new Vector3(Random.Range(1, stretchAmounts), // 🎨
-                                                           Random.Range(1, stretchAmounts),
-                                                           Random.Range(1, stretchAmounts));
+                                                             Random.Range(1, stretchAmounts),
+                                                             Random.Range(1, stretchAmounts));
         }
     }
 }
