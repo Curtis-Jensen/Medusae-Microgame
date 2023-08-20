@@ -67,7 +67,9 @@ public class ProceduralGeneration : MonoBehaviour
             for (int i = spawnPoint.childCount - 1; i >= 0; i--) // 💥
             {
                 var child = spawnPoint.GetChild(i);
-                DestroyImmediate(child.gameObject);
+
+                if (child.CompareTag("Wall"))
+                    DestroyImmediate(child.gameObject);
             }
 
             if (Random.value >= spawnChance) continue;
