@@ -2,9 +2,9 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ProceduralGeneration))]
+[CustomEditor(typeof(GenerateBySpawnPoint))]
 [CanEditMultipleObjects]
-public class ProceduralGenerationEditor : Editor
+public class GenerationBySpawnPointEditor : Editor
 {
     /* 10 When the inspector renders it's GUI:
      * 
@@ -16,7 +16,7 @@ public class ProceduralGenerationEditor : Editor
 
         if (GUILayout.Button("Generate"))
         {
-            var mapGenerator = (ProceduralGeneration)target;
+            var mapGenerator = (GenerateBySpawnPoint)target;
             mapGenerator.CreateMap();
         }
     }
