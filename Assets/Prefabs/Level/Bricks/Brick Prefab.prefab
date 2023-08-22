@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2427182067249519851}
   - component: {fileID: 2427182067249519850}
   - component: {fileID: -1078773655104199350}
-  - component: {fileID: -3075791855208588325}
   m_Layer: 0
   m_Name: Brick Prefab
   m_TagString: Procedural
@@ -96,17 +95,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.020000001, y: 0.02, z: 0.020000003}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-3075791855208588325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2427182067249519848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 326d796544c58f14a8048643e4c8badd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  VerticalBobFrequency: 0.5
-  BobbingAmount: 1

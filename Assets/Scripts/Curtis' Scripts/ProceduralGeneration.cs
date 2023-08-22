@@ -43,7 +43,8 @@ public abstract class ProceduralGeneration : MonoBehaviour
 
         SpawnObjects(spawnChance);
 
-        floor.BuildNavMesh(); // Bake navigation map
+        if(floor != null)
+            floor.BuildNavMesh(); // Bake navigation map
     }
 
     protected abstract void SpawnObjects(float spawnChance);

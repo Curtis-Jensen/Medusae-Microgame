@@ -19,37 +19,38 @@ public class GenerateByRegion : ProceduralGeneration
     /// <param name="spawnChance">The chance of spawning a new object on each spawn point</param>
     protected override void SpawnObjects(float spawnChance)
     {
-        Vector3 spawnPointOffset = new Vector3(0.5f, 0f, 0.5f); // Offset to ensure objects are centered
-
-        for (float x = 0; x < regionSize.x; x++)
+        for (int i = transform.childCount - 1; i >= 0; i--) // 💥
         {
-            for (float z = 0; z < regionSize.z; z++)
+            var child = transform.GetChild(i);
+
+            if (child.CompareTag("Procedural"))
+                DestroyImmediate(child.gameObject);
+        }
+
+        for (float x = 0; x < regionSize.x; x += 10)
+        {
+            for (float z = 0; z < regionSize.z; z += 10)
             {
-                Vector3 spawnPosition = new Vector3(x, 0f, z) + spawnPointOffset;
-
-                // Delete existing objects at the spawn position
-                Collider[] colliders = Physics.OverlapSphere(spawnPosition, 0.5f); // Adjust the radius
-                foreach (var collider in colliders)
+                for (float y = 0; y < regionSize.y; y += 10)
                 {
-                    if (collider.CompareTag("Procedural"))
-                        DestroyImmediate(collider.gameObject);
+                    Vector3 spawnPosition = transform.position - (regionSize/2) + new Vector3(x, y, z);
+
+                    if (Random.value >= spawnChance) continue;
+
+                    int randomIndex = Random.Range(0, objectPrefabs.Length);
+                    GameObject chosenObject = objectPrefabs[randomIndex];
+
+                    var rotation = Quaternion.Euler(Random.Range(-tiltAngle, tiltAngle),
+                                                    Random.Range(0, 360),
+                                                    Random.Range(-tiltAngle, tiltAngle));
+
+                    var newObject = Instantiate(chosenObject, spawnPosition, rotation, transform);
+
+                    if (stretchy)
+                        newObject.transform.localScale = new Vector3(Random.Range(1, stretchAmounts),
+                                                                     Random.Range(1, stretchAmounts),
+                                                                     Random.Range(1, stretchAmounts));
                 }
-
-                if (Random.value >= spawnChance) continue;
-
-                int randomIndex = Random.Range(0, objectPrefabs.Length);
-                GameObject chosenObject = objectPrefabs[randomIndex];
-
-                var rotation = Quaternion.Euler(Random.Range(-tiltAngle, tiltAngle),
-                                                Random.Range(0, 360),
-                                                Random.Range(-tiltAngle, tiltAngle));
-
-                var newObject = Instantiate(chosenObject, spawnPosition, rotation, transform);
-
-                if (stretchy)
-                    newObject.transform.localScale = new Vector3(Random.Range(1, stretchAmounts),
-                                                                 Random.Range(1, stretchAmounts),
-                                                                 Random.Range(1, stretchAmounts));
             }
         }
     }
