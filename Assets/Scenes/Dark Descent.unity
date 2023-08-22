@@ -13307,7 +13307,7 @@ MonoBehaviour:
   - {fileID: 2427182067249519848, guid: ccc826f303368b74d8345925aa8073ed, type: 3}
   - {fileID: 5139086180685441815, guid: 2cea5429ea3baaf4192929f44ced5f47, type: 3}
   packedMazeChance: 0
-  spawnChance: 0.2
+  spawnChance: 0.15
   tiltAngle: 20
   stretchy: 0
   stretchAmounts: 1
@@ -19179,7 +19179,7 @@ MonoBehaviour:
   - {fileID: 2427182067249519848, guid: ccc826f303368b74d8345925aa8073ed, type: 3}
   - {fileID: 5139086180685441815, guid: 2cea5429ea3baaf4192929f44ced5f47, type: 3}
   packedMazeChance: 0
-  spawnChance: 0.2
+  spawnChance: 0.15
   tiltAngle: 20
   stretchy: 0
   stretchAmounts: 1
@@ -47481,7 +47481,7 @@ MonoBehaviour:
   - {fileID: 2427182067249519848, guid: ccc826f303368b74d8345925aa8073ed, type: 3}
   - {fileID: 5139086180685441815, guid: 2cea5429ea3baaf4192929f44ced5f47, type: 3}
   packedMazeChance: 0
-  spawnChance: 0.2
+  spawnChance: 0.15
   tiltAngle: 20
   stretchy: 0
   stretchAmounts: 1
@@ -50910,7 +50910,7 @@ MonoBehaviour:
   - {fileID: 2427182067249519848, guid: ccc826f303368b74d8345925aa8073ed, type: 3}
   - {fileID: 5139086180685441815, guid: 2cea5429ea3baaf4192929f44ced5f47, type: 3}
   packedMazeChance: 0
-  spawnChance: 0.2
+  spawnChance: 0.15
   tiltAngle: 20
   stretchy: 0
   stretchAmounts: 1
