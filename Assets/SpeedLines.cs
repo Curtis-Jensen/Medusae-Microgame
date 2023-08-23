@@ -62,6 +62,8 @@ public class SpeedLines : MonoBehaviour
 
     float CalculateFallingSpeed()
     {
+        if (Time.deltaTime == 0) return 0;
+
         // Calculate the distance traveled in the vertical axis
         float verticalDistance = transform.position.y - previousPosition.y;
 
