@@ -45,9 +45,6 @@ namespace Unity.FPS.Gameplay
         [Tooltip("Multiplicator for the sprint speed (based on grounded speed)")]
         public float SprintSpeedModifier = 2f;
 
-        [Tooltip("Height at which the player dies instantly when falling off the map")]
-        public float KillHeight = -50f;
-
         [Header("Rotation")]
         [Tooltip("Rotation speed for moving the camera")]
         public float RotationSpeed = 200f;
@@ -178,10 +175,6 @@ namespace Unity.FPS.Gameplay
 
         void Update()
         {
-            // check for Y kill
-            if (!IsDead && transform.position.y < KillHeight)
-                health.Kill();
-
             HasJumpedThisFrame = false;
 
             bool wasGrounded = IsGrounded;
