@@ -26,8 +26,7 @@ public class EndlessGeneration : MonoBehaviour
 
     void SpawnFloor(GameObject floor)
     {
-        var newPosition =
-            new Vector3(lastSpawned.position.x, lastSpawned.position.y - 100, lastSpawned.position.z); // Calculate where the new floor will go
+        var newPosition = new Vector3(lastSpawned.position.x, lastSpawned.position.y - 100, lastSpawned.position.z); // Calculate where the new floor will go
         GameObject newFloor = Instantiate(floor, newPosition, Quaternion.identity, transform); // Spawn the new floor
 
         lastSpawned = newFloor.transform; // Keep track of where the last floor was to know where the next one goes
