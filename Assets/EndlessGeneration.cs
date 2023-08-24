@@ -6,7 +6,7 @@ public class EndlessGeneration : MonoBehaviour
 {
     public Transform player;
     public Transform lastSpawned;
-    public GameObject floor;
+    public GameObject basicFloor;
     public GameObject treeFloor;
     public float loadingDistance = 20;
     public int floorsUntilTree = 20;
@@ -17,28 +17,18 @@ public class EndlessGeneration : MonoBehaviour
     {
         if (player.position.y > (lastSpawned.position.y + loadingDistance)) return; // If the player hasn't fallen far enough, don't make a new floor
 
+        var nextFloor = basicFloor;
         if (floorsSpawned == floorsUntilTree)
-            SpawnTree();
-        else
-            SpawnNewFloor();
+            nextFloor = treeFloor;
+
+        SpawnFloor(nextFloor);
     }
 
-    void SpawnNewFloor()
+    void SpawnFloor(GameObject floor)
     {
         var newPosition =
             new Vector3(lastSpawned.position.x, lastSpawned.position.y - 100, lastSpawned.position.z); // Calculate where the new floor will go
                 GameObject newFloor = Instantiate(floor, newPosition, Quaternion.identity, transform); // Spawn the new floor
-
-        lastSpawned = newFloor.transform; // Keep track of where the last floor was to know where the next one goes
-
-        floorsSpawned++;
-    }
-
-    void SpawnTree()
-    {
-        var newPosition =
-            new Vector3(lastSpawned.position.x, lastSpawned.position.y - 100, lastSpawned.position.z); // Calculate where the new floor will go
-        GameObject newFloor = Instantiate(treeFloor, newPosition, Quaternion.identity, transform); // Spawn the new floor
 
         lastSpawned = newFloor.transform; // Keep track of where the last floor was to know where the next one goes
 
