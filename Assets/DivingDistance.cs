@@ -20,10 +20,10 @@ public class DivingDistance : MonoBehaviour
         {
             PlayerPrefs.SetFloat("bestScore", currentScore);
             PlayerPrefs.SetString("scoreDeclaration",
-                $"You dove down to a new record of {currentScore} meters!");
+                $"You have reached a new depth of understanding: {currentScore}.");
         }
         else
-            PlayerPrefs.SetString("scoreDeclaration", $"You dove down  {currentScore}  meters." +
-                $"  Your best score is {bestScore} meters.");
+            PlayerPrefs.SetString("scoreDeclaration", $"Thinking through it, it doesn’t make as much sense: {currentScore}, " +
+                $"but you still feel and remember the time you understood: {bestScore}.");
     }
 }
