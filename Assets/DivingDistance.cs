@@ -36,6 +36,6 @@ public class DivingDistance : MonoBehaviour
         }
         else
             PlayerPrefs.SetString("scoreDeclaration", $"Thinking through it, it doesn’t make as much sense: {currentScore}, " +
-                $"but you still feel and remember the time you understood: {bestScore}.");
+                $"but you still feel and remember the time you understood more: {bestScore}.");
     }
 }

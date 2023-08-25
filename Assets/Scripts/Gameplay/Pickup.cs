@@ -56,9 +56,8 @@ namespace Unity.FPS.Gameplay
             {
                 OnPicked(pickingPlayer);
 
-                PickupEvent evt = Events.PickupEvent;
-                evt.Pickup = gameObject;
-                EventManager.Broadcast(evt);
+                var playerLight = pickingPlayer.GetComponentInChildren<LightManager>();
+                playerLight.GainLight();
             }
         }
 
