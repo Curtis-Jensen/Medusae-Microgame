@@ -96,6 +96,8 @@ namespace Unity.FPS.Game
             }
             else
             {
+
+
                 sceneToLoad = LoseSceneName;
                 timeLoadEndGameScene = Time.time + EndSceneLoadDelay;
             }
