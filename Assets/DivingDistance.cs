@@ -1,24 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DivingDistance : MonoBehaviour
 {
     public CharacterController player;
 
+    TextMeshProUGUI text;
+
     void Update()
     {
         if (player.velocity.y >= 0f)
-            SaveBestScore(player.transform.position.y); // Call the method to save the highscore
+        {
+            var playerPosition = -(int)player.transform.position.y;
+            SaveBestScore(playerPosition); // Call the method to save the highscore
+        }
     }
 
-    public void SaveBestScore(float currentScore)
+    public void SaveBestScore(int currentScore)
     {
-        float bestScore = PlayerPrefs.GetFloat("bestScore", 0f);
+        float bestScore = PlayerPrefs.GetInt("bestScore", 0);
 
-        if (currentScore <= bestScore)
+        if (currentScore >= bestScore)
         {
-            PlayerPrefs.SetFloat("bestScore", currentScore);
+            PlayerPrefs.SetInt("bestScore", currentScore);
             PlayerPrefs.SetString("scoreDeclaration",
                 $"You have reached a new depth of understanding: {currentScore}.");
         }
