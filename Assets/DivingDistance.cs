@@ -9,6 +9,21 @@ public class DivingDistance : MonoBehaviour
     void Update()
     {
         if (player.velocity.y >= 0f)
-            Debug.Log("Player is not moving downward.");
+            SaveBestScore(player.transform.position.y); // Call the method to save the highscore
+    }
+
+    public void SaveBestScore(float currentScore)
+    {
+        float bestScore = PlayerPrefs.GetFloat("bestScore", 0f);
+
+        if (currentScore <= bestScore)
+        {
+            PlayerPrefs.SetFloat("bestScore", currentScore);
+            PlayerPrefs.SetString("scoreDeclaration",
+                $"You dove down to a new record of {currentScore} meters!");
+        }
+        else
+            PlayerPrefs.SetString("scoreDeclaration", $"You dove down  {currentScore}  meters." +
+                $"  Your best score is {bestScore} meters.");
     }
 }
