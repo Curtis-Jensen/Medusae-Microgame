@@ -32,10 +32,10 @@ public class DivingDistance : MonoBehaviour
         {
             PlayerPrefs.SetInt("bestScore", currentScore);
             PlayerPrefs.SetString("scoreDeclaration",
-                $"You have reached a new depth of understanding: {currentScore}.");
+                $"You have reached a new level of depth of isight: {currentScore}!  Things seem clearer now.");
         }
         else
-            PlayerPrefs.SetString("scoreDeclaration", $"Thinking through it, it doesn’t make as much sense: {currentScore}, " +
-                $"but you still feel and remember the time you understood more: {bestScore}.");
+            PlayerPrefs.SetString("scoreDeclaration", $"Although at the moment your depth of insight is only: {currentScore}, " +
+                $"you still feel and remember the time you understood at the level of: {bestScore}, and it guides you forward.");
     }
 }
