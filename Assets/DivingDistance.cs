@@ -7,7 +7,12 @@ public class DivingDistance : MonoBehaviour
 {
     public CharacterController player;
 
-    TextMeshProUGUI text;
+    TextMeshProUGUI distanceText;
+
+    void Start()
+    {
+        distanceText = GetComponent<TextMeshProUGUI>();
+    }
 
     void Update()
     {
@@ -15,6 +20,7 @@ public class DivingDistance : MonoBehaviour
         {
             var playerPosition = -(int)player.transform.position.y;
             SaveBestScore(playerPosition); // Call the method to save the highscore
+            distanceText.text = playerPosition.ToString();
         }
     }
 
