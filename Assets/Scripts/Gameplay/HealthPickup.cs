@@ -1,8 +1,6 @@
-﻿using Unity.FPS.Game;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Unity.FPS.Gameplay
-{
+
     public class HealthPickup : Pickup
     {
         [Header("Parameters")]
@@ -20,4 +18,3 @@ namespace Unity.FPS.Gameplay
             }
         }
     }
-}

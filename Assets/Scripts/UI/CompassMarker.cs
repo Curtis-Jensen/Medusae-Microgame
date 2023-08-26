@@ -1,9 +1,6 @@
-﻿using Unity.FPS.AI;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Unity.FPS.UI
-{
     public class CompassMarker : MonoBehaviour
     {
         [Tooltip("Main marker image")] public Image MainImage;
@@ -55,4 +52,3 @@ namespace Unity.FPS.UI
             MainImage.color = DefaultColor;
         }
     }
-}

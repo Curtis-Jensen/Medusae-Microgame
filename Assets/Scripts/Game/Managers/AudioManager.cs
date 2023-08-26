@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Unity.FPS.Game
-{
+
     public class AudioManager : MonoBehaviour
     {
         public AudioMixer[] AudioMixers;
@@ -45,4 +44,3 @@ namespace Unity.FPS.Game
             }
         }
     }
-}

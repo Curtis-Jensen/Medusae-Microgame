@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using Unity.FPS.Game;
 using UnityEditor;
 using UnityEngine;
 
-namespace Unity.FPS.EditorExt
-{
 
     [CustomEditor(typeof(PrefabReplacer))]
     public class PrefabReplacerEditor : Editor
@@ -14,9 +11,7 @@ namespace Unity.FPS.EditorExt
             DrawDefaultInspector();
 
             if (GUILayout.Button("Replace"))
-            {
                 Replace((target as PrefabReplacer));
-            }
         }
 
         public void Replace(PrefabReplacer replacer)
@@ -54,4 +49,3 @@ namespace Unity.FPS.EditorExt
             }
         }
     }
-}

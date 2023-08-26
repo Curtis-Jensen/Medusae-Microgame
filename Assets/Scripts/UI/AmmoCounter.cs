@@ -1,11 +1,8 @@
 ﻿using TMPro;
-using Unity.FPS.Game;
-using Unity.FPS.Gameplay;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Unity.FPS.UI
-{
+
     [RequireComponent(typeof(FillBarColorChange))]
     public class AmmoCounter : MonoBehaviour
     {
@@ -107,4 +104,3 @@ namespace Unity.FPS.UI
             EventManager.RemoveListener<AmmoPickupEvent>(OnAmmoPickup);
         }
     }
-}

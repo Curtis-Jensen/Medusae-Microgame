@@ -1,11 +1,8 @@
-﻿using Unity.FPS.Game;
-using Unity.FPS.Gameplay;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Unity.FPS.UI
-{
+
     public class InGameMenuManager : MonoBehaviour
     {
         [Tooltip("Root GameObject of the menu used to toggle its activation")]
@@ -158,4 +155,3 @@ namespace Unity.FPS.UI
             ControlImage.SetActive(show);
         }
     }
-}

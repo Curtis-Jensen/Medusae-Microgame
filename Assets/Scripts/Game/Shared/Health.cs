@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace Unity.FPS.Game
-{
+
     public class Health : MonoBehaviour
     {
         [Tooltip("Maximum amount of health")] public float maxHealth = 100f;
@@ -84,4 +83,3 @@ namespace Unity.FPS.Game
             }
         }
     }
-}

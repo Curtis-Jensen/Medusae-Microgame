@@ -1,9 +1,6 @@
-﻿using Unity.FPS.Game;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Unity.FPS.UI
-{
     public class ToggleGameObjectButton : MonoBehaviour
     {
         public GameObject ObjectToToggle;
@@ -25,4 +22,3 @@ namespace Unity.FPS.UI
                 EventSystem.current.SetSelectedGameObject(null);
         }
     }
-}

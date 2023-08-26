@@ -1,7 +1,6 @@
 using UnityEngine;
 
-namespace Unity.FPS.Game
-{
+
     public class EnemyMelee : MonoBehaviour
     {
         public float clawDamage;
@@ -40,4 +39,3 @@ namespace Unity.FPS.Game
             }
         }
     }
-}

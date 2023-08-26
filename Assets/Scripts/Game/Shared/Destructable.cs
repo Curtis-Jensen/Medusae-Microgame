@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Unity.FPS.Game
-{
+
     public class Destructable : MonoBehaviour
     {
         Health health;
@@ -27,4 +26,3 @@ namespace Unity.FPS.Game
             Destroy(gameObject);
         }
     }
-}

@@ -1,8 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Unity.FPS.Game
-{
     public abstract class Objective : MonoBehaviour
     {
         [Tooltip("Name of the objective that will be shown on screen")]
@@ -59,4 +57,3 @@ namespace Unity.FPS.Game
             OnObjectiveCompleted?.Invoke(this);
         }
     }
-}

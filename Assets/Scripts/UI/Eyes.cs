@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Unity.FPS.UI
-{
+
     public class Eyes : MonoBehaviour
     {
         #region Public Variables
@@ -256,4 +254,3 @@ namespace Unity.FPS.UI
         }
         #endregion
     }
-}

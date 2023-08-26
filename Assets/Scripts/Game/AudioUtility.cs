@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Unity.FPS.Game
-{
     public class AudioUtility
     {
         static AudioManager s_AudioManager;
@@ -74,4 +72,4 @@ namespace Unity.FPS.Game
             return Mathf.Pow(10f, valueInDb / 20.0f);
         }
     }
-}
+

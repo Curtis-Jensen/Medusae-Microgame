@@ -1,9 +1,6 @@
-﻿using Unity.FPS.Game;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Unity.FPS.UI
-{
     public class WorldspaceHealthBar : MonoBehaviour
     {
         [Tooltip("Health component to track")] public Health Health;
@@ -30,4 +27,3 @@ namespace Unity.FPS.UI
                 HealthBarPivot.gameObject.SetActive(HealthBarImage.fillAmount != 1);
         }
     }
-}

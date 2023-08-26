@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
 
-namespace UnityEngine.AI
-{
+
     public enum CollectObjects
     {
         All = 0,
@@ -469,4 +470,4 @@ namespace UnityEngine.AI
         }
 #endif
     }
-}
+

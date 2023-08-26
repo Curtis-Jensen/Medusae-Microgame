@@ -1,10 +1,7 @@
-﻿using Unity.FPS.Game;
-using Unity.FPS.Gameplay;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Unity.FPS.UI
-{
+
     public class FeedbackFlashHUD : MonoBehaviour
     {
         [Header("References")]
@@ -132,4 +129,3 @@ namespace Unity.FPS.UI
             FlashImage.color = HealFlashColor;
         }
     }
-}

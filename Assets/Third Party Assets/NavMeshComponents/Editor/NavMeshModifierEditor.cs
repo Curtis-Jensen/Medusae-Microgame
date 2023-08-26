@@ -1,7 +1,6 @@
 using UnityEngine.AI;
 
-namespace UnityEditor.AI
-{
+
     [CanEditMultipleObjects]
     [CustomEditor(typeof(NavMeshModifier))]
     class NavMeshModifierEditor : Editor
@@ -46,4 +45,4 @@ namespace UnityEditor.AI
             serializedObject.ApplyModifiedProperties();
         }
     }
-}
+

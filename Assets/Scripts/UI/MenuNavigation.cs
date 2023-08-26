@@ -1,10 +1,8 @@
-﻿using Unity.FPS.Game;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Unity.FPS.UI
-{
+
     public class MenuNavigation : MonoBehaviour
     {
         public Selectable DefaultSelection;
@@ -29,4 +27,3 @@ namespace Unity.FPS.UI
             }
         }
     }
-}

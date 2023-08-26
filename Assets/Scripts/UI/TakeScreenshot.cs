@@ -1,13 +1,10 @@
 ﻿using System.IO;
-using Unity.FPS.Game;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Unity.FPS.UI
-{
     public class TakeScreenshot : MonoBehaviour
     {
         [Tooltip("Root of the screenshot panel in the menu")]
@@ -97,4 +94,3 @@ namespace Unity.FPS.UI
             }
         }
     }
-}

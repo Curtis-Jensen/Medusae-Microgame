@@ -1,8 +1,6 @@
-﻿using Unity.FPS.Game;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Unity.FPS.Gameplay
-{
+
     public class ChargedProjectileEffectsHandler : MonoBehaviour
     {
         [Tooltip("Object that will be affected by charging scale & color changes")]
@@ -45,4 +43,3 @@ namespace Unity.FPS.Gameplay
             }
         }
     }
-}

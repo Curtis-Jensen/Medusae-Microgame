@@ -1,8 +1,6 @@
-﻿using Unity.FPS.Game;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Unity.FPS.Gameplay
-{
+
     [RequireComponent(typeof(AudioSource))]
     public class ChargedWeaponEffectsHandler : MonoBehaviour
     {
@@ -161,4 +159,3 @@ namespace Unity.FPS.Gameplay
             }
         }
     }
-}

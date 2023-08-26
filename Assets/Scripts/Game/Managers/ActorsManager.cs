@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Unity.FPS.Game
-{
+
     public class ActorsManager : MonoBehaviour
     {
         public List<Actor> Actors { get; private set; }
@@ -15,4 +14,4 @@ namespace Unity.FPS.Game
             Actors = new List<Actor>();
         }
     }
-}
+

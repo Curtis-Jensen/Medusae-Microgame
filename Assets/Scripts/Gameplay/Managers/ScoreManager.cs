@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Unity.FPS.Gameplay
-{
     public class ScoreManager : MonoBehaviour
     {
         public CharacterController player;
@@ -31,4 +29,3 @@ namespace Unity.FPS.Gameplay
                     $"you still feel and remember the time you understood at the level of: {bestScore}, and it guides you forward.");
         }
     }
-}

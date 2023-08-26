@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Unity.FPS.Game
-{
+
     public class ObjectiveManager : MonoBehaviour
     {
         List<Objective> m_Objectives = new List<Objective>();
@@ -39,4 +38,3 @@ namespace Unity.FPS.Game
             Objective.OnObjectiveCreated -= RegisterObjective;
         }
     }
-}

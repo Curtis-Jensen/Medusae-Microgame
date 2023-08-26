@@ -1,8 +1,5 @@
-﻿using Unity.FPS.Game;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Unity.FPS.Gameplay
-{
     public class ObjectiveKillEnemies : Objective
     {
         [Tooltip("Chose whether you need to kill every enemies or only a minimum amount")]
@@ -76,4 +73,3 @@ namespace Unity.FPS.Gameplay
             EventManager.RemoveListener<EnemyKillEvent>(OnEnemyKilled);
         }
     }
-}

@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-namespace Unity.FPS.Game
-{
     public abstract class WeaponController : MonoBehaviour
     {
         #region🌎Variables
@@ -87,4 +85,3 @@ namespace Unity.FPS.Game
             (ShootType != WeaponShootType.Charge ? 1f : Mathf.Max(1f, AmmoUsedOnStartCharge)) /
             (MaxAmmo * BulletsPerShot);
     }
-}

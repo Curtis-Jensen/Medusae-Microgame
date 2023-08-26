@@ -5,8 +5,6 @@ using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace Unity.FPS.EditorExt
-{
     // Simple example of stripping of a debug build configuration
     class ShaderBuildStripping : IPreprocessShaders
     {
@@ -85,4 +83,3 @@ namespace Unity.FPS.EditorExt
 #endif
         }
     }
-}

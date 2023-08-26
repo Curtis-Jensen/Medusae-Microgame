@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Unity.FPS.Game
-{
+
     #region 🌎 Enums
     public enum WeaponShootType
     {
@@ -410,4 +409,3 @@ namespace Unity.FPS.Game
         }
         #endregion
     }
-}

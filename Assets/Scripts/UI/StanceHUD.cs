@@ -1,10 +1,6 @@
-﻿using Unity.FPS.Game;
-using Unity.FPS.Gameplay;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Unity.FPS.UI
-{
     public class StanceHUD : MonoBehaviour
     {
         [Tooltip("Image component for the stance sprites")]
@@ -30,4 +26,3 @@ namespace Unity.FPS.UI
             StanceImage.sprite = crouched ? CrouchingSprite : StandingSprite;
         }
     }
-}

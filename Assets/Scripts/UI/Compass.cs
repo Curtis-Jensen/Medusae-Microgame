@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using Unity.FPS.Game;
-using Unity.FPS.Gameplay;
 using UnityEngine;
 
-namespace Unity.FPS.UI
-{
+
     public class Compass : MonoBehaviour
     {
         public RectTransform CompasRect;
@@ -96,4 +93,3 @@ namespace Unity.FPS.UI
             elementsDictionnary.Remove(element);
         }
     }
-}

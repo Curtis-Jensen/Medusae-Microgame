@@ -1,10 +1,7 @@
-﻿using Unity.FPS.Game;
-using Unity.FPS.Gameplay;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Unity.FPS.UI
-{
+
     public class CrosshairManager : MonoBehaviour
     {
         public Image CrosshairImage;
@@ -82,4 +79,3 @@ namespace Unity.FPS.UI
             UpdateCrosshairPointingAtEnemy(true);
         }
     }
-}

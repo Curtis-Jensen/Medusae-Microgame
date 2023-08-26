@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Unity.FPS.Game
-{
+
     [System.Serializable]
     public struct MinMaxFloat
     {
@@ -37,4 +36,3 @@ namespace Unity.FPS.Game
             return Vector3.Lerp(Min, Max, ratio);
         }
     }
-}

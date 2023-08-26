@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-namespace Unity.FPS.AI
-{
     public class PatrolPath : MonoBehaviour
     {
         [Tooltip("The parent object of the enemies that will be assigned to this path on Start.")]
@@ -65,4 +63,3 @@ namespace Unity.FPS.AI
             }
         }
     }
-}

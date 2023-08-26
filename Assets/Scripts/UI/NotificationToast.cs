@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-namespace Unity.FPS.UI
-{
     public class NotificationToast : MonoBehaviour
     {
         [Tooltip("Text content that will display the notification text")]
@@ -59,4 +57,3 @@ namespace Unity.FPS.UI
             }
         }
     }
-}

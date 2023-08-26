@@ -1,8 +1,6 @@
-﻿using Unity.FPS.Game;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Unity.FPS.Gameplay
-{
+
     [RequireComponent(typeof(Rigidbody), typeof(Collider))]
     public class Pickup : MonoBehaviour
     {
@@ -79,4 +77,3 @@ namespace Unity.FPS.Gameplay
             hasPlayedFeedback = true;
         }
     }
-}

@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
-using Unity.FPS.Game;
 using UnityEngine;
 
-namespace Unity.FPS.Gameplay
-{
     public class OverheatBehavior : MonoBehaviour
     {
         [System.Serializable]
@@ -115,4 +112,3 @@ namespace Unity.FPS.Gameplay
             m_LastAmmoRatio = currentAmmoRatio;
         }
     }
-}

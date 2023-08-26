@@ -1,9 +1,7 @@
-﻿using Unity.FPS.Game;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace Unity.FPS.Gameplay
-{
+
     [RequireComponent(typeof(CharacterController), typeof(PlayerInputHandler), typeof(AudioSource))]
     public class PlayerCharacterController : MonoBehaviour
     {
@@ -492,4 +490,3 @@ namespace Unity.FPS.Gameplay
             return true;
         }
     }
-}

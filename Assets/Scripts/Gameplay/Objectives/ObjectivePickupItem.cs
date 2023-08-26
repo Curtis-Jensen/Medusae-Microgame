@@ -1,8 +1,6 @@
-﻿using Unity.FPS.Game;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Unity.FPS.Gameplay
-{
+
     public class ObjectivePickupItem : Objective
     {
         [Tooltip("Item to pickup to complete the objective")]
@@ -34,5 +32,4 @@ namespace Unity.FPS.Gameplay
         {
             EventManager.RemoveListener<PickupEvent>(OnPickupEvent);
         }
-    }
 }

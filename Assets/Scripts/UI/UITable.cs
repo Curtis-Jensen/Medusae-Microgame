@@ -1,7 +1,5 @@
 using UnityEngine;
 
-namespace Unity.FPS.UI
-{
     // The component that is used to display the Objectives, the Notification and the game messages like a list
     // When a new one is created, the previous ones move down to make room for the new one
 
@@ -35,4 +33,3 @@ namespace Unity.FPS.UI
             }
         }
     }
-}

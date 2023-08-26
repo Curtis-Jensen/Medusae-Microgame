@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 
-namespace UnityEngine.AI
-{
+
     [ExecuteInEditMode]
     [DefaultExecutionOrder(-101)]
     [AddComponentMenu("Navigation/NavMeshLink", 33)]
@@ -169,4 +168,4 @@ namespace UnityEngine.AI
         }
 #endif
     }
-}
+

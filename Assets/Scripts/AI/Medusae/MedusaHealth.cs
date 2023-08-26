@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Unity.FPS.Game
-{
+
     public class MedusaHealth : MonoBehaviour
     {
         [Tooltip("*Whatever the health is set to at start is the max health")]
@@ -49,4 +48,3 @@ namespace Unity.FPS.Game
             }
         }
     }
-}

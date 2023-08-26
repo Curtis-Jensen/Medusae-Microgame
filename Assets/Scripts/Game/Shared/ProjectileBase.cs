@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace Unity.FPS.Game
-{
     //Contains properties and behaviors applicable to all projectiles
     public abstract class ProjectileBase : MonoBehaviour
     {
@@ -26,4 +24,3 @@ namespace Unity.FPS.Game
             onShoot?.Invoke();
         }
     }
-}

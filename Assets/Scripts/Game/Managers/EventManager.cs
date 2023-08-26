@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Unity.FPS.Game
-{
+
     public class GameEvent
     {
     }
@@ -58,4 +57,3 @@ namespace Unity.FPS.Game
             s_EventLookups.Clear();
         }
     }
-}

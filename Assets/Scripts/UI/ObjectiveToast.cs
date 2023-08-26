@@ -1,9 +1,7 @@
-﻿using Unity.FPS.Game;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Unity.FPS.UI
-{
+
     public class ObjectiveToast : MonoBehaviour
     {
         [Header("References")]
@@ -196,4 +194,3 @@ namespace Unity.FPS.UI
             m_AudioSource.PlayOneShot(sound);
         }
     }
-}

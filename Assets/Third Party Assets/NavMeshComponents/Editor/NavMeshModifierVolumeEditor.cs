@@ -3,8 +3,7 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace UnityEditor.AI
-{
+
     [CanEditMultipleObjects]
     [CustomEditor(typeof(NavMeshModifierVolume))]
     class NavMeshModifierVolumeEditor : Editor
@@ -143,4 +142,4 @@ namespace UnityEditor.AI
                 view.MoveToView(go.transform);
         }
     }
-}
+

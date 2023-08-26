@@ -1,9 +1,5 @@
-﻿using Unity.FPS.Game;
-using Unity.FPS.Gameplay;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Unity.FPS.UI
-{
     public class NotificationHUDManager : MonoBehaviour
     {
         [Tooltip("UI panel containing the layoutGroup for displaying notifications")]
@@ -60,4 +56,3 @@ namespace Unity.FPS.UI
             EventManager.RemoveListener<ObjectiveUpdateEvent>(OnObjectiveUpdateEvent);
         }
     }
-}
