@@ -1,6 +1,8 @@
 ﻿
 using UnityEngine;
 
+namespace Unity.FPS.Gameplay
+{
     public class PositionBobbing : MonoBehaviour
     {
         [Tooltip("Frequency at which the item will move up and down")]
@@ -24,3 +26,4 @@ using UnityEngine;
             transform.position = m_StartPosition + Vector3.up * bobbingAnimationPhase;
         }
     }
+}

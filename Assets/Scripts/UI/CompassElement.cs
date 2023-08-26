@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using Unity.FPS.Game;
+using UnityEngine;
 
-
+namespace Unity.FPS.UI
+{
     public class CompassElement : MonoBehaviour
     {
         [Tooltip("The marker on the compass for this element")]
@@ -31,3 +33,4 @@
             compass.UnregisterCompassElement(transform);
         }
     }
+}

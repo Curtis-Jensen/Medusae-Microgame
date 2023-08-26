@@ -5,7 +5,8 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
-
+namespace UnityEditor.AI
+{
     public class NavMeshAssetManager : ScriptableSingleton<NavMeshAssetManager>
     {
         internal struct AsyncBakeOperation
@@ -319,4 +320,4 @@ using UnityEngine.AI;
             }
         }
     }
-
+}

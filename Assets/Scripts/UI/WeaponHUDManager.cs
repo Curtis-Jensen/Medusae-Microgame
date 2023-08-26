@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
+using Unity.FPS.Game;
+using Unity.FPS.Gameplay;
 using UnityEngine;
 
+namespace Unity.FPS.UI
+{
     public class WeaponHUDManager : MonoBehaviour
     {
         [Tooltip("UI panel containing the layoutGroup for displaying weapon ammo")]
@@ -68,3 +72,4 @@ using UnityEngine;
             UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(AmmoPanel);
         }
     }
+}

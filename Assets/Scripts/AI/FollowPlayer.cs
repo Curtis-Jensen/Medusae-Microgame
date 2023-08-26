@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using Unity.FPS.Game;
+using UnityEngine;
 
-
+namespace Unity.FPS.AI
+{
     public class FollowPlayer : MonoBehaviour
     {
         Transform playerTransform;
@@ -25,3 +27,4 @@
             transform.position = playerTransform.position + originalOffset;
         }
     }
+}

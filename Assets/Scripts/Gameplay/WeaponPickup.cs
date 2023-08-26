@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+﻿using Unity.FPS.Game;
+using UnityEngine;
 
+namespace Unity.FPS.Gameplay
+{
     public class WeaponPickup : Pickup
     {
         [Tooltip("The prefab for the weapon that will be added to the player on pickup")]
@@ -36,3 +39,4 @@
             }
         }
     }
+}

@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using Unity.FPS.Game;
 using UnityEngine;
 
+namespace Unity.FPS.UI
+{
     public class ObjectiveHUDManager : MonoBehaviour
     {
         [Tooltip("UI panel containing the layoutGroup for displaying objectives")]
@@ -83,3 +86,4 @@ using UnityEngine;
             Objective.OnObjectiveCompleted -= UnregisterObjective;
         }
     }
+}

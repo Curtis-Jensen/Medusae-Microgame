@@ -6,7 +6,8 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AI;
 
-
+namespace UnityEditor.AI
+{
     [CanEditMultipleObjects]
     [CustomEditor(typeof(NavMeshSurface))]
     class NavMeshSurfaceEditor : Editor
@@ -392,4 +393,4 @@ using UnityEngine.AI;
                 view.MoveToView(go.transform);
         }
     }
-
+}

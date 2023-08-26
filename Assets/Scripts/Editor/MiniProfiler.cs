@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
+using Unity.FPS.AI;
+using Unity.FPS.Game;
+using Unity.FPS.Gameplay;
 using UnityEditor;
 using UnityEngine;
 
-
+namespace Unity.FPS.EditorExt
+{
     public class MiniProfiler : EditorWindow
     {
         class BoundsAndCount
@@ -378,3 +382,4 @@ using UnityEngine;
             EditorUtility.ClearProgressBar();
         }
     }
+}

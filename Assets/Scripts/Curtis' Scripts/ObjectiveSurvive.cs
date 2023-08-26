@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Unity.FPS.Game;
 using UnityEngine;
 
 public class ObjectiveSurvive : Objective

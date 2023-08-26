@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-
+namespace Unity.FPS.UI
+{
     public class FillBarColorChange : MonoBehaviour
     {
         [Header("Foreground")]
@@ -59,3 +60,4 @@ using UnityEngine.UI;
             previousValue = currentRatio;
         }
     }
+}

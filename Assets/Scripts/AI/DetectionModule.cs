@@ -1,8 +1,10 @@
 ﻿using System.Linq;
+using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.Events;
 
-
+namespace Unity.FPS.AI
+{
     public class DetectionModule : MonoBehaviour
     {
         #region Global🌎Variables
@@ -132,3 +134,4 @@ using UnityEngine.Events;
                 Animator.SetTrigger(animationAttackParameter);
         }
     }
+}

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-
+namespace Unity.FPS.Game
+{
     // This class contains general information describing an actor (player or enemies).
     // It is mostly used for AI detection logic and determining if an actor is friend or foe
     public class Actor : MonoBehaviour
@@ -30,3 +31,4 @@
                 actorsManager.Actors.Remove(this);
         }
     }
+}

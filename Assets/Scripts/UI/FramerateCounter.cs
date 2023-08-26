@@ -1,7 +1,8 @@
 ﻿using TMPro;
 using UnityEngine;
 
-
+namespace Unity.FPS.UI
+{
     public class FramerateCounter : MonoBehaviour
     {
         [Tooltip("Delay between updates of the displayed framerate value")]
@@ -28,3 +29,4 @@ using UnityEngine;
             }
         }
     }
+}

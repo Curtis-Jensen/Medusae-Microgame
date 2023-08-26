@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.ProBuilder;
 using UnityEngine.Rendering;
 
-
+namespace Unity.FPS.Game
+{
     public static class MeshCombineUtility
     {
         public class RenderBatchData
@@ -179,3 +180,4 @@ using UnityEngine.Rendering;
             return -1;
         }
     }
+}

@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+﻿using Unity.FPS.Game;
+using UnityEngine;
 
+namespace Unity.FPS.Gameplay
+{
     // Debug script, teleports the player across the map for faster testing
     public class TeleportPlayer : MonoBehaviour
     {
@@ -26,3 +29,4 @@
         }
 
     }
+}

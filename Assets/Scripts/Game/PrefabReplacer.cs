@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+namespace Unity.FPS.Game
+{
     public class PrefabReplacer : MonoBehaviour
     {
         [System.Serializable]
@@ -13,3 +15,4 @@ using UnityEngine;
         public bool SwitchOrder;
         public List<ReplacementDefinition> Replacements = new List<ReplacementDefinition>();
     }
+}

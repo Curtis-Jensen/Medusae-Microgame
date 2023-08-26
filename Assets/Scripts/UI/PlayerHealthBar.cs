@@ -1,6 +1,10 @@
-﻿using UnityEngine;
+﻿using Unity.FPS.Game;
+using Unity.FPS.Gameplay;
+using UnityEngine;
 using UnityEngine.UI;
 
+namespace Unity.FPS.UI
+{
     public class PlayerHealthBar : MonoBehaviour
     {
         [Tooltip("Image component dispplaying current health")]
@@ -26,3 +30,4 @@ using UnityEngine.UI;
             HealthFillImage.fillAmount = m_PlayerHealth.currentHealth / m_PlayerHealth.maxHealth;
         }
     }
+}

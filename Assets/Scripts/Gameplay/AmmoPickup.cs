@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using Unity.FPS.Game;
+using UnityEngine;
 
-
+namespace Unity.FPS.Gameplay
+{
     public class AmmoPickup : Pickup
     {
         [Tooltip("Weapon those bullets are for")]
@@ -29,4 +31,4 @@
             }
         }
     }
-
+}

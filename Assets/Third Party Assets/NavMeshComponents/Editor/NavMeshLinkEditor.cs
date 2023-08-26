@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-
+namespace UnityEditor.AI
+{
     [CanEditMultipleObjects]
     [CustomEditor(typeof(NavMeshLink))]
     class NavMeshLinkEditor : Editor
@@ -275,4 +276,4 @@ using UnityEngine.AI;
                 view.MoveToView(go.transform);
         }
     }
-
+}

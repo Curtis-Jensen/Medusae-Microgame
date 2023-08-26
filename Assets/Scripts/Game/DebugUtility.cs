@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-
+namespace Unity.FPS.Game
+{
     public static class DebugUtility
     {
         public static void HandleErrorIfNullGetComponent<TO, TS>(Component component, Component source,
@@ -53,3 +54,4 @@
 #endif
         }
     }
+}

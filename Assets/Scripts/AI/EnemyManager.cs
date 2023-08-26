@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using Unity.FPS.Game;
 using UnityEngine;
 
-
+namespace Unity.FPS.AI
+{
     public class EnemyManager : MonoBehaviour
     {
         public List<NpcController> Enemies { get; private set; }
@@ -33,3 +35,4 @@ using UnityEngine;
             Enemies.Remove(enemyKilled);
         }
     }
+}

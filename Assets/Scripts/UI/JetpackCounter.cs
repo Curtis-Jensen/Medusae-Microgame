@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using Unity.FPS.Game;
+using Unity.FPS.Gameplay;
+using UnityEngine;
 using UnityEngine.UI;
 
-
+namespace Unity.FPS.UI
+{
     public class JetpackCounter : MonoBehaviour
     {
         [Tooltip("Image component representing jetpack fuel")]
@@ -34,3 +37,4 @@ using UnityEngine.UI;
             }
         }
     }
+}

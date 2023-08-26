@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+namespace Unity.FPS.Game
+{
     public class TimedSelfDestruct : MonoBehaviour
     {
         public float LifeTime = 1f;
@@ -19,3 +21,4 @@
             }
         }
     }
+}

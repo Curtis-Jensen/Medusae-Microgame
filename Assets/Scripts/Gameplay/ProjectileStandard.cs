@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using Unity.FPS.Game;
 using UnityEngine;
 
+namespace Unity.FPS.Gameplay
+{
     //Contains properties and behaviors that only the standard projectile has
     public class ProjectileStandard : ProjectileBase
     {
@@ -238,3 +241,4 @@ using UnityEngine;
             Gizmos.DrawSphere(transform.position, Radius);
         }
     }
+}

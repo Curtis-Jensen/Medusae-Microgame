@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
+namespace Unity.FPS.Game
+{
     public class GameFlowManager : MonoBehaviour
     {
         [Header("Parameters")]
@@ -108,3 +109,4 @@ using UnityEngine.SceneManagement;
             EventManager.RemoveListener<PlayerDeathEvent>(OnPlayerDeath);
         }
     }
+}

@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using Unity.FPS.AI;
+using Unity.FPS.Game;
+using UnityEngine;
 using UnityEngine.UI;
 
-
+namespace Unity.FPS.UI
+{
     public class EnemyCounter : MonoBehaviour
     {
         [Header("Enemies")]
@@ -21,3 +24,4 @@ using UnityEngine.UI;
             EnemiesText.text = enemyManager.NumberOfEnemiesRemaining + "/" + enemyManager.NumberOfEnemiesTotal;
         }
     }
+}

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-
+namespace Unity.FPS.Game
+{
     public class Damageable : MonoBehaviour
     {
         [Tooltip("Multiplier to apply to the received damage")]
@@ -43,3 +44,4 @@
             Health.TakeDamage(totalDamage, damageSource); // 3
         }
     }
+}

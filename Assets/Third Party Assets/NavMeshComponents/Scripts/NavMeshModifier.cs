@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 
-
+namespace UnityEngine.AI
+{
     [ExecuteInEditMode]
     [AddComponentMenu("Navigation/NavMeshModifier", 32)]
     [HelpURL("https://github.com/Unity-Technologies/NavMeshComponents#documentation-draft")]
@@ -50,4 +51,4 @@ using System.Collections.Generic;
             return m_AffectedAgents.IndexOf(agentTypeID) != -1;
         }
     }
-
+}

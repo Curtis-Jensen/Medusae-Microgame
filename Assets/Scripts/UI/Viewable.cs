@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Unity.FPS.UI
+{
     public class Viewable : MonoBehaviour //What will be accessed by Eyes.cs to be looked at
     {
         [Tooltip("By how much this object will increase or decrease effects (such as giving damage or healing)")]
@@ -19,3 +21,4 @@ using UnityEngine;
                 eye.viewableList.Add(this);
         }
     }
+}

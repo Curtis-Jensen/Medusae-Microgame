@@ -1,4 +1,6 @@
 using UnityEngine;
+using Unity.FPS.AI;
+using Unity.FPS.Game;
 
 public class EnemyController : NpcController
 {

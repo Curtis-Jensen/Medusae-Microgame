@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-
+namespace UnityEditor.AI
+{
     public static class NavMeshComponentsGUIUtility
     {
         public static void AreaPopup(string labelName, SerializedProperty areaProperty)
@@ -254,4 +255,4 @@ using UnityEngine.AI;
             return false;
         }
     }
-
+}

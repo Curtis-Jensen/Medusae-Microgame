@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-
+namespace Unity.FPS.Game
+{
     public class MeshCombiner : MonoBehaviour
     {
         public List<GameObject> CombineParents = new List<GameObject>();
@@ -107,3 +108,4 @@ using UnityEngine;
             }
         }
     }
+}

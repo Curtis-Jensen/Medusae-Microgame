@@ -1,4 +1,5 @@
-﻿
+﻿namespace Unity.FPS.Game
+{
     public class InputNames
     {
         // all the constant strings used across the game
@@ -27,3 +28,4 @@
         public const string buttonReverseAim = "Reverse Aim";
         public const string buttonCloseEyes = "Close Eyes";
     }
+}

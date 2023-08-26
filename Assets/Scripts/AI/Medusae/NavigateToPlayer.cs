@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-
+namespace Unity.FPS.Game
+{
     public class NavigateToPlayer : MonoBehaviour
     {
         #region Variables
@@ -71,3 +72,4 @@ using UnityEngine.AI;
             Gizmos.DrawWireSphere(transform.position, detectionRadius);
         }
     }
+}

@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+﻿using Unity.FPS.Game;
+using UnityEngine;
 
+namespace Unity.FPS.Gameplay
+{
     [RequireComponent(typeof(Collider))]
     public class ObjectiveReachPoint : Objective
     {
@@ -28,3 +31,4 @@
             }
         }
     }
+}

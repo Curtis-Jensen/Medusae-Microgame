@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+namespace Unity.FPS.AI
+{
     // Component used to override values on start from the NavmeshAgent component in order to change
     // how the agent  is moving
     public class NavigationModule : MonoBehaviour
@@ -14,3 +16,4 @@
         [Tooltip("The acceleration to reach the maximum speed (in world units per second squared).")]
         public float Acceleration = 0f;
     }
+}

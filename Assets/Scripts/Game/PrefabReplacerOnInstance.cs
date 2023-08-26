@@ -4,6 +4,8 @@ using UnityEditor;
 #endif
 using UnityEngine;
 
+namespace Unity.FPS.Game
+{
     [ExecuteInEditMode]
     public class PrefabReplacerOnInstance : MonoBehaviour
     {
@@ -43,3 +45,4 @@ using UnityEngine;
 #endif
         }
     }
+}
