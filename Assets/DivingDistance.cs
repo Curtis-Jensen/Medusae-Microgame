@@ -16,12 +16,9 @@ public class DivingDistance : MonoBehaviour
 
     void Update()
     {
-        if (player.velocity.y >= 0f)
-        {
-            var playerPosition = -(int)player.transform.position.y;
-            SaveBestScore(playerPosition); // Call the method to save the highscore
-            distanceText.text = playerPosition.ToString();
-        }
+        var playerPosition = -(int)player.transform.position.y;
+        SaveBestScore(playerPosition); // Call the method to save the highscore
+        distanceText.text = playerPosition.ToString();
     }
 
     public void SaveBestScore(int currentScore)
