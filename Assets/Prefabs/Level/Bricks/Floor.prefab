@@ -50,7 +50,7 @@ MonoBehaviour:
   - {fileID: 5139086180685441815, guid: 2cea5429ea3baaf4192929f44ced5f47, type: 3}
   packedMazeChance: 0
   spawnChance: 0.025
-  tiltAngle: 22
+  tiltAngle: 360
   stretchy: 0
   stretchAmounts: 1
   gizmoColor: {r: 1, g: 0, b: 0, a: 1}
