@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using Unity.FPS.Gameplay;
 
 public class ScoreDisplay : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public ScoreManager scoreManager;
+    TextMeshProUGUI scoreDisplay;
+
     void Start()
     {
-        
+        scoreDisplay = GetComponent<TextMeshProUGUI>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        scoreDisplay.text = "Light level: " + scoreManager.lightScore.ToString();
     }
 }

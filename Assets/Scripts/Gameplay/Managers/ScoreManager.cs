@@ -6,14 +6,12 @@ namespace Unity.FPS.Gameplay
 {
     public class ScoreManager : MonoBehaviour
     {
-        public CharacterController player;
-        public ScoreDisplay distanceText;
+        [HideInInspector]
+        public int lightScore;
 
         void Update()
         {
-            var playerPosition = -(int)player.transform.position.y;
-            SaveBestScore(playerPosition); // Call the method to save the highscore
-            distanceText.text = playerPosition.ToString();
+            SaveBestScore(lightScore); // Call the method to save the highscore
         }
 
         public void SaveBestScore(int currentScore)

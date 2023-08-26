@@ -56,7 +56,8 @@ namespace Unity.FPS.Gameplay
             {
                 OnPicked(pickingPlayer);
 
-                pickingPlayer.GetComponent<ScoreManager>();
+                pickingPlayer.GetComponent<ScoreManager>().lightScore++;
+                Destroy(gameObject);
             }
         }
 
