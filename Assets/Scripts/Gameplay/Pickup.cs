@@ -56,8 +56,7 @@ namespace Unity.FPS.Gameplay
             {
                 OnPicked(pickingPlayer);
 
-                var playerLight = pickingPlayer.GetComponentInChildren<LightManager>();
-                playerLight.GainLight();
+                pickingPlayer.GetComponent<ScoreManager>();
             }
         }
 
