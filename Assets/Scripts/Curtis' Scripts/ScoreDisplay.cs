@@ -16,6 +16,8 @@ public class ScoreDisplay : MonoBehaviour
 
     void Update()
     {
-        scoreDisplay.text = "Light level: " + scoreManager.lightScore.ToString();
+        if (scoreManager.lightScore == 0) return;
+
+        scoreDisplay.text = "Lights: " + scoreManager.lightScore.ToString();
     }
 }
