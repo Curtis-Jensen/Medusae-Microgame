@@ -17,6 +17,7 @@ public abstract class ProceduralGeneration : MonoBehaviour
     [Range(0, 1)]
     [Tooltip("What percentage of the map will be filled with walls")]
     public float spawnChance;
+    [Range(0, 180)]
     [Tooltip("How far the walls will tilt")]
     public float tiltAngle = 10;
 
