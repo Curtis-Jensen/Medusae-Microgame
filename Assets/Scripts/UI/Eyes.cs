@@ -81,21 +81,23 @@ namespace Unity.FPS.UI
              */
         void FixedUpdate()
         {
-            if (Blinking()) return;
-
-            eyesViewing = false;
-
-            var viewablesInRange = ScanFrameForViewables();
-            foreach (var viewable in viewablesInRange)
+            if (Blinking()) effectMagnitude = 0;
+            else
             {
-                var hit = CheckForObstructions(viewable);
-                if (hit != null)
-                    AddLookTime(viewable.damageMultiplier);
+                eyesViewing = false;
+
+                var viewablesInRange = ScanFrameForViewables();
+                foreach (var viewable in viewablesInRange)
+                {
+                    var hit = CheckForObstructions(viewable);
+                    if (hit != null)
+                        AddLookTime(viewable.damageMultiplier);
+                }
+                EyesTest();
             }
 
             SetStaticIntensity();
             RenderStatic();
-            EyesTest();
         }
 
         /* Step 2 ⬜
