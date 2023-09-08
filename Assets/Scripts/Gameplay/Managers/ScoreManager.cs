@@ -22,10 +22,10 @@ namespace Unity.FPS.Gameplay
             {
                 PlayerPrefs.SetInt("bestScore", currentScore);
                 PlayerPrefs.SetString("scoreDeclaration",
-                    $"You have reached a new depth of insight: {currentScore}!  Things seem clearer now.");
+                    $"You have reached a new depth of light: {currentScore}!  Things seem clearer now.");
             }
             else
-                PlayerPrefs.SetString("scoreDeclaration", $"Although at the moment your depth of insight is only: {currentScore}, " +
+                PlayerPrefs.SetString("scoreDeclaration", $"Although at the moment your depth of light is only: {currentScore}, " +
                     $"you still feel and remember the time you understood at the level of: {bestScore}, and it guides you forward.");
         }
     }
