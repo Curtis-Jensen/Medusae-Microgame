@@ -24,7 +24,7 @@ public class MusicManager : MonoBehaviour
     {
         source.clip = musicChoices[Random.Range(0, musicChoices.Count)].music;
         source.Play();
-        yield return new WaitForSeconds(source.clip.length);
+        yield return new WaitForSecondsRealtime(source.clip.length);
         source.Stop();
         StartCoroutine(PlayMusic());
     }
