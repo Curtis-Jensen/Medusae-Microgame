@@ -816,9 +816,9 @@ MonoBehaviour:
   BulletsPerShot: 1
   meleeWeapon: 0
   WeaponMuzzle: {fileID: 2096565386399891227}
-  ProjectilePrefab: {fileID: 8924682559891268397, guid: ec753d54f333bb944b8b04884ad63828,
+  ProjectilePrefab: {fileID: 8924682559891268397, guid: e34a48cf124ca274b843fd8fa17b9d71,
     type: 3}
-  DelayBetweenShots: 0.8
+  DelayBetweenShots: 0.4
   BulletSpreadAngle: 2
   RecoilForce: 1
   ShellCasing: {fileID: 0}
