@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Health
   - SpawnPoint
+  - Opaque
+  - Wall
   layers:
   - Default
   - TransparentFX
