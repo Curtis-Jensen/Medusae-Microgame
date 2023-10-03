@@ -783,6 +783,7 @@ GameObject:
   - component: {fileID: 642337668}
   - component: {fileID: 642337670}
   - component: {fileID: 642337669}
+  - component: {fileID: 642337671}
   m_Layer: 5
   m_Name: High Score Text
   m_TagString: Untagged
@@ -806,8 +807,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 20.3253}
-  m_SizeDelta: {x: 935.65, y: 151.1016}
+  m_AnchoredPosition: {x: 0, y: 39.916595}
+  m_SizeDelta: {x: 935.65, y: 190.2842}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &642337669
 MonoBehaviour:
@@ -907,6 +908,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 642337667}
   m_CullTransparentMesh: 0
+--- !u!114 &642337671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642337667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1a7f539ffb056043b4624c29a7bca93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highScoreMessage: You survived {0} today, but you survived {1} in your best life
 --- !u!1 &904770611
 GameObject:
   m_ObjectHideFlags: 0
