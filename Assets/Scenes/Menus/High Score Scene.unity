@@ -920,7 +920,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a7f539ffb056043b4624c29a7bca93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highScoreMessage: You survived {0} today, but you survived {1} in your best life
+  highScoreMessage: Survived longer than ever before!  {0} waves!
+  regularMessage: You survived {0} this time, but in your best life you survived
+    {1} waves
 --- !u!1 &904770611
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,7 +1586,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Fight again
+  m_text: Get back up
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 75063828274bdb145a55f6dd2f22e8b2, type: 2}
   m_sharedMaterial: {fileID: 21098970014090698, guid: 75063828274bdb145a55f6dd2f22e8b2,

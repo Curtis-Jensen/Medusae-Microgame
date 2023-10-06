@@ -8,7 +8,9 @@ public class HighScoreDisplay : MonoBehaviour
 {
     TextMeshProUGUI highScoreDisplay;
     [TextArea(1, 10)]
-    public string highScoreMessage;
+    public string highScoreMessage;    
+    [TextArea(1, 10)]
+    public string regularMessage;
 
     void Start()
     {
@@ -16,6 +18,13 @@ public class HighScoreDisplay : MonoBehaviour
 
         var recentScore = PlayerPrefs.GetInt("recentScore");
         var highScore = PlayerPrefs.GetInt("highScore");
-        highScoreDisplay.text = highScoreMessage;
+
+        if (recentScore > highScore)
+        {
+            PlayerPrefs.SetInt("highScore", recentScore);
+            highScoreDisplay.text = string.Format(highScoreMessage, recentScore); ;
+        }
+        else
+            highScoreDisplay.text = string.Format(regularMessage, recentScore, highScore); ;
     }
 }
