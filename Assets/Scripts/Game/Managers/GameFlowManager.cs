@@ -30,6 +30,9 @@ namespace Unity.FPS.Game
         [Tooltip("This string has to be the name of the scene you want to load when losing")]
         public string LoseSceneName = "LoseScene";
 
+        [Tooltip("Component that spawns the enemies and keeps track of what wave it is")]
+        public SpawnManager spawnManager;
+
         public bool GameIsEnding { get; private set; }
 
         float timeLoadEndGameScene;
@@ -99,6 +102,8 @@ namespace Unity.FPS.Game
                 sceneToLoad = LoseSceneName;
                 timeLoadEndGameScene = Time.time + EndSceneLoadDelay;
             }
+
+            if (spawnManager) PlayerPrefs.SetInt("recentScore", spawnManager.waveNumber);
         }
 
         void OnDestroy()
