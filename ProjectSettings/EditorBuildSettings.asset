@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Wave Defense.unity
     guid: 34971add3b319224484ee17c3cb6bf99
+  - enabled: 1
+    path: Assets/Scenes/Menus/High Score Scene.unity
+    guid: b7422447f6066b346a9eb90a58530248
   m_configObjects: {}

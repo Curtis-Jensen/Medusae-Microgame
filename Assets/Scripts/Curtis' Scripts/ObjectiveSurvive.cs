@@ -24,7 +24,7 @@ public class ObjectiveSurvive : Objective
             }
             catch
             {
-                Debug.Log("For some reason spawnManager (for enemies) was probably set to null after respawning the player.");
+                Debug.LogWarning("For some reason spawnManager (for enemies) was probably set to null after respawning the player.");
             }
         }
     }

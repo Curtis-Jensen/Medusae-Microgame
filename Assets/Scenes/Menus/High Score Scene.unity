@@ -921,7 +921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highScoreMessage: Survived longer than ever before!  {0} waves!
-  regularMessage: You survived {0} this time, but in your best life you survived
+  regularMessage: You survived {0} waves this time, but in your best life you survived
     {1} waves
 --- !u!1 &904770611
 GameObject:
