@@ -920,9 +920,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a7f539ffb056043b4624c29a7bca93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highScoreMessage: Survived longer than ever before!  {0} waves!
-  regularMessage: You survived {0} waves this time, but in your best life you survived
-    {1} waves
+  highScoreMessages:
+  - You've set a new high score at (0) waves! A testament to your enduring spirit
+    and the growth within. Keep shining bright!
+  - 'New high score: {0}! Your journey through the waves reflects not just endurance,
+    but the growth of a resilient spirit.'
+  - A new high score achieved at (0) waves! Each wave conquered is a step towards
+    spiritual triumph. Keep soaring higher!
+  - With (0) waves, you've etched a new high score! This score is not just numbers
+    but the unwavering flame of your spirit.
+  - Celebrate your new high score of (0) waves! Each wave surpassed is a victory
+    over the shadows within.
+  regularMessages:
+  - 'In the face of temptation, you endured through {0} waves. Your best wave, a
+    testament to your unwavering spirit: {1}'
+  - 'Against the tide of challenges, you stood strong for {0} waves. Your highest
+    wave reflects the resilience within your soul: {1}'
+  - 'Your journey through {0} waves reveals the growth of your spirit. Each wave,
+    a step in your continuous fight against the shadows: {1}'
+  - 'Through {0} waves, you faced the test of character. Your highest wave echoes
+    the strength found in overcoming life''s temptations: {1}'
 --- !u!1 &904770611
 GameObject:
   m_ObjectHideFlags: 0
