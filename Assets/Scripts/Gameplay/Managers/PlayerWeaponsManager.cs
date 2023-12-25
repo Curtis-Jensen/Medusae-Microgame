@@ -93,7 +93,7 @@ namespace Unity.FPS.Gameplay
         public UnityAction<WeaponController, int> OnAddedWeapon;
         public UnityAction<WeaponController, int> OnRemovedWeapon;
 
-        WeaponController[] weaponSlots = new WeaponController[9]; // 9 available weapon slots
+        WeaponController[] weaponSlots = new WeaponController[2]; // 2 Available weapon slots
         PlayerInputHandler inputHandler;
         PlayerCharacterController playerCharacterController;
         float weaponBobFactor;
@@ -485,20 +485,6 @@ namespace Unity.FPS.Gameplay
             }
         }
 
-        /* 1 if we already hold this weapon type (a weapon coming from the same source prefab), don't add the weapon
-         * 
-         * 2 search our weapon slots for the first free one, assign the weapon to it, and return true if we found one. Return false otherwise
-         * 
-         * 3 only add the weapon if the slot is free
-         * 
-         * 4 spawn the weapon prefab as child of the weapon socket
-         * 
-         * 5 Set owner to this gameObject so the weapon can alter projectile/damage logic accordingly
-         * 
-         * 6 Assign the first person layer to the weapon
-         * 
-         * 7 This function converts a layermask to a layer index
-         */
         /// <summary>
         /// Adds a weapon to our inventory
         /// </summary>
@@ -506,53 +492,45 @@ namespace Unity.FPS.Gameplay
         /// <returns></returns>
         public bool AddWeapon(WeaponController weaponPrefab)
         {
-            // 1
+            // 1 if we already hold this weapon type (a weapon coming from the same source prefab), don't add the weapon
             if (HasWeapon(weaponPrefab) != null)
-            {
                 return false;
-            }
 
-            // 2
+            // 2 search our weapon slots for the first free one, assign the weapon to it, and return true if we found one. Return false otherwise
             for (int i = 0; i < weaponSlots.Length; i++)
             {
-                // 3
-                if (weaponSlots[i] == null)
-                {
-                    // 4
-                    WeaponController weaponInstance = Instantiate(weaponPrefab, WeaponParentSocket);
-                    weaponInstance.transform.localPosition = Vector3.zero;
-                    weaponInstance.transform.localRotation = Quaternion.identity;
+                // 3 If the weapon slot is not free, move along
+                if (weaponSlots[i] != null)
+                    continue;
 
-                    // 5
-                    weaponInstance.owner = gameObject;
-                    weaponInstance.sourcePrefab = weaponPrefab.gameObject;
-                    weaponInstance.ShowWeapon(false);
+                // 4 Spawn the weapon prefab as child of the weapon socket
+                WeaponController weaponInstance = Instantiate(weaponPrefab, WeaponParentSocket);
+                weaponInstance.transform.localPosition = Vector3.zero;
+                weaponInstance.transform.localRotation = Quaternion.identity;
 
-                    // 6
-                    int layerIndex =
-                        Mathf.RoundToInt(Mathf.Log(FpsWeaponLayer.value,
-                            2)); // 7
-                    foreach (Transform t in weaponInstance.gameObject.GetComponentsInChildren<Transform>(true))
-                    {
-                        t.gameObject.layer = layerIndex;
-                    }
+                // 5 Set owner to this gameObject so the weapon can alter projectile / damage logic accordingly
+                weaponInstance.owner = gameObject;
+                weaponInstance.sourcePrefab = weaponPrefab.gameObject;
+                weaponInstance.ShowWeapon(false);
 
-                    weaponSlots[i] = weaponInstance;
+                // 6 Assign the first person layer to the weapon
+                int layerIndex =
+                    Mathf.RoundToInt(Mathf.Log(FpsWeaponLayer.value,
+                        2)); // 7 This function converts a layermask to a layer index
+                foreach (Transform t in weaponInstance.gameObject.GetComponentsInChildren<Transform>(true))
+                    t.gameObject.layer = layerIndex;
 
-                    if (OnAddedWeapon != null)
-                    {
-                        OnAddedWeapon.Invoke(weaponInstance, i);
-                    }
+                weaponSlots[i] = weaponInstance;
 
-                    return true;
-                }
+                if (OnAddedWeapon != null)
+                    OnAddedWeapon.Invoke(weaponInstance, i);
+
+                return true;
             }
 
             // Handle auto-switching to weapon if no weapons currently
             if (GetActiveWeapon() == null)
-            {
                 SwitchWeapon(true);
-            }
 
             return false;
         }
