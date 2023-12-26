@@ -19,10 +19,9 @@ namespace Unity.FPS.Gameplay
 
         public bool randomizeWeapons;
 
-        public int arsenalSize;
-
-        [Tooltip("List of weapon the player will start with")]
-        public List<WeaponController> weapons = new List<WeaponController>();
+        [Tooltip("List of weapon the player could start with")]
+        public List<WeaponController> possibleWeapons = new List<WeaponController>();
+        [Tooltip("What the player currently has equipped")]
         public WeaponController[] weaponSlots;
 
         [Header("References")]
@@ -133,23 +132,23 @@ namespace Unity.FPS.Gameplay
 
         void PickFirstWeapons()
         {
-            for (int i = 0; i < arsenalSize; i++)
+            for (int i = 0; i < weaponSlots.Length; i++)
             {
                 if (randomizeWeapons)
                 {
-                    int randomIndex = Random.Range(0, weapons.Count);
-                    var selectedWeapon = weapons[randomIndex];
+                    int randomIndex = Random.Range(0, possibleWeapons.Count);
+                    var selectedWeapon = possibleWeapons[randomIndex];
 
                     AddWeapon(selectedWeapon);
-                    weapons.RemoveAt(randomIndex);
+                    possibleWeapons.RemoveAt(randomIndex);
                 }
-                else if (i < weapons.Count)
+                else if (i < possibleWeapons.Count)
                 {
-                    AddWeapon(weapons[i]);
+                    AddWeapon(possibleWeapons[i]);
                 }
                 else
                 {
-                    Debug.LogError($"There are more weapons expected via arsenal size ({arsenalSize}) than what are loaded via weapons ({weapons.Count})");            
+                    Debug.LogError($"There are more weapons expected ({weaponSlots.Length}) than what are loaded via weapons ({possibleWeapons.Count})");            
                     break; // Break the loop if there are no more available weapons to add
                 }
             }
