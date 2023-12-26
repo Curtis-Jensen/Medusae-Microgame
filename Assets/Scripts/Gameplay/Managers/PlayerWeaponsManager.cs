@@ -23,6 +23,7 @@ namespace Unity.FPS.Gameplay
 
         [Tooltip("List of weapon the player will start with")]
         public List<WeaponController> weapons = new List<WeaponController>();
+        public WeaponController[] weaponSlots;
 
         [Header("References")]
         [Tooltip("Secondary camera used to avoid seeing weapon go throw geometries")]
@@ -93,7 +94,6 @@ namespace Unity.FPS.Gameplay
         public UnityAction<WeaponController, int> OnAddedWeapon;
         public UnityAction<WeaponController, int> OnRemovedWeapon;
 
-        WeaponController[] weaponSlots = new WeaponController[2]; // 2 Available weapon slots
         PlayerInputHandler inputHandler;
         PlayerCharacterController playerCharacterController;
         float weaponBobFactor;
