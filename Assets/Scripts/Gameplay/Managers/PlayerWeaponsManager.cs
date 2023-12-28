@@ -528,8 +528,38 @@ namespace Unity.FPS.Gameplay
             }
 
             // Handle auto-switching to weapon if no weapons currently
-            if (GetActiveWeapon() == null)
+            if (GetActiveWeapon() != null)
+            {
+                RemoveWeapon(weaponSlots[ActiveWeaponIndex]);
+
+                // 4 Spawn the weapon prefab as child of the weapon socket
+                WeaponController weaponInstance = Instantiate(weaponPrefab, WeaponParentSocket);
+                weaponInstance.transform.localPosition = Vector3.zero;
+                weaponInstance.transform.localRotation = Quaternion.identity;
+
+                // 5 Set owner to this gameObject so the weapon can alter projectile / damage logic accordingly
+                weaponInstance.owner = gameObject;
+                weaponInstance.sourcePrefab = weaponPrefab.gameObject;
+                weaponInstance.ShowWeapon(false);
+
+                // 6 Assign the first person layer to the weapon
+                int layerIndex =
+                    Mathf.RoundToInt(Mathf.Log(FpsWeaponLayer.value,
+                        2)); // 7 This function converts a layermask to a layer index
+                foreach (Transform t in weaponInstance.gameObject.GetComponentsInChildren<Transform>(true))
+                    t.gameObject.layer = layerIndex;
+
+                weaponSlots[ActiveWeaponIndex] = weaponInstance;
+
+                if (OnAddedWeapon != null)
+                    OnAddedWeapon.Invoke(weaponInstance, ActiveWeaponIndex);
+
                 SwitchWeapon(true);
+
+                return true;
+            }
+
+            SwitchWeapon(true);
 
             return false;
         }
@@ -545,17 +575,9 @@ namespace Unity.FPS.Gameplay
                     weaponSlots[i] = null;
 
                     if (OnRemovedWeapon != null)
-                    {
                         OnRemovedWeapon.Invoke(weaponInstance, i);
-                    }
 
                     Destroy(weaponInstance.gameObject);
-
-                    // Handle case of removing active weapon (switch to next weapon)
-                    if (i == ActiveWeaponIndex)
-                    {
-                        SwitchWeapon(true);
-                    }
 
                     return true;
                 }
