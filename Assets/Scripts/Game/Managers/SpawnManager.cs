@@ -7,6 +7,7 @@ namespace Unity.FPS.Game
     public class SpawnManager : MonoBehaviour
     {
         #region Variables
+        public bool saving;
         public int waveNumber;
         public Text waveHud;
         public float endWaveDelay = 3;
@@ -28,9 +29,11 @@ namespace Unity.FPS.Game
          */
         void Awake()
         {
-            playerName = PlayerPrefs.GetString("playerName");
-            if (waveNumber == 0)
+            if (saving)
+            {
+                playerName = PlayerPrefs.GetString("playerName");
                 waveNumber = PlayerPrefs.GetInt(playerName + "waveNumber") / 2;
+            }
 
             StartCoroutine(EndWave());
 
@@ -44,7 +47,8 @@ namespace Unity.FPS.Game
         {
             waveNumber++;
             waveHud.text = waveNumber.ToString();
-            PlayerPrefs.SetInt(playerName + "waveNumber", waveNumber);
+            if(saving)
+                PlayerPrefs.SetInt(playerName + "waveNumber", waveNumber);
 
             yield return new WaitForSeconds(endWaveDelay);
 
