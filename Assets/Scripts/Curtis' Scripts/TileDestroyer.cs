@@ -7,6 +7,10 @@ public class TileDestroyer : MonoBehaviour
 {
     [Tooltip("How hard the tile pops up when broken")]
     public float popForce;
+    [Tooltip("Color to flash the tile")]
+    public Color flashColor = Color.red;
+    [Tooltip("How long the tile flashes before popping")]
+    public float flashDuration = 0.5f;
     public GameObject tileParent;
 
     Health health;
@@ -45,8 +49,28 @@ public class TileDestroyer : MonoBehaviour
         var fallingTile = stableTiles[Random.Range(0, stableTiles.Count)];
 
         fallingTile.isKinematic = false;
-        fallingTile.useGravity = true;
-        fallingTile.AddForce(new Vector3(0, popForce, 0), ForceMode.Impulse);
+        fallingTile.useGravity = false;
+        StartCoroutine(FlashThenPop(fallingTile));
         tileCount--;
     }
+
+    IEnumerator FlashThenPop(Rigidbody tile)
+    {
+        Renderer renderer = tile.GetComponent<Renderer>();
+        Color originalColor = renderer.material.color;
+        float elapsed = 0f;
+
+        while (elapsed < flashDuration)
+        {
+            renderer.material.color = flashColor;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Restore original color and apply pop force
+        renderer.material.color = originalColor;
+        tile.useGravity = true;
+        tile.AddForce(new Vector3(0, popForce, 0), ForceMode.Impulse);
+    }
 }
+

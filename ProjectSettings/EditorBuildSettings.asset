@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Medusae/Menus/High Score Scene.unity
     guid: b7422447f6066b346a9eb90a58530248
+  - enabled: 1
+    path: Assets/Scenes/Ship Mind/Hub World Ship Mind.unity
+    guid: 6645c0a57bfda4585a022e4f33477594
+  - enabled: 1
+    path: Assets/Scenes/Ship Mind/Ship Mind Fight.unity
+    guid: 17ec5f0b3bdda274c89f3cc90cb88e63
   m_configObjects: {}
