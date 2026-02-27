@@ -11,8 +11,6 @@ namespace Unity.FPS.UI
 
         void Start()
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
             EventSystem.current.SetSelectedGameObject(null);
         }
 
