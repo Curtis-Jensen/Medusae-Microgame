@@ -48,8 +48,6 @@ public class TileDestroyer : MonoBehaviour
 
         var fallingTile = stableTiles[Random.Range(0, stableTiles.Count)];
 
-        fallingTile.isKinematic = false;
-        fallingTile.useGravity = false;
         StartCoroutine(FlashThenPop(fallingTile));
         tileCount--;
     }
@@ -66,7 +64,7 @@ public class TileDestroyer : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-
+        tile.isKinematic = false;
         // Restore original color and apply pop force
         renderer.material.color = originalColor;
         tile.useGravity = true;
