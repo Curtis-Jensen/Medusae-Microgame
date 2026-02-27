@@ -61,3 +61,16 @@ crashlytics-build.properties
 
 UserSettings/EditorUserSettings.asset
 UserSettings/EditorUserSettings.asset
+.vscode/launch.json
+.vscode/extensions.json
+.vscode/settings.json
+Packages/manifest.json
+Packages/manifest.json
+Packages/packages-lock.json
+ProjectSettings/ProjectSettings.asset
+ProjectSettings/Packages/com.unity.learn.iet-framework/Settings.json
+ProjectSettings/Packages/com.unity.probuilder/Settings.json
+ProjectSettings/Packages/com.unity.services.core/Settings.json
+UserSettings/EditorUserSettings.asset
+UserSettings/Search.settings
+UserSettings/Layouts/CurrentMaximizeLayout.dwlt
