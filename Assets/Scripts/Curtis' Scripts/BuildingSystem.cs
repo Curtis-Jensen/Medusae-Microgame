@@ -1,5 +1,7 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Camera))]
+
 /// <summary>
 /// Fortnite-style grid-based building system for walls only.
 /// Attach this to the player and assign a wall prefab.
@@ -33,16 +35,9 @@ public class BuildingSystem : MonoBehaviour
     private void Start()
     {
         playerCamera = GetComponent<Camera>();
-        if (playerCamera == null)
-        {
-            playerCamera = Camera.main;
-        }
-        
-        if (wallPrefab == null)
-        {
-            Debug.LogError("BuildingSystem: Wall prefab not assigned!");
-        }
-        
+
+        playerCamera = Camera.main;
+                
         CreatePreviewWall();
     }
     
@@ -79,8 +74,6 @@ public class BuildingSystem : MonoBehaviour
     /// </summary>
     private void CreatePreviewWall()
     {
-        if (wallPrefab == null) return;
-        
         previewWall = Instantiate(wallPrefab);
         previewWall.name = "Preview Wall";
         

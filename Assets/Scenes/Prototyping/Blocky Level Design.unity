@@ -1575,40 +1575,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 182186f743c95194da3b941633bba555, type: 3}
---- !u!1 &498898796 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7253983127304857660, guid: 761cdc9e4e883334cbdcea062d0befa7,
-    type: 3}
-  m_PrefabInstance: {fileID: 1459097083}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &498898808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 498898796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5e997ca5d5354e9a8e28242a16bd903, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wallPrefab: {fileID: 8394858586091143364, guid: 7e504d0a465c8cc47b91df5a04d176a7,
-    type: 3}
-  gridSize: 2
-  buildDistance: 10
-  wallHeight: 2
-  wallThickness: 0.1
-  buildSurface:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  buildingLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  wallCost: 10
-  validPlacementMaterial: {fileID: 0}
-  invalidPlacementMaterial: {fileID: 0}
-  showGridPreview: 0
 --- !u!4 &530157468 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2310106926148786977, guid: 182186f743c95194da3b941633bba555,
@@ -3274,6 +3240,40 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1229325282}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1229478624 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7442781921941657531, guid: 761cdc9e4e883334cbdcea062d0befa7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1459097083}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1229478632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1229478624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e997ca5d5354e9a8e28242a16bd903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallPrefab: {fileID: 8394858586091143364, guid: 7e504d0a465c8cc47b91df5a04d176a7,
+    type: 3}
+  gridSize: 2
+  buildDistance: 10
+  wallHeight: 2
+  wallThickness: 0.1
+  buildSurface:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  wallCost: 10
+  validPlacementMaterial: {fileID: 0}
+  invalidPlacementMaterial: {fileID: 0}
+  showGridPreview: 1
 --- !u!1001 &1233751941
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3972,6 +3972,11 @@ PrefabInstance:
       propertyPath: staticSound
       value: 
       objectReference: {fileID: 8300000, guid: 16334b46f72208946ae7065b13845e8b, type: 3}
+    - target: {fileID: 1360575517897679518, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: currentHealth
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 7253983127304857660, guid: 761cdc9e4e883334cbdcea062d0befa7,
         type: 3}
       propertyPath: m_Name
