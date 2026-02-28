@@ -76,7 +76,7 @@ public class BuildingSystem : MonoBehaviour
         }
         
         // Build on left click
-        if (Input.GetMouseButtonDown(0) && canPlaceWall)
+        if (Input.GetMouseButton(0) && canPlaceWall)
         {
             PlaceBuilding();
         }
@@ -136,6 +136,7 @@ public class BuildingSystem : MonoBehaviour
         previewFloor.SetActive(false);
     }
     
+    // 🚨TECH DEBT TODO🚨: This seems big and like there's a lot of repitition in it
     /// <summary>
     /// Updates the preview position based on camera raycast and build type
     /// </summary>
@@ -224,13 +225,6 @@ public class BuildingSystem : MonoBehaviour
         if (colliders.Length > 0)
         {
             return false; // Wall already exists here
-        }
-        
-        // Check if player is too close
-        float distanceToPlayer = Vector3.Distance(position, transform.position);
-        if (distanceToPlayer < gridSize)
-        {
-            return false;
         }
         
         return true;
