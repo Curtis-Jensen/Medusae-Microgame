@@ -3267,9 +3267,11 @@ MonoBehaviour:
   floorPrefab: {fileID: 8394858586091143364, guid: 0831b3d6a5523490c8d48c4b2672e0d9,
     type: 3}
   gridSize: 10
-  buildDistance: 10
+  buildDistance: 11
   wallHeight: 2
   wallThickness: 0.1
+  angleThreshold: 0.3
+  angleBuffer: 0.05
   buildSurface:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -4298,17 +4300,17 @@ PrefabInstance:
     - target: {fileID: 2310106926148786977, guid: 182186f743c95194da3b941633bba555,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -52.718185
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2310106926148786977, guid: 182186f743c95194da3b941633bba555,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.995743
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2310106926148786977, guid: 182186f743c95194da3b941633bba555,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.453905
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2310106926148786977, guid: 182186f743c95194da3b941633bba555,
         type: 3}

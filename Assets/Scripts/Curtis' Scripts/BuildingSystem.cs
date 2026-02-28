@@ -16,6 +16,8 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private float buildDistance = 10f; // How far the player can build
     [SerializeField] private float wallHeight = 2f;
     [SerializeField] private float wallThickness = 0.1f;
+    [SerializeField] private float angleThreshold = 0.707f; // sin(45°), angle above which to treat as floor/ceiling
+    [SerializeField] private float angleBuffer = 0.05f; // Buffer to prevent flickering near threshold
     
     [Header("Layer Masks")]
     [SerializeField] private LayerMask buildSurface = -1; // What surfaces can walls be placed on
@@ -48,19 +50,18 @@ public class BuildingSystem : MonoBehaviour
     
     /// <summary>
     /// Determines what type of building to place based on camera direction
+    /// Uses dot product to check if looking more than 45° above/below horizontal
     /// </summary>
     private BuildType DetermineBuildType()
     {
         Vector3 forward = playerCamera.transform.forward;
+        float verticalComponent = Vector3.Dot(forward, Vector3.up);
+        float threshold = angleThreshold + angleBuffer;
         
-        // Check if looking primarily up or down
-        if (Mathf.Abs(forward.y) > Mathf.Abs(forward.x) && Mathf.Abs(forward.y) > Mathf.Abs(forward.z))
-        {
-            if (forward.y > 0)
-                return BuildType.FloorAbove;
-            else
-                return BuildType.FloorBelow;
-        }
+        if (verticalComponent > threshold)
+            return BuildType.FloorAbove;
+        else if (verticalComponent < -threshold)
+            return BuildType.FloorBelow;
         
         return BuildType.Wall;
     }
