@@ -3260,7 +3260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallPrefab: {fileID: 8394858586091143364, guid: 7e504d0a465c8cc47b91df5a04d176a7,
     type: 3}
-  gridSize: 2
+  gridSize: 10
   buildDistance: 10
   wallHeight: 2
   wallThickness: 0.1
@@ -3270,7 +3270,6 @@ MonoBehaviour:
   buildingLayer:
     serializedVersion: 2
     m_Bits: 0
-  wallCost: 10
   validPlacementMaterial: {fileID: 0}
   invalidPlacementMaterial: {fileID: 0}
   showGridPreview: 1
