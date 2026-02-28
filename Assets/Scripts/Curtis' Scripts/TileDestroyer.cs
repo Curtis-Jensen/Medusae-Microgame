@@ -47,15 +47,13 @@ public class TileDestroyer : MonoBehaviour
 
     void LateUpdate()
     {
-        if (currentFlashingTiles.Count > 0)
-        {
+
             lineRenderer.positionCount = currentFlashingTiles.Count * 2;
             for (int i = 0; i < currentFlashingTiles.Count; i++)
             {
                 lineRenderer.SetPosition(i * 2, transform.position + lineOffset);
                 lineRenderer.SetPosition(i * 2 + 1, currentFlashingTiles[i].transform.position);
             }
-        }
     }
 
     void DestroyATile()
@@ -78,7 +76,6 @@ public class TileDestroyer : MonoBehaviour
         Color originalColor = renderer.material.color;
         float elapsed = 0f;
         currentFlashingTiles.Add(tile);
-        lineRenderer.enabled = true;
 
         while (elapsed < flashDuration)
         {
@@ -92,8 +89,6 @@ public class TileDestroyer : MonoBehaviour
         tile.useGravity = true;
         tile.AddForce(new Vector3(0, popForce, 0), ForceMode.Impulse);
         currentFlashingTiles.Remove(tile);
-        if (currentFlashingTiles.Count == 0)
-            lineRenderer.enabled = false;
     }
 }
 
