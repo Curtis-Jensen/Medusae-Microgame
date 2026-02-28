@@ -3260,6 +3260,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallPrefab: {fileID: 8394858586091143364, guid: 7e504d0a465c8cc47b91df5a04d176a7,
     type: 3}
+  floorPrefab: {fileID: 8394858586091143364, guid: 0831b3d6a5523490c8d48c4b2672e0d9,
+    type: 3}
   gridSize: 10
   buildDistance: 10
   wallHeight: 2
@@ -3275,6 +3277,7 @@ MonoBehaviour:
   invalidPlacementMaterial: {fileID: 2100000, guid: dae54daeb5f254153b01f3b0aca1637c,
     type: 2}
   wallMaterial: {fileID: 2100000, guid: 987929a85627845648f3728e16884910, type: 2}
+  floorMaterial: {fileID: 2100000, guid: 987929a85627845648f3728e16884910, type: 2}
   showGridPreview: 1
 --- !u!1001 &1233751941
 PrefabInstance:
