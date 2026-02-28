@@ -105,7 +105,7 @@ public class BuildingSystem : MonoBehaviour
         }
         
         Rigidbody rb = previewWall.GetComponent<Rigidbody>();
-        rb.isKinematic = true;
+        if (rb != null) rb.isKinematic = true;
         
         // Set preview material
         SetPreviewMaterial(previewWall, invalidPlacementMaterial);
