@@ -88,13 +88,6 @@ public class BuildingSystem : MonoBehaviour
             previewWall.SetActive(showGridPreview);
             previewFloor.SetActive(showGridPreview);
         }
-        
-        // Debug: Add resources
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            buildingResource += 100;
-            Debug.Log($"Resources: {buildingResource}");
-        }
     }
     
     /// <summary>
