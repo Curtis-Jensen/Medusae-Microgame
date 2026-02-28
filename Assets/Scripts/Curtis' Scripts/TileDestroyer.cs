@@ -17,6 +17,8 @@ public class TileDestroyer : MonoBehaviour
     float maxHealth;
     float tileCount;
     float initialTileCount;
+    Rigidbody currentFlashingTile;
+    LineRenderer lineRenderer;
 
     void Start()
     {
@@ -24,6 +26,9 @@ public class TileDestroyer : MonoBehaviour
         maxHealth = health.maxHealth;
         tileCount = tileParent.transform.childCount;
         initialTileCount = tileCount;
+        
+        // Create LineRenderer
+        lineRenderer = gameObject.GetComponent<LineRenderer>();
     }
 
     /* Checks the percentage of health and the percentage of breakable tiles.
@@ -36,6 +41,15 @@ public class TileDestroyer : MonoBehaviour
         float tilePercentage = tileCount / initialTileCount;
 
         if (healthPercentage < tilePercentage) DestroyATile();
+    }
+
+    void LateUpdate()
+    {
+        if (currentFlashingTile != null)
+        {
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, currentFlashingTile.transform.position);
+        }
     }
 
     void DestroyATile()
@@ -57,6 +71,8 @@ public class TileDestroyer : MonoBehaviour
         Renderer renderer = tile.GetComponent<Renderer>();
         Color originalColor = renderer.material.color;
         float elapsed = 0f;
+        currentFlashingTile = tile;
+        lineRenderer.enabled = true;
 
         while (elapsed < flashDuration)
         {
@@ -69,6 +85,8 @@ public class TileDestroyer : MonoBehaviour
         renderer.material.color = originalColor;
         tile.useGravity = true;
         tile.AddForce(new Vector3(0, popForce, 0), ForceMode.Impulse);
+        currentFlashingTile = null;
+        lineRenderer.enabled = false;
     }
 }
 
