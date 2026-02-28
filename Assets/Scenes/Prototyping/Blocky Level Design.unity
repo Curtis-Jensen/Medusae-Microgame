@@ -3270,7 +3270,8 @@ MonoBehaviour:
   buildingLayer:
     serializedVersion: 2
     m_Bits: 0
-  validPlacementMaterial: {fileID: 0}
+  validPlacementMaterial: {fileID: 2100000, guid: b271cd98b999d4d269cafdf0c7d70b84,
+    type: 2}
   invalidPlacementMaterial: {fileID: 0}
   showGridPreview: 1
 --- !u!1001 &1233751941
