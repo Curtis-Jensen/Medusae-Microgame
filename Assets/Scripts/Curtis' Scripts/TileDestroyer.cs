@@ -11,6 +11,8 @@ public class TileDestroyer : MonoBehaviour
     public Color flashColor = Color.red;
     [Tooltip("How long the tile flashes before popping")]
     public float flashDuration = 0.5f;
+    [Tooltip("Offset for the connection line position")]
+    public Vector3 lineOffset = Vector3.zero;
     public GameObject tileParent;
 
     Health health;
@@ -47,7 +49,7 @@ public class TileDestroyer : MonoBehaviour
     {
         if (currentFlashingTile != null)
         {
-            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(0, transform.position + lineOffset);
             lineRenderer.SetPosition(1, currentFlashingTile.transform.position);
         }
     }
