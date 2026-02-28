@@ -19,7 +19,7 @@ public class TileDestroyer : MonoBehaviour
     float maxHealth;
     float tileCount;
     float initialTileCount;
-    Rigidbody currentFlashingTile;
+    List<Rigidbody> currentFlashingTiles = new List<Rigidbody>();
     LineRenderer lineRenderer;
 
     void Start()
@@ -47,10 +47,14 @@ public class TileDestroyer : MonoBehaviour
 
     void LateUpdate()
     {
-        if (currentFlashingTile != null)
+        if (currentFlashingTiles.Count > 0)
         {
-            lineRenderer.SetPosition(0, transform.position + lineOffset);
-            lineRenderer.SetPosition(1, currentFlashingTile.transform.position);
+            lineRenderer.positionCount = currentFlashingTiles.Count * 2;
+            for (int i = 0; i < currentFlashingTiles.Count; i++)
+            {
+                lineRenderer.SetPosition(i * 2, transform.position + lineOffset);
+                lineRenderer.SetPosition(i * 2 + 1, currentFlashingTiles[i].transform.position);
+            }
         }
     }
 
@@ -73,11 +77,8 @@ public class TileDestroyer : MonoBehaviour
         Renderer renderer = tile.GetComponent<Renderer>();
         Color originalColor = renderer.material.color;
         float elapsed = 0f;
-        currentFlashingTile = tile;
+        currentFlashingTiles.Add(tile);
         lineRenderer.enabled = true;
-
-        lineRenderer.SetPosition(0, transform.position + lineOffset);
-        lineRenderer.SetPosition(1, currentFlashingTile.transform.position);
 
         while (elapsed < flashDuration)
         {
@@ -90,8 +91,9 @@ public class TileDestroyer : MonoBehaviour
         renderer.material.color = originalColor;
         tile.useGravity = true;
         tile.AddForce(new Vector3(0, popForce, 0), ForceMode.Impulse);
-        currentFlashingTile = null;
-        lineRenderer.enabled = false;
+        currentFlashingTiles.Remove(tile);
+        if (currentFlashingTiles.Count == 0)
+            lineRenderer.enabled = false;
     }
 }
 
