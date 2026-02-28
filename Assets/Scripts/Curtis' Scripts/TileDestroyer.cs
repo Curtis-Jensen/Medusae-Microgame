@@ -76,6 +76,9 @@ public class TileDestroyer : MonoBehaviour
         currentFlashingTile = tile;
         lineRenderer.enabled = true;
 
+        lineRenderer.SetPosition(0, transform.position + lineOffset);
+        lineRenderer.SetPosition(1, currentFlashingTile.transform.position);
+
         while (elapsed < flashDuration)
         {
             renderer.material.color = flashColor;
