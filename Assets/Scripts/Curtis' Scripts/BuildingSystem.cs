@@ -14,8 +14,6 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private GameObject floorPrefab;
     [SerializeField] private float gridSize = 2f; // Size of each grid cell
     [SerializeField] private float buildDistance = 10f; // How far the player can build
-    [SerializeField] private float wallHeight = 2f;
-    [SerializeField] private float wallThickness = 0.1f;
     [SerializeField] private float angleThreshold = 0.707f; // sin(45°), angle above which to treat as floor/ceiling
     [SerializeField] private float angleBuffer = 0.05f; // Buffer to prevent flickering near threshold
     
@@ -77,7 +75,7 @@ public class BuildingSystem : MonoBehaviour
         }
         
         // Build on left click
-        if (Input.GetMouseButton(0) && canPlaceWall)
+        if (Input.GetMouseButtonDown(0) && canPlaceWall)
         {
             PlaceBuilding();
         }
@@ -137,66 +135,61 @@ public class BuildingSystem : MonoBehaviour
         previewFloor.SetActive(false);
     }
     
-    // 🚨TECH DEBT TODO🚨: This seems big and like there's a lot of repitition in it
+    /// <summary>
+    /// Calculates the preview position for a wall based on raycast
+    /// </summary>
+    private Vector3 GetWallPreviewPosition()
+    {
+        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+        Vector3 targetPosition = ray.origin + ray.direction * buildDistance;
+        
+        // Raycast to find exact placement surface
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, buildDistance, buildSurface))
+        {
+            targetPosition = hit.point;
+        }
+        
+        return SnapToGrid(targetPosition);
+    }
+    
+    /// <summary>
+    /// Calculates the preview position for a floor based on camera position
+    /// </summary>
+    private Vector3 GetFloorPreviewPosition(BuildType buildType)
+    {
+        if (buildType == BuildType.FloorBelow)
+            return SnapToGrid(transform.position - Vector3.up * gridSize);
+        else
+            return SnapToGrid(transform.position + Vector3.up * gridSize);
+    }
+    
     /// <summary>
     /// Updates the preview position based on camera raycast and build type
     /// </summary>
     private void UpdatePreviewPosition()
     {
-        Vector3 snappedPosition = Vector3.zero;
+        Vector3 snappedPosition = currentBuildType == BuildType.Wall
+            ? GetWallPreviewPosition()
+            : GetFloorPreviewPosition(currentBuildType);
         
-        if (currentBuildType == BuildType.Wall)
-        {
-            Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-            Vector3 targetPosition = ray.origin + ray.direction * buildDistance;
-            
-            // Raycast to find exact placement surface
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, buildDistance, buildSurface))
-            {
-                targetPosition = hit.point;
-            }
-            
-            snappedPosition = SnapToGrid(targetPosition);
-            
-            // Update wall preview
-            previewWall.SetActive(true);
-            previewFloor.SetActive(false);
+        // Update preview visibility
+        bool isWall = currentBuildType == BuildType.Wall;
+        previewWall.SetActive(isWall);
+        previewFloor.SetActive(!isWall);
+        
+        // Update preview position
+        if (isWall)
             previewWall.transform.position = snappedPosition;
-        }
-        else if (currentBuildType == BuildType.FloorBelow)
-        {
-            // Place floor below the player
-            snappedPosition = SnapToGrid(transform.position - Vector3.up * gridSize);
-            
-            previewWall.SetActive(false);
-            previewFloor.SetActive(true);
-            previewFloor.transform.position = snappedPosition;
-        }
-        else if (currentBuildType == BuildType.FloorAbove)
-        {
-            // Place floor above the player
-            snappedPosition = SnapToGrid(transform.position + Vector3.up * gridSize);
-            
-            previewWall.SetActive(false);
-            previewFloor.SetActive(true);
-            previewFloor.transform.position = snappedPosition;
-        }
-        
-        // Check if placement is valid
-        canPlaceWall = IsPlacementValid(snappedPosition);
-        
-        // Update preview material color based on validity
-        Material previewMat = validPlacementMaterial;
-        if (!canPlaceWall)
-        {
-            previewMat = invalidPlacementMaterial;
-        }
-        
-        if (currentBuildType == BuildType.Wall)
-            SetPreviewMaterial(previewWall, previewMat);
         else
-            SetPreviewMaterial(previewFloor, previewMat);
+            previewFloor.transform.position = snappedPosition;
+        
+        // Check if placement is valid and update material
+        canPlaceWall = IsPlacementValid(snappedPosition);
+        Material previewMat = canPlaceWall ? validPlacementMaterial : invalidPlacementMaterial;
+        
+        GameObject previewObj = isWall ? previewWall : previewFloor;
+        SetPreviewMaterial(previewObj, previewMat);
     }
     
     /// <summary>
@@ -218,7 +211,7 @@ public class BuildingSystem : MonoBehaviour
         // Check if there's already a wall at this position
         Collider[] colliders = Physics.OverlapBox(
             position, 
-            new Vector3(gridSize / 2f, wallHeight / 2f, gridSize / 2f),
+            new Vector3(gridSize / 2f, gridSize / 2f, gridSize / 2f),
             Quaternion.identity,
             buildingLayer
         );
