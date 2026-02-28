@@ -19,8 +19,6 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private LayerMask buildSurface = -1; // What surfaces can walls be placed on
     [SerializeField] private LayerMask buildingLayer; // What layer walls are on
     
-    [Header("Building Cost")]
-    [SerializeField] private int wallCost = 10; // Resources needed to build a wall
     
     [Header("Visual Feedback")]
     [SerializeField] private Material validPlacementMaterial;
@@ -49,7 +47,7 @@ public class BuildingSystem : MonoBehaviour
         }
         
         // Build on left click
-        if (Input.GetMouseButtonDown(0) && canPlaceWall && buildingResource >= wallCost)
+        if (Input.GetMouseButtonDown(0) && canPlaceWall)
         {
             PlaceWall();
         }
@@ -141,12 +139,7 @@ public class BuildingSystem : MonoBehaviour
     /// Checks if a wall can be placed at this position
     /// </summary>
     private bool IsPlacementValid(Vector3 position)
-    {
-        if (buildingResource < wallCost)
-        {
-            return false;
-        }
-        
+    {        
         // Check if there's already a wall at this position
         Collider[] colliders = Physics.OverlapBox(
             position, 
@@ -191,12 +184,7 @@ public class BuildingSystem : MonoBehaviour
         foreach (Collider col in newWall.GetComponentsInChildren<Collider>())
         {
             col.enabled = true;
-        }
-        
-        // Deduct resources
-        buildingResource -= wallCost;
-        
-        Debug.Log($"Wall placed at {wallPosition}. Resources remaining: {buildingResource}");
+        }  
     }
     
     /// <summary>
@@ -207,32 +195,13 @@ public class BuildingSystem : MonoBehaviour
         if (material == null) return;
         
         Renderer renderer = obj.GetComponent<Renderer>();
-        if (renderer != null)
-        {
-            renderer.material = material;
-        }
+
+        renderer.material = material;
         
         foreach (Renderer childRenderer in obj.GetComponentsInChildren<Renderer>())
         {
             childRenderer.material = material;
         }
-    }
-    
-    /// <summary>
-    /// Add resources to the building system
-    /// </summary>
-    public void AddResources(int amount)
-    {
-        buildingResource += amount;
-        Debug.Log($"Added {amount} resources. Total: {buildingResource}");
-    }
-    
-    /// <summary>
-    /// Get current available resources
-    /// </summary>
-    public int GetAvailableResources()
-    {
-        return buildingResource;
     }
     
     /// <summary>
