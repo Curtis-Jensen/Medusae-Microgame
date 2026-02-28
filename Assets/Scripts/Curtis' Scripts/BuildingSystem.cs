@@ -23,6 +23,7 @@ public class BuildingSystem : MonoBehaviour
     [Header("Visual Feedback")]
     [SerializeField] private Material validPlacementMaterial;
     [SerializeField] private Material invalidPlacementMaterial;
+    [SerializeField] private Material wallMaterial;
     [SerializeField] private bool showGridPreview = true;
     
     private Camera playerCamera;
@@ -179,6 +180,8 @@ public class BuildingSystem : MonoBehaviour
         // Create the actual wall
         GameObject newWall = Instantiate(wallPrefab, wallPosition, Quaternion.identity);
         newWall.name = "Wall";
+        
+        SetPreviewMaterial(newWall, wallMaterial);
         
         // Enable collider
         foreach (Collider col in newWall.GetComponentsInChildren<Collider>())
