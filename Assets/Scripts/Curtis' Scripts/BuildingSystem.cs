@@ -158,10 +158,12 @@ public class BuildingSystem : MonoBehaviour
     /// </summary>
     private Vector3 GetFloorPreviewPosition(BuildType buildType)
     {
+        Vector3 verticalOffset = Vector3.up * (gridSize / 2);
+        
         if (buildType == BuildType.FloorBelow)
-            return SnapToGrid(transform.position - Vector3.up * gridSize);
+            return SnapToGrid(transform.position - Vector3.up * gridSize) + verticalOffset;
         else
-            return SnapToGrid(transform.position + Vector3.up * gridSize);
+            return SnapToGrid(transform.position + Vector3.up * gridSize) - verticalOffset;
     }
     
     /// <summary>
