@@ -78,16 +78,38 @@ public class BuildingPreview : MonoBehaviour
     }
     
     /// <summary>
-    /// Calculates the preview position for a floor based on camera position
+    /// Calculates the preview position for a floor based on raycasting downward/upward
     /// </summary>
     public Vector3 GetFloorPreviewPosition(BuildType buildType, Vector3 playerPosition)
     {
         float gridSize = buildingSystem.GetGridSize();
+        Vector3 rayDirection = buildType == BuildType.FloorBelow ? Vector3.down : Vector3.up;
+        float rayDistance = 100f; // Search far up/down for a surface
         
-        if (buildType == BuildType.FloorBelow)
-            return playerPosition - Vector3.up * gridSize;
+        Vector3 targetPosition = playerPosition;
+        
+        // Raycast to find the nearest surface below/above
+        RaycastHit hit;
+        if (Physics.Raycast(playerPosition, rayDirection, out hit, rayDistance))
+        {
+            targetPosition = hit.point;
+            
+            // Place the floor just above/below the hit surface
+            if (buildType == BuildType.FloorBelow)
+                targetPosition = hit.point + Vector3.down * (gridSize / 2);
+            else
+                targetPosition = hit.point + Vector3.up * (gridSize / 2);
+        }
         else
-            return playerPosition + Vector3.up * gridSize;
+        {
+            // Fallback to offset position if no surface found
+            if (buildType == BuildType.FloorBelow)
+                targetPosition = playerPosition - Vector3.up * gridSize;
+            else
+                targetPosition = playerPosition + Vector3.up * gridSize;
+        }
+        
+        return targetPosition;
     }
     
     /// <summary>
