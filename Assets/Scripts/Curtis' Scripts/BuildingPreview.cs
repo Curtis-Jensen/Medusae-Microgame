@@ -83,12 +83,11 @@ public class BuildingPreview : MonoBehaviour
     public Vector3 GetFloorPreviewPosition(BuildType buildType, Vector3 playerPosition)
     {
         float gridSize = buildingSystem.GetGridSize();
-        Vector3 verticalOffset = Vector3.up * (gridSize / 2);
         
         if (buildType == BuildType.FloorBelow)
-            return playerPosition - Vector3.up * gridSize + verticalOffset;
+            return playerPosition - Vector3.up * gridSize;
         else
-            return playerPosition + Vector3.up * gridSize - verticalOffset;
+            return playerPosition + Vector3.up * gridSize;
     }
     
     /// <summary>
