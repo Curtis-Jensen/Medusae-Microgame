@@ -68,9 +68,9 @@
     <Compile Include="Assets/Scripts/Editor/MiniProfiler.cs" />
     <Compile Include="Assets/Scripts/Editor/LevelEditor/LevelData.cs" />
     <Compile Include="Assets/Scripts/Editor/LevelEditor/PlacedObject.cs" />
+    <Compile Include="Assets/Scripts/Editor/LevelEditor/UsageExamples.cs" />
     <Compile Include="Assets/Scripts/Editor/LevelEditor/LevelManager.cs" />
     <Compile Include="Assets/Scripts/Editor/LevelEditor/LevelEditorWindow.cs" />
-    <Compile Include="Assets/Scripts/Editor/LevelEditor/UsageExamples.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Scripts/Editor/fps.Editor.asmdef" />

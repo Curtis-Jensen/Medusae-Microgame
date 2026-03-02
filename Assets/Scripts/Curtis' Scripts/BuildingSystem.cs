@@ -39,8 +39,6 @@ public class BuildingSystem : MonoBehaviour
     private void Start()
     {
         playerCamera = GetComponent<Camera>();
-
-        playerCamera = Camera.main;
                 
         CreatePreviewWall();
         CreatePreviewFloor();

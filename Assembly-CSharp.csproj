@@ -72,8 +72,8 @@
     <Compile Include="Assets/Scripts/Curtis&apos; Scripts/DayNightCycle.cs" />
     <Compile Include="Assets/Scripts/Curtis&apos; Scripts/ProceduralGenerationEditor.cs" />
     <Compile Include="Assets/Scripts/RandomSound.cs" />
-    <Compile Include="Assets/Scripts/Curtis&apos; Scripts/BuildingSystem.cs" />
     <Compile Include="Assets/Scripts/Curtis&apos; Scripts/NewBehaviourScript.cs" />
+    <Compile Include="Assets/Scripts/Curtis&apos; Scripts/BuildingSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Third Party Assets/TextMesh Pro/Resources/Shaders/TMPro.cginc" />
