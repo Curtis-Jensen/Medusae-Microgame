@@ -1,7 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
-
 /// <summary>
 /// Fortnite-style grid-based building system for walls and floors.
 /// Attach this to the player and assign wall and floor prefabs.
@@ -38,7 +36,7 @@ public class BuildingSystem : MonoBehaviour
     
     private void Start()
     {
-        playerCamera = GetComponent<Camera>();
+        playerCamera = GetComponentInParent<Camera>();
                 
         CreatePreviewWall();
         CreatePreviewFloor();
