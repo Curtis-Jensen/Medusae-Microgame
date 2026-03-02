@@ -20,16 +20,12 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private LayerMask buildingLayer; // What layer walls are on
     
     
-    [Header("Visual Feedback")]
-    [SerializeField] private Material validPlacementMaterial;
-    [SerializeField] private Material invalidPlacementMaterial;
+    [Header("Materials")]
     [SerializeField] private Material wallMaterial;
     [SerializeField] private Material floorMaterial;
-    [SerializeField] private bool showGridPreview = true;
     
     private Camera playerCamera;
-    private GameObject previewWall;
-    private GameObject previewFloor;
+    private BuildingPreview buildingPreview;
     private bool canPlacePiece = true;
     private BuildType currentBuildType = BuildType.Wall;
     private int buildingResource = 100; // Current resources available
@@ -37,9 +33,7 @@ public class BuildingSystem : MonoBehaviour
     private void Start()
     {
         playerCamera = GetComponentInParent<Camera>();
-                
-        CreatePreviewWall();
-        CreatePreviewFloor();
+        buildingPreview = GetComponent<BuildingPreview>();
     }
     
     /// <summary>
@@ -65,130 +59,49 @@ public class BuildingSystem : MonoBehaviour
         // Update build type based on camera direction
         currentBuildType = DetermineBuildType();
         
-        if (previewWall != null)
-        {
-            UpdatePreviewPosition();
-        }
+        // Update preview
+        UpdatePreviewDisplay();
         
         // Build on left click
         if (Input.GetMouseButtonDown(0) && canPlacePiece)
         {
             PlaceBuilding();
         }
-        
-        // Toggle preview on Tab
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            showGridPreview = !showGridPreview;
-            previewWall.SetActive(showGridPreview);
-            previewFloor.SetActive(showGridPreview);
-        }
     }
     
     /// <summary>
-    /// Creates a preview wall to show where the player will build
+    /// Updates the preview display based on current build type and placement validity
     /// </summary>
-    private void CreatePreviewWall()
+    private void UpdatePreviewDisplay()
     {
-        previewWall = Instantiate(wallPrefab);
-        previewWall.name = "Preview Wall";
-        
-        // Disable collider and rigidbody for preview
-        foreach (Collider col in previewWall.GetComponentsInChildren<Collider>())
-        {
-            col.enabled = false;
-        }
-        
-        Rigidbody rb = previewWall.GetComponent<Rigidbody>();
-        if (rb != null) rb.isKinematic = true;
-        
-        // Set preview material
-        SetPreviewMaterial(previewWall, invalidPlacementMaterial);
-        
-        previewWall.SetActive(showGridPreview);
-    }
-    
-    /// <summary>
-    /// Creates a preview floor to show where the player will build
-    /// </summary>
-    private void CreatePreviewFloor()
-    {
-        previewFloor = Instantiate(floorPrefab);
-        previewFloor.name = "Preview Floor";
-        
-        // Disable collider and rigidbody for preview
-        foreach (Collider col in previewFloor.GetComponentsInChildren<Collider>())
-        {
-            col.enabled = false;
-        }
-        
-        Rigidbody rb = previewFloor.GetComponent<Rigidbody>();
-        if (rb != null) rb.isKinematic = true;
-        
-        // Set preview material
-        SetPreviewMaterial(previewFloor, invalidPlacementMaterial);
-        
-        previewFloor.SetActive(false);
-    }
-    
-    /// <summary>
-    /// Calculates the preview position for a wall based on raycast
-    /// </summary>
-    private Vector3 GetWallPreviewPosition()
-    {
-        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-        Vector3 targetPosition = ray.origin + ray.direction * buildDistance;
-        
-        // Raycast to find exact placement surface
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, buildDistance, buildSurface))
-        {
-            targetPosition = hit.point;
-        }
-        
-        return SnapToGrid(targetPosition);
-    }
-    
-    /// <summary>
-    /// Calculates the preview position for a floor based on camera position
-    /// </summary>
-    private Vector3 GetFloorPreviewPosition(BuildType buildType)
-    {
-        Vector3 verticalOffset = Vector3.up * (gridSize / 2);
-        
-        if (buildType == BuildType.FloorBelow)
-            return SnapToGrid(transform.position - Vector3.up * gridSize) + verticalOffset;
-        else
-            return SnapToGrid(transform.position + Vector3.up * gridSize) - verticalOffset;
-    }
-    
-    /// <summary>
-    /// Updates the preview position based on camera raycast and build type
-    /// </summary>
-    private void UpdatePreviewPosition()
-    {
-        Vector3 snappedPosition = currentBuildType == BuildType.Wall
-            ? GetWallPreviewPosition()
-            : GetFloorPreviewPosition(currentBuildType);
-        
-        // Update preview visibility
-        bool isWall = currentBuildType == BuildType.Wall;
-        previewWall.SetActive(isWall);
-        previewFloor.SetActive(!isWall);
-        
-        // Update preview position
-        if (isWall)
-            previewWall.transform.position = snappedPosition;
-        else
-            previewFloor.transform.position = snappedPosition;
-        
-        // Check if placement is valid and update material
+        Vector3 snappedPosition = GetPreviewPosition();
         canPlacePiece = IsPlacementValid(snappedPosition);
-        Material previewMat = canPlacePiece ? validPlacementMaterial : invalidPlacementMaterial;
         
-        GameObject previewObj = isWall ? previewWall : previewFloor;
-        SetPreviewMaterial(previewObj, previewMat);
+        buildingPreview.UpdatePreview((BuildingPreview.BuildType)currentBuildType, snappedPosition, canPlacePiece);
     }
+    
+    /// <summary>
+    /// Gets the snapped position for the current build type
+    /// </summary>
+    private Vector3 GetPreviewPosition()
+    {
+        Vector3 previewPosition;
+        
+        if (currentBuildType == BuildType.Wall)
+        {
+            previewPosition = buildingPreview.GetWallPreviewPosition();
+        }
+        else
+        {
+            previewPosition = buildingPreview.GetFloorPreviewPosition(
+                (BuildingPreview.BuildType)currentBuildType, 
+                transform.position
+            );
+        }
+        
+        return SnapToGrid(previewPosition);
+    }
+
     
     /// <summary>
     /// Snaps a position to the grid
@@ -227,21 +140,19 @@ public class BuildingSystem : MonoBehaviour
     /// </summary>
     private void PlaceBuilding()
     {
-        Vector3 buildPosition = Vector3.zero;
+        Vector3 buildPosition = GetPreviewPosition();
         GameObject prefab = null;
         Material material = null;
         string buildingName = "";
         
         if (currentBuildType == BuildType.Wall)
         {
-            buildPosition = previewWall.transform.position;
             prefab = wallPrefab;
             material = wallMaterial;
             buildingName = "Wall";
         }
         else if (currentBuildType == BuildType.FloorBelow || currentBuildType == BuildType.FloorAbove)
         {
-            buildPosition = previewFloor.transform.position;
             prefab = floorPrefab;
             material = floorMaterial;
             buildingName = currentBuildType == BuildType.FloorBelow ? "Floor Below" : "Floor Above";
@@ -257,9 +168,17 @@ public class BuildingSystem : MonoBehaviour
         GameObject newBuilding = Instantiate(prefab, buildPosition, Quaternion.identity);
         newBuilding.name = buildingName;
         
+        // Set material if provided
         if (material != null)
         {
-            SetPreviewMaterial(newBuilding, material);
+            Renderer renderer = newBuilding.GetComponent<Renderer>();
+            if (renderer != null)
+                renderer.material = material;
+            
+            foreach (Renderer childRenderer in newBuilding.GetComponentsInChildren<Renderer>())
+            {
+                childRenderer.material = material;
+            }
         }
         
         // Enable collider
@@ -270,27 +189,12 @@ public class BuildingSystem : MonoBehaviour
     }
     
     /// <summary>
-    /// Sets the material for a game object and all its children
-    /// </summary>
-    private void SetPreviewMaterial(GameObject obj, Material material)
-    {
-        if (material == null) return;
-        
-        Renderer renderer = obj.GetComponent<Renderer>();
-
-        renderer.material = material;
-        
-        foreach (Renderer childRenderer in obj.GetComponentsInChildren<Renderer>())
-        {
-            childRenderer.material = material;
-        }
-    }
-    
-    /// <summary>
     /// Set grid size (useful if you want dynamic sizing)
     /// </summary>
     public void SetGridSize(float newGridSize)
     {
         gridSize = newGridSize;
+        if (buildingPreview != null)
+            buildingPreview.SetGridSize(newGridSize);
     }
 }

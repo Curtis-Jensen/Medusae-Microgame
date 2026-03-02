@@ -1377,6 +1377,7 @@ GameObject:
   m_Component:
   - component: {fileID: 374252393}
   - component: {fileID: 374252394}
+  - component: {fileID: 374252395}
   m_Layer: 0
   m_Name: Building System
   m_TagString: Untagged
@@ -1425,13 +1426,29 @@ MonoBehaviour:
   buildingLayer:
     serializedVersion: 2
     m_Bits: 0
-  validPlacementMaterial: {fileID: 2100000, guid: b271cd98b999d4d269cafdf0c7d70b84,
-    type: 2}
-  invalidPlacementMaterial: {fileID: 2100000, guid: dae54daeb5f254153b01f3b0aca1637c,
-    type: 2}
   wallMaterial: {fileID: 2100000, guid: 987929a85627845648f3728e16884910, type: 2}
   floorMaterial: {fileID: 2100000, guid: 987929a85627845648f3728e16884910, type: 2}
-  showGridPreview: 1
+--- !u!114 &374252395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374252392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a1ababe72ac4c04b2c712523597ce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallPrefab: {fileID: 0}
+  floorPrefab: {fileID: 0}
+  gridSize: 2
+  buildDistance: 10
+  buildSurface:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  validPlacementMaterial: {fileID: 0}
+  invalidPlacementMaterial: {fileID: 0}
 --- !u!4 &410619685 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2310106926148786977, guid: 182186f743c95194da3b941633bba555,
