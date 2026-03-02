@@ -28,6 +28,7 @@ public class BuildingSystem : MonoBehaviour
     private BuildingPreview buildingPreview;
     private bool canPlacePiece = true;
     private BuildType currentBuildType = BuildType.Wall;
+    private int buildingResource = 100; // Current resources available
     
     private void Start()
     {
@@ -195,7 +196,29 @@ public class BuildingSystem : MonoBehaviour
     public void SetGridSize(float newGridSize)
     {
         gridSize = newGridSize;
-        if (buildingPreview != null)
-            buildingPreview.SetGridSize(newGridSize);
+    }
+    
+    /// <summary>
+    /// Get grid size
+    /// </summary>
+    public float GetGridSize()
+    {
+        return gridSize;
+    }
+    
+    /// <summary>
+    /// Get build distance
+    /// </summary>
+    public float GetBuildDistance()
+    {
+        return buildDistance;
+    }
+    
+    /// <summary>
+    /// Get build surface layer mask
+    /// </summary>
+    public LayerMask GetBuildSurface()
+    {
+        return buildSurface;
     }
 }

@@ -8,11 +8,6 @@ public class BuildingPreview : MonoBehaviour
 {
     public enum BuildType { Wall, FloorBelow, FloorAbove }
     
-    [Header("Settings")]
-    [SerializeField] private float gridSize = 2f;
-    [SerializeField] private float buildDistance = 10f;
-    [SerializeField] private LayerMask buildSurface = -1;
-    
     [Header("Materials")]
     [SerializeField] private Material validPlacementMaterial;
     [SerializeField] private Material invalidPlacementMaterial;
@@ -23,11 +18,13 @@ public class BuildingPreview : MonoBehaviour
     private GameObject previewWall;
     private GameObject previewFloor;
     private Camera playerCamera;
+    private BuildingSystem buildingSystem;
     private bool showGridPreview = true;
     
     private void Start()
     {
         playerCamera = GetComponentInParent<Camera>();
+        buildingSystem = GetComponent<BuildingSystem>();
         CreatePreviewWall();
         CreatePreviewFloor();
     }
@@ -68,11 +65,11 @@ public class BuildingPreview : MonoBehaviour
     public Vector3 GetWallPreviewPosition()
     {
         Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-        Vector3 targetPosition = ray.origin + ray.direction * buildDistance;
+        Vector3 targetPosition = ray.origin + ray.direction * buildingSystem.GetBuildDistance();
         
         // Raycast to find exact placement surface
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, buildDistance, buildSurface))
+        if (Physics.Raycast(ray, out hit, buildingSystem.GetBuildDistance(), buildingSystem.GetBuildSurface()))
         {
             targetPosition = hit.point;
         }
@@ -85,6 +82,7 @@ public class BuildingPreview : MonoBehaviour
     /// </summary>
     public Vector3 GetFloorPreviewPosition(BuildType buildType, Vector3 playerPosition)
     {
+        float gridSize = buildingSystem.GetGridSize();
         Vector3 verticalOffset = Vector3.up * (gridSize / 2);
         
         if (buildType == BuildType.FloorBelow)
@@ -166,13 +164,5 @@ public class BuildingPreview : MonoBehaviour
         }
     }
     
-    public float GetGridSize()
-    {
-        return gridSize;
-    }
-    
-    public void SetGridSize(float newGridSize)
-    {
-        gridSize = newGridSize;
-    }
+
 }
