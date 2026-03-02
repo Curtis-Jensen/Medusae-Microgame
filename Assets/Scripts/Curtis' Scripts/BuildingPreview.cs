@@ -102,6 +102,37 @@ public class BuildingPreview : MonoBehaviour
     }
     
     /// <summary>
+    /// Gets the snapped position for the current build type
+    /// </summary>
+    public Vector3 GetPreviewPosition(BuildType buildType)
+    {
+        Vector3 previewPosition;
+        
+        if (buildType == BuildType.Wall)
+        {
+            previewPosition = GetWallPreviewPosition();
+        }
+        else
+        {
+            previewPosition = GetFloorPreviewPosition(buildType, buildingSystem.transform.position);
+        }
+        
+        return SnapToGrid(previewPosition);
+    }
+    
+    /// <summary>
+    /// Snaps a position to the grid
+    /// </summary>
+    private Vector3 SnapToGrid(Vector3 position)
+    {
+        float gridSize = buildingSystem.GetGridSize();
+        position.x = Mathf.Round(position.x / gridSize) * gridSize;
+        position.y = Mathf.Round(position.y / gridSize) * gridSize;
+        position.z = Mathf.Round(position.z / gridSize) * gridSize;
+        return position;
+    }
+    
+    /// <summary>
     /// Creates a preview wall to show where the player will build
     /// </summary>
     private void CreatePreviewWall()

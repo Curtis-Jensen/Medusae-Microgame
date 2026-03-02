@@ -28,7 +28,6 @@ public class BuildingSystem : MonoBehaviour
     private BuildingPreview buildingPreview;
     private bool canPlacePiece = true;
     private BuildType currentBuildType = BuildType.Wall;
-    private int buildingResource = 100; // Current resources available
     
     private void Start()
     {
@@ -76,45 +75,13 @@ public class BuildingSystem : MonoBehaviour
     /// </summary>
     private void UpdatePreviewDisplay()
     {
-        Vector3 snappedPosition = GetPreviewPosition();
+        Vector3 snappedPosition = buildingPreview.GetPreviewPosition((BuildingPreview.BuildType)currentBuildType);
         canPlacePiece = IsPlacementValid(snappedPosition);
         
         buildingPreview.UpdatePreview((BuildingPreview.BuildType)currentBuildType, snappedPosition, canPlacePiece);
     }
-    
-    /// <summary>
-    /// Gets the snapped position for the current build type
-    /// </summary>
-    private Vector3 GetPreviewPosition()
-    {
-        Vector3 previewPosition;
-        
-        if (currentBuildType == BuildType.Wall)
-        {
-            previewPosition = buildingPreview.GetWallPreviewPosition();
-        }
-        else
-        {
-            previewPosition = buildingPreview.GetFloorPreviewPosition(
-                (BuildingPreview.BuildType)currentBuildType, 
-                transform.position
-            );
-        }
-        
-        return SnapToGrid(previewPosition);
-    }
 
-    
-    /// <summary>
-    /// Snaps a position to the grid
-    /// </summary>
-    private Vector3 SnapToGrid(Vector3 position)
-    {
-        position.x = Mathf.Round(position.x / gridSize) * gridSize;
-        position.y = Mathf.Round(position.y / gridSize) * gridSize;
-        position.z = Mathf.Round(position.z / gridSize) * gridSize;
-        return position;
-    }
+
     
     /// <summary>
     /// Checks if a wall can be placed at this position
@@ -142,7 +109,7 @@ public class BuildingSystem : MonoBehaviour
     /// </summary>
     private void PlaceBuilding()
     {
-        Vector3 buildPosition = GetPreviewPosition();
+        Vector3 buildPosition = buildingPreview.GetPreviewPosition((BuildingPreview.BuildType)currentBuildType);
         GameObject prefab = null;
         Material material = null;
         string buildingName = "";
