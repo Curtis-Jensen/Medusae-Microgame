@@ -28,12 +28,13 @@ public class BuildingSystem : MonoBehaviour
     private BuildingPreview buildingPreview;
     private bool canPlacePiece = true;
     private BuildType currentBuildType = BuildType.Wall;
-    private int buildingResource = 100; // Current resources available
     
     private void Start()
     {
         playerCamera = GetComponentInParent<Camera>();
         buildingPreview = GetComponent<BuildingPreview>();
+        buildingPreview.wallPrefab = wallPrefab;
+        buildingPreview.floorPrefab = floorPrefab;
     }
     
     /// <summary>

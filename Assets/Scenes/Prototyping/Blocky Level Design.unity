@@ -1425,7 +1425,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   buildingLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   wallMaterial: {fileID: 2100000, guid: 987929a85627845648f3728e16884910, type: 2}
   floorMaterial: {fileID: 2100000, guid: 987929a85627845648f3728e16884910, type: 2}
 --- !u!114 &374252395
@@ -1440,15 +1440,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39a1ababe72ac4c04b2c712523597ce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallPrefab: {fileID: 0}
-  floorPrefab: {fileID: 0}
-  gridSize: 2
-  buildDistance: 10
+  gridSize: 10
+  buildDistance: 11
   buildSurface:
     serializedVersion: 2
     m_Bits: 4294967295
-  validPlacementMaterial: {fileID: 0}
-  invalidPlacementMaterial: {fileID: 0}
+  validPlacementMaterial: {fileID: 2100000, guid: b271cd98b999d4d269cafdf0c7d70b84,
+    type: 2}
+  invalidPlacementMaterial: {fileID: 2100000, guid: dae54daeb5f254153b01f3b0aca1637c,
+    type: 2}
+  wallPrefab: {fileID: 8394858586091143364, guid: 7e504d0a465c8cc47b91df5a04d176a7,
+    type: 3}
+  floorPrefab: {fileID: 8394858586091143364, guid: 0831b3d6a5523490c8d48c4b2672e0d9,
+    type: 3}
 --- !u!4 &410619685 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2310106926148786977, guid: 182186f743c95194da3b941633bba555,

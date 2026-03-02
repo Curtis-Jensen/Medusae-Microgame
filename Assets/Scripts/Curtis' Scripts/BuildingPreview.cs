@@ -8,10 +8,6 @@ public class BuildingPreview : MonoBehaviour
 {
     public enum BuildType { Wall, FloorBelow, FloorAbove }
     
-    [Header("Prefabs")]
-    [SerializeField] private GameObject wallPrefab;
-    [SerializeField] private GameObject floorPrefab;
-    
     [Header("Settings")]
     [SerializeField] private float gridSize = 2f;
     [SerializeField] private float buildDistance = 10f;
@@ -20,6 +16,9 @@ public class BuildingPreview : MonoBehaviour
     [Header("Materials")]
     [SerializeField] private Material validPlacementMaterial;
     [SerializeField] private Material invalidPlacementMaterial;
+
+    [HideInInspector] public GameObject wallPrefab;
+    [HideInInspector] public GameObject floorPrefab;
     
     private GameObject previewWall;
     private GameObject previewFloor;
