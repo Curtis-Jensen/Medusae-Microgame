@@ -32,7 +32,7 @@ public class BuildingSystem : MonoBehaviour
     private Camera playerCamera;
     private GameObject previewWall;
     private GameObject previewFloor;
-    private bool canPlaceWall = true;
+    private bool canPlacePiece = true;
     private BuildType currentBuildType = BuildType.Wall;
     private int buildingResource = 100; // Current resources available
     
@@ -73,7 +73,7 @@ public class BuildingSystem : MonoBehaviour
         }
         
         // Build on left click
-        if (Input.GetMouseButtonDown(0) && canPlaceWall)
+        if (Input.GetMouseButtonDown(0) && canPlacePiece)
         {
             PlaceBuilding();
         }
@@ -185,8 +185,8 @@ public class BuildingSystem : MonoBehaviour
             previewFloor.transform.position = snappedPosition;
         
         // Check if placement is valid and update material
-        canPlaceWall = IsPlacementValid(snappedPosition);
-        Material previewMat = canPlaceWall ? validPlacementMaterial : invalidPlacementMaterial;
+        canPlacePiece = IsPlacementValid(snappedPosition);
+        Material previewMat = canPlacePiece ? validPlacementMaterial : invalidPlacementMaterial;
         
         GameObject previewObj = isWall ? previewWall : previewFloor;
         SetPreviewMaterial(previewObj, previewMat);
