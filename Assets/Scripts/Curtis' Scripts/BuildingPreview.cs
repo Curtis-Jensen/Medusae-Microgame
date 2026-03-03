@@ -18,13 +18,13 @@ public class BuildingPreview : MonoBehaviour
     private GameObject previewWall;
     private GameObject previewFloor;
     private Camera playerCamera;
-    private BuildingSystem buildingSystem;
+    private ConstructionSystem ConstructionSystem;
     private bool showGridPreview = true;
     
     private void Start()
     {
         playerCamera = GetComponentInParent<Camera>();
-        buildingSystem = GetComponent<BuildingSystem>();
+        ConstructionSystem = GetComponent<ConstructionSystem>();
         CreatePreviewWall();
         CreatePreviewFloor();
     }
@@ -65,11 +65,11 @@ public class BuildingPreview : MonoBehaviour
     public Vector3 GetWallPreviewPosition()
     {
         Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-        Vector3 targetPosition = ray.origin + ray.direction * buildingSystem.GetBuildDistance();
+        Vector3 targetPosition = ray.origin + ray.direction * ConstructionSystem.GetBuildDistance();
         
         // Raycast to find exact placement surface
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, buildingSystem.GetBuildDistance(), buildingSystem.GetBuildSurface()))
+        if (Physics.Raycast(ray, out hit, ConstructionSystem.GetBuildDistance(), ConstructionSystem.GetBuildSurface()))
         {
             targetPosition = hit.point;
         }
@@ -82,7 +82,7 @@ public class BuildingPreview : MonoBehaviour
     /// </summary>
     public Vector3 GetFloorPreviewPosition(BuildType buildType, Vector3 playerPosition)
     {
-        float gridSize = buildingSystem.GetGridSize();
+        float gridSize = ConstructionSystem.GetGridSize();
         Vector3 rayDirection = buildType == BuildType.FloorBelow ? Vector3.down : Vector3.up;
         float rayDistance = 100f; // Search far up/down for a surface
         
@@ -135,7 +135,7 @@ public class BuildingPreview : MonoBehaviour
         }
         else
         {
-            previewPosition = GetFloorPreviewPosition(buildType, buildingSystem.transform.position);
+            previewPosition = GetFloorPreviewPosition(buildType, ConstructionSystem.transform.position);
         }
         
         return SnapToGrid(previewPosition);
@@ -146,7 +146,7 @@ public class BuildingPreview : MonoBehaviour
     /// </summary>
     private Vector3 SnapToGrid(Vector3 position)
     {
-        float gridSize = buildingSystem.GetGridSize();
+        float gridSize = ConstructionSystem.GetGridSize();
         position.x = Mathf.Round(position.x / gridSize) * gridSize;
         position.y = Mathf.Round(position.y / gridSize) * gridSize;
         position.z = Mathf.Round(position.z / gridSize) * gridSize;

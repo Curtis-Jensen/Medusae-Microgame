@@ -73,7 +73,7 @@
     <Compile Include="Assets/Scripts/Curtis&apos; Scripts/ProceduralGenerationEditor.cs" />
     <Compile Include="Assets/Scripts/RandomSound.cs" />
     <Compile Include="Assets/Scripts/Curtis&apos; Scripts/NewBehaviourScript.cs" />
-    <Compile Include="Assets/Scripts/Curtis&apos; Scripts/BuildingSystem.cs" />
+    <Compile Include="Assets/Scripts/Curtis&apos; Scripts/ConstructionSystem.cs" />
     <Compile Include="Assets/Scripts/Curtis&apos; Scripts/BuildingPreview.cs" />
   </ItemGroup>
   <ItemGroup>

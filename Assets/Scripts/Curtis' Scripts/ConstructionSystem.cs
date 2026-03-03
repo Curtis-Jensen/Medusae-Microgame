@@ -4,7 +4,7 @@ using UnityEngine;
 /// Fortnite-style grid-based building system for walls and floors.
 /// Attach this to the player and assign wall and floor prefabs.
 /// </summary>
-public class BuildingSystem : MonoBehaviour
+public class ConstructionSystem : MonoBehaviour
 {
     private enum BuildType { Wall, FloorBelow, FloorAbove }
     [Header("Building Settings")]

@@ -1440,11 +1440,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39a1ababe72ac4c04b2c712523597ce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: 10
-  buildDistance: 11
-  buildSurface:
-    serializedVersion: 2
-    m_Bits: 4294967295
   validPlacementMaterial: {fileID: 2100000, guid: b271cd98b999d4d269cafdf0c7d70b84,
     type: 2}
   invalidPlacementMaterial: {fileID: 2100000, guid: dae54daeb5f254153b01f3b0aca1637c,
