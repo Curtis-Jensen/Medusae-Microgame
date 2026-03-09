@@ -502,8 +502,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  CriticalHealthRatio: 0.3
-  currentHealth: 90
+  CriticalHealthRatio: 0.6
+  currentHealth: 100
 --- !u!114 &298744117520805562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,8 +519,8 @@ MonoBehaviour:
   randomizeWeapons: 0
   possibleWeapons:
   - {fileID: 8323776800172828795, guid: 89acfe5481a75124ab0259cbb9893cfc, type: 3}
-  - {fileID: 8323776800172828795, guid: 05d763c6b8671fc4e9505fe1a0218eca, type: 3}
   - {fileID: 8323776800172828795, guid: b318fabc73446b746a1005cede0c4ceb, type: 3}
+  - {fileID: 8323776800172828795, guid: 05d763c6b8671fc4e9505fe1a0218eca, type: 3}
   - {fileID: 8323776800172828795, guid: 3439b4874b7b44e4eb2216314c46b85c, type: 3}
   - {fileID: 8323776800172828795, guid: ff5a8c20084bd444a86f5f83e1e30ff7, type: 3}
   weaponSlots:

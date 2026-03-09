@@ -5,20 +5,20 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Medusae/Menus/IntroMenu.unity
     guid: 56e3faabc5bb30f49a68bb8f1292f988
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Medusae/Hub Church.unity
     guid: 08cfbde502ee8824b8a3d658610819a9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Medusae/Wave Defense.unity
     guid: 34971add3b319224484ee17c3cb6bf99
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Medusae/Menus/High Score Scene.unity
     guid: b7422447f6066b346a9eb90a58530248
   - enabled: 1
-    path: Assets/Scenes/Ship Mind/Hub World Ship Mind.unity
+    path: Assets/Scenes/Ship Mind/Hub World Platform Anchor.unity
     guid: 6645c0a57bfda4585a022e4f33477594
   - enabled: 1
     path: Assets/Scenes/Ship Mind/Ship Mind Fight.unity
