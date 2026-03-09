@@ -62,6 +62,8 @@
     <Analyzer Include="/Users/curtisjensen/.vscode/extensions/visualstudiotoolsforunity.vstuc-1.2.1/Analyzers/Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/Scripts/Curtis&apos; Scripts/ConstructionSystem.cs" />
+    <Compile Include="Assets/Scripts/Curtis&apos; Scripts/NewBehaviourScript.cs" />
     <Compile Include="Assets/Scripts/Curtis&apos; Scripts/ProceduralGeneration.cs" />
     <Compile Include="Assets/Scripts/Curtis&apos; Scripts/TileDestroyer.cs" />
     <Compile Include="Assets/Scripts/Curtis&apos; Scripts/ObjectiveSurvive.cs" />
@@ -69,12 +71,10 @@
     <Compile Include="Assets/Scripts/Curtis&apos; Scripts/SpawnPointGizmo.cs" />
     <Compile Include="Assets/Scripts/Curtis&apos; Scripts/EnemyController.cs" />
     <Compile Include="Assets/Scripts/Curtis&apos; Scripts/MeleeWeapon.cs" />
+    <Compile Include="Assets/Scripts/Curtis&apos; Scripts/BuildingPreview.cs" />
     <Compile Include="Assets/Scripts/Curtis&apos; Scripts/DayNightCycle.cs" />
     <Compile Include="Assets/Scripts/Curtis&apos; Scripts/ProceduralGenerationEditor.cs" />
     <Compile Include="Assets/Scripts/RandomSound.cs" />
-    <Compile Include="Assets/Scripts/Curtis&apos; Scripts/NewBehaviourScript.cs" />
-    <Compile Include="Assets/Scripts/Curtis&apos; Scripts/ConstructionSystem.cs" />
-    <Compile Include="Assets/Scripts/Curtis&apos; Scripts/BuildingPreview.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Third Party Assets/TextMesh Pro/Resources/Shaders/TMPro.cginc" />

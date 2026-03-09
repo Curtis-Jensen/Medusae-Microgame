@@ -62,15 +62,15 @@
     <Analyzer Include="/Users/curtisjensen/.vscode/extensions/visualstudiotoolsforunity.vstuc-1.2.1/Analyzers/Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/Scripts/Editor/LevelEditor/LevelData.cs" />
     <Compile Include="Assets/Scripts/Editor/PrefabReplacerEditor.cs" />
     <Compile Include="Assets/Scripts/Editor/ShaderBuildStripping.cs" />
     <Compile Include="Assets/Scripts/Editor/UITableEditor.cs" />
     <Compile Include="Assets/Scripts/Editor/MiniProfiler.cs" />
-    <Compile Include="Assets/Scripts/Editor/LevelEditor/LevelData.cs" />
-    <Compile Include="Assets/Scripts/Editor/LevelEditor/PlacedObject.cs" />
     <Compile Include="Assets/Scripts/Editor/LevelEditor/UsageExamples.cs" />
     <Compile Include="Assets/Scripts/Editor/LevelEditor/LevelManager.cs" />
     <Compile Include="Assets/Scripts/Editor/LevelEditor/LevelEditorWindow.cs" />
+    <Compile Include="Assets/Scripts/Editor/LevelEditor/PlacedObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Scripts/Editor/fps.Editor.asmdef" />
