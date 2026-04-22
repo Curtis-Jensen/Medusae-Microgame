@@ -39,11 +39,14 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
+*.csproj
+*.sln
 
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
 *.mdb.meta
+# Never ignore EditorUserSettings.asset at root, but ignore it in UserSettings
 EditorUserSettings.asset
 
 # Unity3D generated file on crash reports
@@ -56,8 +59,8 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-UserSettings/EditorUserSettings.asset
-UserSettings/EditorUserSettings.asset
+# Ignore UserSettings entirely
+/UserSettings/
 UserSettings/EditorUserSettings.asset
 UserSettings/Search.settings
 UserSettings/Layouts/CurrentMaximizeLayout.dwlt
@@ -67,3 +70,23 @@ UserSettings/Layouts/CurrentMaximizeLayout.dwlt
 Packages/manifest.json
 Packages/packages-lock.json
 Assets/Prefabs/Level/House/Materials/House.mat
+Assembly-CSharp.csproj
+fps.AI.csproj
+fps.Editor.csproj
+fps.Game.csproj
+fps.Gameplay.csproj
+fps.UI.csproj
+Medusae-Microgame.sln
+NavMeshComponents.csproj
+NavMeshComponentsEditor.csproj
+UserSettings/Layouts/default-2021.dwlt
+Assembly-CSharp.csproj
+fps.AI.csproj
+fps.Editor.csproj
+fps.Game.csproj
+fps.Gameplay.csproj
+fps.UI.csproj
+Medusae-Microgame.sln
+NavMeshComponents.csproj
+NavMeshComponentsEditor.csproj
+UserSettings/Layouts/default-2021.dwlt
