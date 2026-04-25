@@ -49,6 +49,8 @@ namespace Unity.FPS.Game
             if (Invincible)
                 return;
 
+            
+
             float healthBefore = currentHealth;
             currentHealth -= damage;
             currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
