@@ -39,6 +39,9 @@ namespace Unity.FPS.AI
 
 
         [Header("Weapons Parameters")]
+        [Tooltip("Uncheck for enemies (e.g. bosses) that have no GunController and don't shoot")]
+        public bool RequiresWeapon = true;
+
         [Tooltip("Allow weapon swapping for this enemy")]
         public bool SwapToNextWeapon = false;
 
@@ -155,9 +158,12 @@ namespace Unity.FPS.AI
             health.OnDamaged += OnDamaged;
 
             // Find and initialize all weapons
-            FindAndInitializeAllWeapons();
-            var weapon = GetCurrentWeapon();
-            weapon.ShowWeapon(true);
+            if (RequiresWeapon)
+            {
+                FindAndInitializeAllWeapons();
+                var weapon = GetCurrentWeapon();
+                weapon.ShowWeapon(true);
+            }
 
             var detectionModules = GetComponentsInChildren<DetectionModule>();
             DebugUtility.HandleErrorIfNoComponentFound<DetectionModule, NpcController>(detectionModules.Length, this,
@@ -350,6 +356,7 @@ namespace Unity.FPS.AI
 
         public void OrientWeaponsTowards(Vector3 lookPosition)
         {
+            if (weapons == null) return;
             for (int i = 0; i < weapons.Length; i++)
             {
                 // orient weapon towards player
@@ -418,6 +425,9 @@ namespace Unity.FPS.AI
         public bool TryAtack(Vector3 enemyPosition)
         {
             if (gameFlowManager.GameIsEnding)
+                return false;
+
+            if (!RequiresWeapon)
                 return false;
 
             OrientWeaponsTowards(enemyPosition);
